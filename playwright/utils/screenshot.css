@@ -1,0 +1,9 @@
+*[data-volatile="true"], .timestamp, .clock, .live-refresh-time {
+  visibility: hidden !important;
+}
+*, *::before, *::after {
+  caret-color: transparent !important;
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

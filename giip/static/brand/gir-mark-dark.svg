@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="gir-mark-dark-title">
+  <title id="gir-mark-dark-title">GIR mark for dark backgrounds</title>
+  <rect x="4" y="4" width="88" height="88" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="18" y="62" width="12" height="18" fill="#FFFFFF"/>
+  <rect x="34" y="48" width="12" height="32" fill="#539D96"/>
+  <rect x="50" y="32" width="12" height="48" fill="#2947A0"/>
+  <rect x="66" y="16" width="12" height="64" fill="#192F70"/>
+</svg>

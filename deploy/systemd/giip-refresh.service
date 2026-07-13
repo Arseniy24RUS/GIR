@@ -1,0 +1,12 @@
+[Unit]
+Description=GIIP official-source refresh and scientific rebuild
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/giip
+ExecStart=/opt/giip/.venv/bin/python scripts/run_scheduled_refresh.py
+User=giip
+Group=giip
+Nice=10

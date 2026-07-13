@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-page="personal-data-consent">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="/static/brand/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/static/brand/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/static/brand/apple-touch-icon.png" sizes="180x180">
+  <title>Согласие на обработку персональных данных | GIR</title>
+  <meta name="description" content="Условия обработки данных, передаваемых через форму сотрудничества GIR.">
+  <script>
+    (() => {
+      const query = new URLSearchParams(location.search);
+      const requestedLang = query.get("lang") || localStorage.getItem("lang") || navigator.language || "ru";
+      const preferredTheme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      const requestedTheme = query.get("theme") || localStorage.getItem("theme") || preferredTheme;
+      document.documentElement.lang = String(requestedLang).toLowerCase().startsWith("en") ? "en" : "ru";
+      document.documentElement.dataset.theme = requestedTheme === "light" ? "light" : "dark";
+    })();
+  </script>
+  <link rel="stylesheet" href="/static/cooperation.css?v=gir-cooperation-20260711-1">
+</head>
+<body>
+  <!-- LEGAL REVIEW REQUIRED: MGIMO must approve this consent text before public deployment. -->
+  <header class="gir-consent-header" aria-label="GIR">
+    <a class="gir-consent-brand" href="/#landing" aria-label="GIR">
+      <img data-consent-brand src="/static/brand/gir-ru-dark.svg" alt="GIR — Глобальный рейтинг индексов">
+    </a>
+    <div class="gir-consent-controls" data-consent-controls aria-label="Настройки интерфейса">
+      <button class="gir-consent-control" type="button" data-consent-theme-toggle aria-label="Включить светлую тему" title="Включить светлую тему">
+        <img data-consent-theme-icon src="/static/icons/sun.svg" alt="">
+      </button>
+      <button class="gir-consent-control" type="button" data-consent-lang-toggle aria-label="Язык: русский" title="Язык: русский">RU</button>
+      <a class="gir-consent-cooperation" href="mailto:project_office@inno.mgimo.ru" data-open-cooperation data-cooperation-tooltip aria-label="Сотрудничество">
+        <span data-cooperation-label>Сотрудничество</span><span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </header>
+  <main id="main-content">
+    <article class="gir-consent-document">
+      <header class="gir-consent-document-header">
+        <a class="gir-consent-back" href="/#landing"><span aria-hidden="true">←</span><span data-consent-i18n="back">Вернуться в GIR</span></a>
+        <p class="gir-consent-eyebrow" data-consent-i18n="eyebrow">GIR • МГИМО</p>
+        <h1 data-consent-i18n="title">Согласие на обработку персональных данных</h1>
+        <p data-consent-i18n="intro">Отправляя форму сотрудничества, пользователь добровольно предоставляет данные для обработки обращения проектным офисом МГИМО.
+        </p>
+      </header>
+      <section class="gir-consent-section">
+        <h2 data-consent-i18n="purposeTitle">Цель обработки</h2>
+        <p data-consent-i18n="purposeCopy">Рассмотрение предложения о сотрудничестве с GIR, определение подходящего формата взаимодействия и обратная связь с заявителем.</p>
+      </section>
+      <section class="gir-consent-section">
+        <h2 data-consent-i18n="dataTitle">Состав данных</h2>
+        <p data-consent-i18n="dataCopy">ФИО, телефон, адрес электронной почты, организация, проект GIR, текст сообщения, язык интерфейса и адрес страницы отправки.</p>
+      </section>
+      <section class="gir-consent-section">
+        <h2 data-consent-i18n="transferTitle">Передача и хранение</h2>
+        <p data-consent-i18n="transferCopy">Данные направляются на project_office@inno.mgimo.ru через сервис FormSubmit. Согласно документации FormSubmit, отправления могут храниться сервисом до 30 дней.</p>
+      </section>
+      <section class="gir-consent-section">
+        <h2 data-consent-i18n="withdrawalTitle">Отзыв согласия</h2>
+        <p data-consent-i18n="withdrawalCopy">Запрос на уточнение, ограничение обработки или удаление данных можно направить на project_office@inno.mgimo.ru.</p>
+      </section>
+    </article>
+  </main>
+  <script src="/static/cooperation.js?v=gir-cooperation-20260711-1"></script>
+</body>
+</html>

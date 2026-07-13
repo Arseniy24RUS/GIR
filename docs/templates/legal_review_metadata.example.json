@@ -1,0 +1,19 @@
+{
+  "reviewer_name": "FULL LEGAL NAME — AUTHORISED LAWYER ONLY",
+  "reviewed_at": "YYYY-MM-DD",
+  "evidence_path": "docs/legal/signed_source_terms_review.pdf",
+  "sources": [
+    {
+      "source_id": "WORLD_BANK_HDI",
+      "terms_url": "https://official.example/terms",
+      "terms_version_date": "YYYY-MM-DD",
+      "storage_allowed": true,
+      "transformation_allowed": true,
+      "redistribution_allowed": false,
+      "attribution_required": "Attribution text",
+      "release_archive_decision": "exclude_raw_keep_derived",
+      "review_status": "approved",
+      "notes": "Human legal assessment"
+    }
+  ]
+}

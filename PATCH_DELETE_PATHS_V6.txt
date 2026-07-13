@@ -1,0 +1,17 @@
+PATCH_APPLIED_V5.json
+PATCH_BASELINE_V5.json
+PATCH_DELETE_PATHS.txt
+PATCH_FILE_LIST.txt
+PATCH_INTEGRATION_V5.json
+PATCH_INTEGRATION_V5.json.sha256
+PATCH_MANIFEST_V5.json
+PATCH_README_V5.md
+PATCH_SHA256SUMS.txt
+docs/CODEX_FINAL_RELEASE_TZ.md
+docs/CODEX_PATCH_INTEGRATION.md
+docs/CODEX_FINAL_ONLINE_DATA_TZ.md
+docs/FRONTEND_V5_INTEGRATION_CONTRACT.md
+docs/HTEI_METHODOLOGY_V5.md
+scripts/apply_scientific_release_patch.py
+scripts/record_playwright_v5_evidence.py
+scripts/write_patch_integration_manifest.py

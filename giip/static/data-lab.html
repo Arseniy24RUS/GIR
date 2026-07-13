@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Данные и исследование · Global Index Research</title>
+  <link rel="icon" href="/static/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/stage5.css">
+</head>
+<body>
+  <a class="dl-skip" href="#dl-main" data-i18n="skip">Перейти к содержанию</a>
+  <header class="dl-header">
+    <a class="dl-brand" href="/" aria-label="Global Index Research — главная" data-i18n-aria="brandHome">
+      <span class="dl-brand-mark" aria-hidden="true">G</span>
+      <span><strong>GLOBAL INDEX</strong><small>RESEARCH PLATFORM</small></span>
+    </a>
+    <div class="dl-header-context">
+      <span class="dl-header-label" data-i18n="workspace">Исследовательское пространство</span>
+      <strong>Data Lab</strong>
+    </div>
+    <div class="dl-header-actions">
+      <button class="dl-icon-button" id="dl-theme" type="button" aria-label="Переключить тему" title="Переключить тему">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.4A7 7 0 0 1 12 3Z"/></svg>
+      </button>
+      <button class="dl-lang" id="dl-lang" type="button" aria-label="Switch language">EN</button>
+      <a class="dl-back" href="/"><span data-i18n="back">Вернуться в платформу</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+  </header>
+
+  <div class="dl-shell">
+    <aside class="dl-sidebar" aria-label="Навигация Data Lab" data-i18n-aria="navLabel">
+      <div class="dl-sidebar-intro"><span>DATA LAB</span><p data-i18n="sidebarIntro">Источники, файлы и наблюдения в едином доказательном контуре.</p></div>
+      <nav id="dl-tabs" class="dl-nav" aria-label="Разделы" data-i18n-aria="sections">
+        <button type="button" data-tab="overview" aria-current="page"><span>01</span><b data-i18n="navOverview">Обзор</b></button>
+        <button type="button" data-tab="explorer"><span>02</span><b>Data Explorer</b></button>
+        <button type="button" data-tab="sources"><span>03</span><b data-i18n="navSources">Источники</b></button>
+        <button type="button" data-tab="files"><span>04</span><b data-i18n="navFiles">Файлы</b></button>
+        <button type="button" data-tab="repro"><span>05</span><b data-i18n="navRepro">Воспроизводимость</b></button>
+      </nav>
+      <div class="dl-sidebar-footer">
+        <span class="dl-status"><i></i><span data-i18n="status">Каталог связан с рабочей SQLite</span></span>
+        <a href="/api/data-catalog/manifest.csv" data-i18n="manifest">CSV-манифест</a>
+      </div>
+    </aside>
+
+    <main id="dl-main" class="dl-main" tabindex="-1">
+      <div id="dl-app" class="dl-loading" aria-live="polite">
+        <div class="dl-loading-mark">G</div>
+        <p data-i18n="loading">Собирается каталог доказательной базы…</p>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="dl-dialog" class="dl-dialog" aria-labelledby="dl-dialog-title">
+    <div class="dl-dialog-head">
+      <div><span id="dl-dialog-kicker"></span><h2 id="dl-dialog-title"></h2><p id="dl-dialog-subtitle"></p></div>
+      <button type="button" id="dl-dialog-close" aria-label="Закрыть" data-i18n-aria="close">×</button>
+    </div>
+    <div id="dl-dialog-body" class="dl-dialog-body"></div>
+  </dialog>
+  <div id="dl-tooltip" class="dl-tooltip" role="tooltip"></div>
+  <div id="dl-toast" class="dl-toast" role="status" aria-live="polite"></div>
+
+  <script src="/static/stage5_data_lab.js" defer></script>
+</body>
+</html>

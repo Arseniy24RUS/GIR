@@ -1,0 +1,7 @@
+classification,code,level,htei_status,description_en,description_ru,methodological_tier,notes
+ISCO08,21,2-digit,direct_stem_proxy,Science and engineering professionals,Специалисты в области науки и техники,direct_group,Preferred detailed occupation group
+ISCO08,25,2-digit,direct_digital_proxy,Information and communications technology professionals,Специалисты по информационно-коммуникационным технологиям,direct_group,Preferred detailed occupation group
+ISCO08,31,2-digit,direct_stem_proxy,Science and engineering associate professionals,Специалисты-техники в области науки и техники,direct_group,Preferred detailed occupation group
+ISCO08,35,2-digit,direct_digital_proxy,Information and communications technicians,Техники по информационно-коммуникационным технологиям,direct_group,Preferred detailed occupation group
+ISCO08,2,1-digit,broad_proxy,Professionals,Специалисты высшего уровня квалификации,broad_proxy,Includes health teaching business legal and other non-high-tech professions
+ISCO08,3,1-digit,broad_proxy,Technicians and associate professionals,Специалисты среднего уровня квалификации,broad_proxy,Includes many non-high-tech occupations

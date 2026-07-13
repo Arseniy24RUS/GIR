@@ -1,0 +1,42 @@
+.github-pages-notice {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 8px 24px;
+  color: #f4f7ff;
+  background: linear-gradient(90deg, #213a8f, #3158c8 52%, #257c78);
+  font: 500 13px/1.35 Onest, Inter, system-ui, sans-serif;
+  text-align: center;
+}
+
+.github-pages-notice strong {
+  font-weight: 700;
+}
+
+.github-pages-notice a {
+  flex: 0 0 auto;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html[lang="ru"] .github-pages-notice__en,
+html[lang="en"] .github-pages-notice__ru {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .github-pages-notice {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    padding: 9px 14px;
+    text-align: left;
+  }
+}
+

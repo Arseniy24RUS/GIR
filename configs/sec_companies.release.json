@@ -1,0 +1,13 @@
+{
+  "source": "SEC EDGAR Company Facts API",
+  "companies": [
+    {"company_id": "AAPL", "ticker": "AAPL", "company_name": "Apple Inc.", "iso3": "USA"},
+    {"company_id": "MSFT", "ticker": "MSFT", "company_name": "Microsoft Corporation", "iso3": "USA"},
+    {"company_id": "GOOGL", "ticker": "GOOGL", "company_name": "Alphabet Inc.", "iso3": "USA"},
+    {"company_id": "IBM", "ticker": "IBM", "company_name": "International Business Machines Corporation", "iso3": "USA"},
+    {"company_id": "TSM", "ticker": "TSM", "company_name": "Taiwan Semiconductor Manufacturing Company Limited", "iso3": "TWN"},
+    {"company_id": "ASML", "ticker": "ASML", "company_name": "ASML Holding N.V.", "iso3": "NLD"},
+    {"company_id": "SAP", "ticker": "SAP", "company_name": "SAP SE", "iso3": "DEU"},
+    {"company_id": "ARM", "ticker": "ARM", "company_name": "Arm Holdings plc", "iso3": "GBR"}
+  ]
+}

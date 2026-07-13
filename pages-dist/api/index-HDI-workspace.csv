@@ -1,0 +1,194 @@
+﻿iso3,country,score,rank,percentile,value_year,source_data_year,source_id,quality_flag
+ISL,Исландия,97.2,1,100.0,2023,2023,UNDP_HDR,official_value
+NOR,Норвегия,97.0,2,99.4819,2023,2023,UNDP_HDR,official_value
+CHE,Швейцария,97.0,3,98.9637,2023,2023,UNDP_HDR,official_value
+DNK,Дания,96.2,4,98.4456,2023,2023,UNDP_HDR,official_value
+DEU,Германия,95.89999999999999,5,97.9275,2023,2023,UNDP_HDR,official_value
+SWE,Швеция,95.89999999999999,6,97.4093,2023,2023,UNDP_HDR,official_value
+AUS,Австралия,95.8,7,96.8912,2023,2023,UNDP_HDR,official_value
+HKG,Гонконг,95.5,8,96.3731,2023,2023,UNDP_HDR,official_value
+NLD,Нидерланды,95.5,9,95.8549,2023,2023,UNDP_HDR,official_value
+BEL,Бельгия,95.1,10,95.3368,2023,2023,UNDP_HDR,official_value
+IRL,Ирландия,94.89999999999999,11,94.8187,2023,2023,UNDP_HDR,official_value
+FIN,Финляндия,94.8,12,94.3005,2023,2023,UNDP_HDR,official_value
+SGP,Сингапур,94.6,13,93.7824,2023,2023,UNDP_HDR,official_value
+GBR,Великобритания,94.6,14,93.2642,2023,2023,UNDP_HDR,official_value
+ARE,ОАЭ,94.0,15,92.7461,2023,2023,UNDP_HDR,official_value
+CAN,Канада,93.89999999999999,16,92.228,2023,2023,UNDP_HDR,official_value
+LIE,Лихтенштейн,93.8,17,91.7098,2023,2023,UNDP_HDR,official_value
+NZL,Новая Зеландия,93.8,18,91.1917,2023,2023,UNDP_HDR,official_value
+USA,США,93.8,19,90.6736,2023,2023,UNDP_HDR,official_value
+KOR,Республика Корея,93.7,20,90.1554,2023,2023,UNDP_HDR,official_value
+SVN,Словения,93.10000000000001,21,89.6373,2023,2023,UNDP_HDR,official_value
+AUT,Австрия,93.0,22,89.1192,2023,2023,UNDP_HDR,official_value
+JPN,Япония,92.5,23,88.601,2023,2023,UNDP_HDR,official_value
+MLT,Мальта,92.4,24,88.0829,2023,2023,UNDP_HDR,official_value
+LUX,Люксембург,92.2,25,87.5648,2023,2023,UNDP_HDR,official_value
+FRA,Франция,92.0,26,87.0466,2023,2023,UNDP_HDR,official_value
+ISR,Израиль,91.9,27,86.5285,2023,2023,UNDP_HDR,official_value
+ESP,Испания,91.8,28,86.0104,2023,2023,UNDP_HDR,official_value
+CZE,Чехия,91.5,29,85.4922,2023,2023,UNDP_HDR,official_value
+ITA,Италия,91.5,30,84.9741,2023,2023,UNDP_HDR,official_value
+SMR,Сан-Марино,91.5,31,84.456,2023,2023,UNDP_HDR,official_value
+AND,Андорра,91.3,32,83.9378,2023,2023,UNDP_HDR,official_value
+CYP,Кипр,91.3,33,83.4197,2023,2023,UNDP_HDR,official_value
+GRC,Греция,90.8,34,82.9016,2023,2023,UNDP_HDR,official_value
+POL,Польша,90.60000000000001,35,82.3834,2023,2023,UNDP_HDR,official_value
+EST,Эстония,90.5,36,81.8653,2023,2023,UNDP_HDR,official_value
+SAU,Саудовская Аравия,90.0,37,81.3472,2023,2023,UNDP_HDR,official_value
+BHR,Бахрейн,89.9,38,80.829,2023,2023,UNDP_HDR,official_value
+LTU,Литва,89.5,39,80.3109,2023,2023,UNDP_HDR,official_value
+PRT,Португалия,89.0,40,79.7927,2023,2023,UNDP_HDR,official_value
+HRV,Хорватия,88.9,41,79.2746,2023,2023,UNDP_HDR,official_value
+LVA,Латвия,88.9,42,78.7565,2023,2023,UNDP_HDR,official_value
+QAT,Катар,88.6,43,78.2383,2023,2023,UNDP_HDR,official_value
+SVK,Словакия,88.0,44,77.7202,2023,2023,UNDP_HDR,official_value
+CHL,Чили,87.8,45,77.2021,2023,2023,UNDP_HDR,official_value
+HUN,Венгрия,87.0,46,76.6839,2023,2023,UNDP_HDR,official_value
+ARG,Аргентина,86.5,47,76.1658,2023,2023,UNDP_HDR,official_value
+MNE,Черногория,86.2,48,75.6477,2023,2023,UNDP_HDR,official_value
+URY,Уругвай,86.2,49,75.1295,2023,2023,UNDP_HDR,official_value
+OMN,Оман,85.8,50,74.6114,2023,2023,UNDP_HDR,official_value
+TUR,Турция,85.3,51,74.0933,2023,2023,UNDP_HDR,official_value
+KWT,Кувейт,85.2,52,73.5751,2023,2023,UNDP_HDR,official_value
+ATG,Антигуа и Барбуда,85.1,53,73.057,2023,2023,UNDP_HDR,official_value
+SYC,Сейшельские о-ва,84.8,54,72.5389,2023,2023,UNDP_HDR,official_value
+BGR,Болгария,84.5,55,72.0207,2023,2023,UNDP_HDR,official_value
+ROU,Румыния,84.5,56,71.5026,2023,2023,UNDP_HDR,official_value
+GEO,Грузия,84.39999999999999,57,70.9845,2023,2023,UNDP_HDR,official_value
+KNA,Сент-Китс и Невис,84.0,58,70.4663,2023,2023,UNDP_HDR,official_value
+PAN,Панама,83.89999999999999,59,69.9482,2023,2023,UNDP_HDR,official_value
+BRN,Бруней,83.7,60,69.4301,2023,2023,UNDP_HDR,official_value
+KAZ,Казахстан,83.7,61,68.9119,2023,2023,UNDP_HDR,official_value
+CRI,Коста-Рика,83.3,62,68.3938,2023,2023,UNDP_HDR,official_value
+SRB,Сербия,83.3,63,67.8756,2023,2023,UNDP_HDR,official_value
+RUS,Россия,83.2,64,67.3575,2023,2023,UNDP_HDR,official_value
+BLR,Беларусь,82.39999999999999,65,66.8394,2023,2023,UNDP_HDR,official_value
+BHS,Багамы,82.0,66,66.3212,2023,2023,UNDP_HDR,official_value
+MYS,Малайзия,81.89999999999999,67,65.8031,2023,2023,UNDP_HDR,official_value
+MKD,Северная Македония,81.5,68,65.285,2023,2023,UNDP_HDR,official_value
+ARM,Армения,81.10000000000001,69,64.7668,2023,2023,UNDP_HDR,official_value
+BRB,Барбадос,81.10000000000001,70,64.2487,2023,2023,UNDP_HDR,official_value
+ALB,Албания,81.0,71,63.7306,2023,2023,UNDP_HDR,official_value
+TTO,Тринидад и Тобаго,80.7,72,63.2124,2023,2023,UNDP_HDR,official_value
+MUS,Маврикий,80.60000000000001,73,62.6943,2023,2023,UNDP_HDR,official_value
+BIH,Босния и Герцеговина,80.4,74,62.1762,2023,2023,UNDP_HDR,official_value
+IRN,Иран,79.9,75,61.658,2023,2023,UNDP_HDR,official_value
+VCT,Сент-Винсент и Гренадины,79.80000000000001,76,61.1399,2023,2023,UNDP_HDR,official_value
+THA,Таиланд,79.80000000000001,77,60.6218,2023,2023,UNDP_HDR,official_value
+CHN,Китай,79.7,78,60.1036,2023,2023,UNDP_HDR,official_value
+PER,Перу,79.4,79,59.5855,2023,2023,UNDP_HDR,official_value
+GRD,Гренада,79.10000000000001,80,59.0674,2023,2023,UNDP_HDR,official_value
+AZE,Азербайджан,78.9,81,58.5492,2023,2023,UNDP_HDR,official_value
+MEX,Мексика,78.9,82,58.0311,2023,2023,UNDP_HDR,official_value
+COL,Колумбия,78.8,83,57.513,2023,2023,UNDP_HDR,official_value
+BRA,Бразилия,78.60000000000001,84,56.9948,2023,2023,UNDP_HDR,official_value
+PLW,Палау,78.60000000000001,85,56.4767,2023,2023,UNDP_HDR,official_value
+MDA,Молдова,78.5,86,55.9585,2023,2023,UNDP_HDR,official_value
+UKR,Украина,77.9,87,55.4404,2023,2023,UNDP_HDR,official_value
+ECU,Эквадор,77.7,88,54.9223,2023,2023,UNDP_HDR,official_value
+DOM,Доминиканская Республика,77.60000000000001,89,54.4041,2023,2023,UNDP_HDR,official_value
+GUY,Гайана,77.60000000000001,90,53.886,2023,2023,UNDP_HDR,official_value
+LKA,Шри-Ланка,77.60000000000001,91,53.3679,2023,2023,UNDP_HDR,official_value
+TON,Тонга,76.9,92,52.8497,2023,2023,UNDP_HDR,official_value
+MDV,Мальдивы,76.6,93,52.3316,2023,2023,UNDP_HDR,official_value
+VNM,Вьетнам,76.6,94,51.8135,2023,2023,UNDP_HDR,official_value
+TKM,Туркменистан,76.4,95,51.2953,2023,2023,UNDP_HDR,official_value
+DZA,Алжир,76.3,96,50.7772,2023,2023,UNDP_HDR,official_value
+CUB,Куба,76.2,97,50.2591,2023,2023,UNDP_HDR,official_value
+DMA,Доминика,76.1,98,49.7409,2023,2023,UNDP_HDR,official_value
+PRY,Парагвай,75.6,99,49.2228,2023,2023,UNDP_HDR,official_value
+EGY,Египет,75.4,100,48.7047,2023,2023,UNDP_HDR,official_value
+JOR,Иордания,75.4,101,48.1865,2023,2023,UNDP_HDR,official_value
+LBN,Ливан,75.2,102,47.6684,2023,2023,UNDP_HDR,official_value
+LCA,Сент-Люсия,74.8,103,47.1503,2023,2023,UNDP_HDR,official_value
+MNG,Монголия,74.7,104,46.6321,2023,2023,UNDP_HDR,official_value
+TUN,Тунис,74.6,105,46.114,2023,2023,UNDP_HDR,official_value
+ZAF,ЮАР,74.1,106,45.5959,2023,2023,UNDP_HDR,official_value
+UZB,Узбекистан,74.0,107,45.0777,2023,2023,UNDP_HDR,official_value
+BOL,Боливия,73.3,108,44.5596,2023,2023,UNDP_HDR,official_value
+GAB,Габон,73.3,109,44.0415,2023,2023,UNDP_HDR,official_value
+MHL,Маршалловы о-ва,73.3,110,43.5233,2023,2023,UNDP_HDR,official_value
+BWA,Ботсвана,73.1,111,43.0052,2023,2023,UNDP_HDR,official_value
+FJI,Фиджи,73.1,112,42.487,2023,2023,UNDP_HDR,official_value
+IDN,Индонезия,72.8,113,41.9689,2023,2023,UNDP_HDR,official_value
+SUR,Суринам,72.2,114,41.4508,2023,2023,UNDP_HDR,official_value
+BLZ,Белиз,72.1,115,40.9326,2023,2023,UNDP_HDR,official_value
+LBY,Ливия,72.1,116,40.4145,2023,2023,UNDP_HDR,official_value
+JAM,Ямайка,72.0,117,39.8964,2023,2023,UNDP_HDR,official_value
+KGZ,Киргизия,72.0,118,39.3782,2023,2023,UNDP_HDR,official_value
+PHL,Филиппины,72.0,119,38.8601,2023,2023,UNDP_HDR,official_value
+MAR,Марокко,71.0,120,38.342,2023,2023,UNDP_HDR,official_value
+VEN,Венесуэла,70.89999999999999,121,37.8238,2023,2023,UNDP_HDR,official_value
+WSM,Самоа,70.8,122,37.3057,2023,2023,UNDP_HDR,official_value
+NIC,Никарагуа,70.6,123,36.7876,2023,2023,UNDP_HDR,official_value
+NRU,Науру,70.3,124,36.2694,2023,2023,UNDP_HDR,official_value
+BTN,Бутан,69.8,125,35.7513,2023,2023,UNDP_HDR,official_value
+SWZ,Эсватини,69.5,126,35.2332,2023,2023,UNDP_HDR,official_value
+IRQ,Ирак,69.5,127,34.715,2023,2023,UNDP_HDR,official_value
+TJK,Таджикистан,69.1,128,34.1969,2023,2023,UNDP_HDR,official_value
+TUV,Тувалу,68.89999999999999,129,33.6788,2023,2023,UNDP_HDR,official_value
+BGD,Бангладеш,68.5,130,33.1606,2023,2023,UNDP_HDR,official_value
+IND,Индия,68.5,131,32.6425,2023,2023,UNDP_HDR,official_value
+SLV,Сальвадор,67.80000000000001,132,32.1244,2023,2023,UNDP_HDR,official_value
+GNQ,Экваториальная Гвинея,67.4,133,31.6062,2023,2023,UNDP_HDR,official_value
+PSE,Палестинские территории,67.4,134,31.0881,2023,2023,UNDP_HDR,official_value
+CPV,Кабо-Верде,66.8,135,30.5699,2023,2023,UNDP_HDR,official_value
+NAM,Намибия,66.5,136,30.0518,2023,2023,UNDP_HDR,official_value
+GTM,Гватемала,66.2,137,29.5337,2023,2023,UNDP_HDR,official_value
+COG,Конго - Браззавиль,64.9,138,29.0155,2023,2023,UNDP_HDR,official_value
+HND,Гондурас,64.5,139,28.4974,2023,2023,UNDP_HDR,official_value
+KIR,Кирибати,64.4,140,27.9793,2023,2023,UNDP_HDR,official_value
+STP,Сан-Томе и Принсипи,63.7,141,27.4611,2023,2023,UNDP_HDR,official_value
+TLS,Восточный Тимор,63.4,142,26.943,2023,2023,UNDP_HDR,official_value
+GHA,Гана,62.8,143,26.4249,2023,2023,UNDP_HDR,official_value
+KEN,Кения,62.8,144,25.9067,2023,2023,UNDP_HDR,official_value
+NPL,Непал,62.2,145,25.3886,2023,2023,UNDP_HDR,official_value
+VUT,Вануату,62.1,146,24.8705,2023,2023,UNDP_HDR,official_value
+LAO,Лаос,61.7,147,24.3523,2023,2023,UNDP_HDR,official_value
+AGO,Ангола,61.6,148,23.8342,2023,2023,UNDP_HDR,official_value
+FSM,Федеративные Штаты Микронезии,61.5,149,23.3161,2023,2023,UNDP_HDR,official_value
+MMR,Мьянма (Бирма),60.9,150,22.7979,2023,2023,UNDP_HDR,official_value
+KHM,Камбоджа,60.6,151,22.2798,2023,2023,UNDP_HDR,official_value
+COM,Коморы,60.3,152,21.7617,2023,2023,UNDP_HDR,official_value
+ZWE,Зимбабве,59.8,153,21.2435,2023,2023,UNDP_HDR,official_value
+ZMB,Замбия,59.5,154,20.7254,2023,2023,UNDP_HDR,official_value
+CMR,Камерун,58.8,155,20.2073,2023,2023,UNDP_HDR,official_value
+SLB,Соломоновы о-ва,58.4,156,19.6891,2023,2023,UNDP_HDR,official_value
+CIV,Кот-д’Ивуар,58.199999999999996,157,19.171,2023,2023,UNDP_HDR,official_value
+UGA,Уганда,58.199999999999996,158,18.6528,2023,2023,UNDP_HDR,official_value
+RWA,Руанда,57.8,159,18.1347,2023,2023,UNDP_HDR,official_value
+PNG,Папуа — Новая Гвинея,57.599999999999994,160,17.6166,2023,2023,UNDP_HDR,official_value
+TGO,Того,57.099999999999994,161,17.0984,2023,2023,UNDP_HDR,official_value
+SYR,Сирия,56.39999999999999,162,16.5803,2023,2023,UNDP_HDR,official_value
+MRT,Мавритания,56.3,163,16.0622,2023,2023,UNDP_HDR,official_value
+NGA,Нигерия,56.00000000000001,164,15.544,2023,2023,UNDP_HDR,official_value
+TZA,Танзания,55.50000000000001,165,15.0259,2023,2023,UNDP_HDR,official_value
+HTI,Гаити,55.400000000000006,166,14.5078,2023,2023,UNDP_HDR,official_value
+LSO,Лесото,55.00000000000001,167,13.9896,2023,2023,UNDP_HDR,official_value
+PAK,Пакистан,54.400000000000006,168,13.4715,2023,2023,UNDP_HDR,official_value
+SEN,Сенегал,53.0,169,12.9534,2023,2023,UNDP_HDR,official_value
+GMB,Гамбия,52.400000000000006,170,12.4352,2023,2023,UNDP_HDR,official_value
+COD,Конго - Киншаса,52.2,171,11.9171,2023,2023,UNDP_HDR,official_value
+MWI,Малави,51.7,172,11.399,2023,2023,UNDP_HDR,official_value
+BEN,Бенин,51.5,173,10.8808,2023,2023,UNDP_HDR,official_value
+GNB,Гвинея-Бисау,51.4,174,10.3627,2023,2023,UNDP_HDR,official_value
+DJI,Джибути,51.300000000000004,175,9.8446,2023,2023,UNDP_HDR,official_value
+SDN,Судан,51.1,176,9.3264,2023,2023,UNDP_HDR,official_value
+LBR,Либерия,51.0,177,8.8083,2023,2023,UNDP_HDR,official_value
+ERI,Эритрея,50.3,178,8.2902,2023,2023,UNDP_HDR,official_value
+GIN,Гвинея,50.0,179,7.772,2023,2023,UNDP_HDR,official_value
+ETH,Эфиопия,49.7,180,7.2539,2023,2023,UNDP_HDR,official_value
+AFG,Афганистан,49.6,181,6.7358,2023,2023,UNDP_HDR,official_value
+MOZ,Мозамбик,49.3,182,6.2176,2023,2023,UNDP_HDR,official_value
+MDG,Мадагаскар,48.699999999999996,183,5.6995,2023,2023,UNDP_HDR,official_value
+YEM,Йемен,47.0,184,5.1813,2023,2023,UNDP_HDR,official_value
+SLE,Сьерра-Леоне,46.7,185,4.6632,2023,2023,UNDP_HDR,official_value
+BFA,Буркина-Фасо,45.9,186,4.1451,2023,2023,UNDP_HDR,official_value
+BDI,Бурунди,43.9,187,3.6269,2023,2023,UNDP_HDR,official_value
+MLI,Мали,41.9,188,3.1088,2023,2023,UNDP_HDR,official_value
+NER,Нигер,41.9,189,2.5907,2023,2023,UNDP_HDR,official_value
+TCD,Чад,41.6,190,2.0725,2023,2023,UNDP_HDR,official_value
+CAF,Центрально-Африканская Республика,41.4,191,1.5544,2023,2023,UNDP_HDR,official_value
+SOM,Сомали,40.400000000000006,192,1.0363,2023,2023,UNDP_HDR,official_value
+SSD,Южный Судан,38.800000000000004,193,0.5181,2023,2023,UNDP_HDR,official_value

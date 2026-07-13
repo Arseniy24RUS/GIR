@@ -1,0 +1,165 @@
+﻿iso3,country,score,rank,percentile,value_year,source_data_year,source_id,quality_flag
+SAU,Саудовская Аравия,99.2,1,100.0,2025,2023,ITU_IDI,official_value
+FIN,Финляндия,98.7,2,99.3902,2025,2023,ITU_IDI,official_value
+EST,Эстония,98.5,3,98.7805,2025,2023,ITU_IDI,official_value
+KWT,Кувейт,98.4,4,98.1707,2025,2023,ITU_IDI,official_value
+QAT,Катар,98.4,5,97.561,2025,2023,ITU_IDI,official_value
+ARE,ОАЭ,98.3,6,96.9512,2025,2023,ITU_IDI,official_value
+DNK,Дания,97.9,7,96.3415,2025,2023,ITU_IDI,official_value
+SGP,Сингапур,97.7,8,95.7317,2025,2023,ITU_IDI,official_value
+HKG,Гонконг,97.6,9,95.122,2025,2023,ITU_IDI,official_value
+BHR,Бахрейн,97.5,10,94.5122,2025,2023,ITU_IDI,official_value
+USA,США,97.4,11,93.9024,2025,2023,ITU_IDI,official_value
+ISL,Исландия,95.9,12,93.2927,2025,2023,ITU_IDI,official_value
+AUS,Австралия,95.8,13,92.6829,2025,2023,ITU_IDI,official_value
+SWE,Швеция,95.7,14,92.0732,2025,2023,ITU_IDI,official_value
+POL,Польша,95.6,15,91.4634,2025,2023,ITU_IDI,official_value
+AUT,Австрия,95.5,16,90.8537,2025,2023,ITU_IDI,official_value
+GBR,Великобритания,95.4,17,90.2439,2025,2023,ITU_IDI,official_value
+LTU,Литва,95.3,18,89.6341,2025,2023,ITU_IDI,official_value
+MYS,Малайзия,95.3,19,89.0244,2025,2023,ITU_IDI,official_value
+MAC,Макао (САР),95.2,20,88.4146,2025,2023,ITU_IDI,official_value
+KOR,Республика Корея,95.1,21,87.8049,2025,2023,ITU_IDI,official_value
+LVA,Латвия,95.1,22,87.1951,2025,2023,ITU_IDI,official_value
+MLT,Мальта,95.0,23,86.5854,2025,2023,ITU_IDI,official_value
+NOR,Норвегия,93.7,24,85.9756,2025,2023,ITU_IDI,official_value
+BRN,Бруней,93.6,25,85.3659,2025,2023,ITU_IDI,official_value
+JPN,Япония,93.6,26,84.7561,2025,2023,ITU_IDI,official_value
+NLD,Нидерланды,93.5,27,84.1463,2025,2023,ITU_IDI,official_value
+CHL,Чили,93.4,28,83.5366,2025,2023,ITU_IDI,official_value
+ISR,Израиль,93.4,29,82.9268,2025,2023,ITU_IDI,official_value
+LIE,Лихтенштейн,93.3,30,82.3171,2025,2023,ITU_IDI,official_value
+ESP,Испания,93.3,31,81.7073,2025,2023,ITU_IDI,official_value
+HRV,Хорватия,93.2,32,81.0976,2025,2023,ITU_IDI,official_value
+CHE,Швейцария,93.1,33,80.4878,2025,2023,ITU_IDI,official_value
+LUX,Люксембург,92.9,34,79.878,2025,2023,ITU_IDI,official_value
+OMN,Оман,92.9,35,79.2683,2025,2023,ITU_IDI,official_value
+SMR,Сан-Марино,92.5,36,78.6585,2025,2023,ITU_IDI,official_value
+RUS,Россия,92.3,37,78.0488,2025,2023,ITU_IDI,official_value
+MCO,Монако,92.2,38,77.439,2025,2023,ITU_IDI,official_value
+THA,Таиланд,91.9,39,76.8293,2025,2023,ITU_IDI,official_value
+IRL,Ирландия,91.5,40,76.2195,2025,2023,ITU_IDI,official_value
+SVN,Словения,91.4,41,75.6098,2025,2023,ITU_IDI,official_value
+NZL,Новая Зеландия,91.3,42,75.0,2025,2023,ITU_IDI,official_value
+CHN,Китай,91.2,43,74.3902,2025,2023,ITU_IDI,official_value
+FRA,Франция,90.9,44,73.7805,2025,2023,ITU_IDI,official_value
+AND,Андорра,90.8,45,73.1707,2025,2023,ITU_IDI,official_value
+BLR,Беларусь,90.7,46,72.561,2025,2023,ITU_IDI,official_value
+KAZ,Казахстан,90.5,47,71.9512,2025,2023,ITU_IDI,official_value
+URY,Уругвай,90.0,48,71.3415,2025,2023,ITU_IDI,official_value
+BGR,Болгария,89.9,49,70.7317,2025,2023,ITU_IDI,official_value
+CYP,Кипр,89.9,50,70.122,2025,2023,ITU_IDI,official_value
+BEL,Бельгия,89.8,51,69.5122,2025,2023,ITU_IDI,official_value
+MNE,Черногория,89.7,52,68.9024,2025,2023,ITU_IDI,official_value
+DEU,Германия,89.6,53,68.2927,2025,2023,ITU_IDI,official_value
+ROU,Румыния,89.6,54,67.6829,2025,2023,ITU_IDI,official_value
+GEO,Грузия,89.5,55,67.0732,2025,2023,ITU_IDI,official_value
+CZE,Чехия,89.3,56,66.4634,2025,2023,ITU_IDI,official_value
+CAN,Канада,89.1,57,65.8537,2025,2023,ITU_IDI,official_value
+SRB,Сербия,89.0,58,65.2439,2025,2023,ITU_IDI,official_value
+BHS,Багамы,88.9,59,64.6341,2025,2023,ITU_IDI,official_value
+HUN,Венгрия,88.9,60,64.0244,2025,2023,ITU_IDI,official_value
+PRT,Португалия,88.8,61,63.4146,2025,2023,ITU_IDI,official_value
+ITA,Италия,88.7,62,62.8049,2025,2023,ITU_IDI,official_value
+TUR,Турция,88.5,63,62.1951,2025,2023,ITU_IDI,official_value
+MNG,Монголия,88.4,64,61.5854,2025,2023,ITU_IDI,official_value
+SVK,Словакия,88.4,65,60.9756,2025,2023,ITU_IDI,official_value
+MAR,Марокко,88.2,66,60.3659,2025,2023,ITU_IDI,official_value
+IRN,Иран,87.9,67,59.7561,2025,2023,ITU_IDI,official_value
+LBY,Ливия,87.8,68,59.1463,2025,2023,ITU_IDI,official_value
+GRC,Греция,87.7,69,58.5366,2025,2023,ITU_IDI,official_value
+ARM,Армения,86.9,70,57.9268,2025,2023,ITU_IDI,official_value
+UZB,Узбекистан,86.5,71,57.3171,2025,2023,ITU_IDI,official_value
+CRI,Коста-Рика,86.3,72,56.7073,2025,2023,ITU_IDI,official_value
+MUS,Маврикий,86.3,73,56.0976,2025,2023,ITU_IDI,official_value
+DZA,Алжир,86.1,74,55.4878,2025,2023,ITU_IDI,official_value
+VNM,Вьетнам,86.0,75,54.878,2025,2023,ITU_IDI,official_value
+AZE,Азербайджан,85.9,76,54.2683,2025,2023,ITU_IDI,official_value
+KGZ,Киргизия,85.9,77,53.6585,2025,2023,ITU_IDI,official_value
+BTN,Бутан,85.7,78,53.0488,2025,2023,ITU_IDI,official_value
+MKD,Северная Македония,85.2,79,52.439,2025,2023,ITU_IDI,official_value
+ZAF,ЮАР,85.0,80,51.8293,2025,2023,ITU_IDI,official_value
+IDN,Индонезия,84.7,81,51.2195,2025,2023,ITU_IDI,official_value
+JOR,Иордания,84.7,82,50.6098,2025,2023,ITU_IDI,official_value
+KNA,Сент-Китс и Невис,84.6,83,50.0,2025,2023,ITU_IDI,official_value
+BRA,Бразилия,84.4,84,49.3902,2025,2023,ITU_IDI,official_value
+ALB,Албания,84.3,85,48.7805,2025,2023,ITU_IDI,official_value
+SUR,Суринам,83.8,86,48.1707,2025,2023,ITU_IDI,official_value
+ARG,Аргентина,83.7,87,47.561,2025,2023,ITU_IDI,official_value
+MDA,Молдова,83.4,88,46.9512,2025,2023,ITU_IDI,official_value
+PAN,Панама,83.0,89,46.3415,2025,2023,ITU_IDI,official_value
+UKR,Украина,82.5,90,45.7317,2025,2023,ITU_IDI,official_value
+BIH,Босния и Герцеговина,82.4,91,45.122,2025,2023,ITU_IDI,official_value
+MEX,Мексика,82.3,92,44.5122,2025,2023,ITU_IDI,official_value
+BWA,Ботсвана,82.1,93,43.9024,2025,2023,ITU_IDI,official_value
+SYC,Сейшельские о-ва,82.0,94,43.2927,2025,2023,ITU_IDI,official_value
+MDV,Мальдивы,81.7,95,42.6829,2025,2023,ITU_IDI,official_value
+JAM,Ямайка,80.7,96,42.0732,2025,2023,ITU_IDI,official_value
+CPV,Кабо-Верде,80.6,97,41.4634,2025,2023,ITU_IDI,official_value
+TTO,Тринидад и Тобаго,80.6,98,40.8537,2025,2023,ITU_IDI,official_value
+TUN,Тунис,79.6,99,40.2439,2025,2023,ITU_IDI,official_value
+BRB,Барбадос,79.5,100,39.6341,2025,2023,ITU_IDI,official_value
+IRQ,Ирак,78.4,101,39.0244,2025,2023,ITU_IDI,official_value
+PHL,Филиппины,78.0,102,38.4146,2025,2023,ITU_IDI,official_value
+EGY,Египет,77.9,103,37.8049,2025,2023,ITU_IDI,official_value
+PER,Перу,77.6,104,37.1951,2025,2023,ITU_IDI,official_value
+KHM,Камбоджа,77.4,105,36.5854,2025,2023,ITU_IDI,official_value
+COL,Колумбия,77.2,106,35.9756,2025,2023,ITU_IDI,official_value
+PRY,Парагвай,76.3,107,35.3659,2025,2023,ITU_IDI,official_value
+GAB,Габон,76.1,108,34.7561,2025,2023,ITU_IDI,official_value
+DOM,Доминиканская Республика,75.1,109,34.1463,2025,2023,ITU_IDI,official_value
+LCA,Сент-Люсия,74.6,110,33.5366,2025,2023,ITU_IDI,official_value
+VCT,Сент-Винсент и Гренадины,74.6,111,32.9268,2025,2023,ITU_IDI,official_value
+SWZ,Эсватини,74.4,112,32.3171,2025,2023,ITU_IDI,official_value
+NAM,Намибия,73.2,113,31.7073,2025,2023,ITU_IDI,official_value
+ECU,Эквадор,71.6,114,31.0976,2025,2023,ITU_IDI,official_value
+SEN,Сенегал,71.6,115,30.4878,2025,2023,ITU_IDI,official_value
+LKA,Шри-Ланка,71.4,116,29.878,2025,2023,ITU_IDI,official_value
+GHA,Гана,70.6,117,29.2683,2025,2023,ITU_IDI,official_value
+LAO,Лаос,69.7,118,28.6585,2025,2023,ITU_IDI,official_value
+MMR,Мьянма (Бирма),69.7,119,28.0488,2025,2023,ITU_IDI,official_value
+CIV,Кот-д’Ивуар,69.5,120,27.439,2025,2023,ITU_IDI,official_value
+PSE,Палестинские территории,69.1,121,26.8293,2025,2023,ITU_IDI,official_value
+SLV,Сальвадор,67.6,122,26.2195,2025,2023,ITU_IDI,official_value
+VUT,Вануату,66.7,123,25.6098,2025,2023,ITU_IDI,official_value
+WSM,Самоа,66.0,124,25.0,2025,2023,ITU_IDI,official_value
+BGD,Бангладеш,64.9,125,24.3902,2025,2023,ITU_IDI,official_value
+DJI,Джибути,64.4,126,23.7805,2025,2023,ITU_IDI,official_value
+NIC,Никарагуа,62.2,127,23.1707,2025,2023,ITU_IDI,official_value
+HND,Гондурас,61.9,128,22.561,2025,2023,ITU_IDI,official_value
+ZMB,Замбия,60.3,129,21.9512,2025,2023,ITU_IDI,official_value
+KIR,Кирибати,59.3,130,21.3415,2025,2023,ITU_IDI,official_value
+SYR,Сирия,59.1,131,20.7317,2025,2023,ITU_IDI,official_value
+VEN,Венесуэла,58.6,132,20.122,2025,2023,ITU_IDI,official_value
+LSO,Лесото,58.4,133,19.5122,2025,2023,ITU_IDI,official_value
+MRT,Мавритания,58.0,134,18.9024,2025,2023,ITU_IDI,official_value
+GTM,Гватемала,57.9,135,18.2927,2025,2023,ITU_IDI,official_value
+STP,Сан-Томе и Принсипи,57.1,136,17.6829,2025,2023,ITU_IDI,official_value
+ZWE,Зимбабве,56.8,137,17.0732,2025,2023,ITU_IDI,official_value
+PAK,Пакистан,56.4,138,16.4634,2025,2023,ITU_IDI,official_value
+KEN,Кения,56.0,139,15.8537,2025,2023,ITU_IDI,official_value
+TZA,Танзания,53.2,140,15.2439,2025,2023,ITU_IDI,official_value
+NGA,Нигерия,52.9,141,14.6341,2025,2023,ITU_IDI,official_value
+AGO,Ангола,52.8,142,14.0244,2025,2023,ITU_IDI,official_value
+COM,Коморы,52.2,143,13.4146,2025,2023,ITU_IDI,official_value
+RWA,Руанда,51.9,144,12.8049,2025,2023,ITU_IDI,official_value
+COG,Конго - Браззавиль,49.6,145,12.1951,2025,2023,ITU_IDI,official_value
+YEM,Йемен,48.3,146,11.5854,2025,2023,ITU_IDI,official_value
+BEN,Бенин,47.4,147,10.9756,2025,2023,ITU_IDI,official_value
+TGO,Того,47.2,148,10.3659,2025,2023,ITU_IDI,official_value
+CUB,Куба,46.4,149,9.7561,2025,2023,ITU_IDI,official_value
+CMR,Камерун,46.3,150,9.1463,2025,2023,ITU_IDI,official_value
+GNQ,Экваториальная Гвинея,45.5,151,8.5366,2025,2023,ITU_IDI,official_value
+ETH,Эфиопия,44.0,152,7.9268,2025,2023,ITU_IDI,official_value
+LBR,Либерия,43.6,153,7.3171,2025,2023,ITU_IDI,official_value
+MLI,Мали,42.9,154,6.7073,2025,2023,ITU_IDI,official_value
+TLS,Восточный Тимор,42.7,155,6.0976,2025,2023,ITU_IDI,official_value
+UGA,Уганда,42.4,156,5.4878,2025,2023,ITU_IDI,official_value
+GNB,Гвинея-Бисау,39.0,157,4.878,2025,2023,ITU_IDI,official_value
+COD,Конго - Киншаса,38.0,158,4.2683,2025,2023,ITU_IDI,official_value
+AFG,Афганистан,36.5,159,3.6585,2025,2023,ITU_IDI,official_value
+MWI,Малави,35.4,160,3.0488,2025,2023,ITU_IDI,official_value
+SOM,Сомали,33.7,161,2.439,2025,2023,ITU_IDI,official_value
+MDG,Мадагаскар,32.8,162,1.8293,2025,2023,ITU_IDI,official_value
+MOZ,Мозамбик,32.4,163,1.2195,2025,2023,ITU_IDI,official_value
+BDI,Бурунди,25.3,164,0.6098,2025,2023,ITU_IDI,official_value

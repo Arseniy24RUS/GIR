@@ -1,0 +1,2013 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-10",
+  "asset_root": "/static",
+  "hash_algorithm": "sha256",
+  "runtime_remote_dependencies": true,
+  "notes": [
+    "Source URLs in asset records are provenance metadata, not runtime asset dependencies.",
+    "The optional cooperation form uses the documented FormSubmit endpoint after explicit user consent.",
+    "The manifest does not list its own hash because self-hashing is recursive.",
+    "Stage 6 methodology figures are project-supplied assets with bilingual light/dark variants."
+  ],
+  "assets": [
+    {
+      "path": "brand/apple-touch-icon.png",
+      "source": {
+        "type": "raster_export",
+        "path": "brand/favicon.svg"
+      },
+      "status": "derived",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "ef1a1df548baa8f2fc210200e0ce8c15bf55ec152546158630f0f047fc1c50f2",
+      "bytes": 508,
+      "license": "Project-owned visual identity.",
+      "note": "Hard-edge raster export using only approved palette colors.",
+      "dimensions": "180x180",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/favicon-32.png",
+      "source": {
+        "type": "raster_export",
+        "path": "brand/favicon.svg"
+      },
+      "status": "derived",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "4ffc948b74e6590a577e4f9a23f620afeeba123f321922d7064e0a5d0ab8d2d5",
+      "bytes": 175,
+      "license": "Project-owned visual identity.",
+      "note": "Hard-edge raster export using only approved palette colors.",
+      "dimensions": "32x32",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/favicon.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "400edd5ae1be94f33cc216f99b7eca74fcf2b49d384c681bd29c52c456ec8317",
+      "bytes": 557,
+      "license": "Project-owned visual identity.",
+      "note": "Self-contained GIR favicon master.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/fnisc-en-dark.svg",
+      "source": {
+        "type": "official_mark_with_local_transparent_source",
+        "url": "https://www.fnisc.ru/fnisc_logo.html",
+        "path": "C:\\Users\\arsen\\Downloads\\????? ???? ??????-Photoroom.png",
+        "source_sha256": "5781d5d035ad3e70ca8803a1b7af7d1df281b23400a76d7dadcbcd77afb6d462",
+        "embedded_mark_sha256": "ec4e0027ebf95ced8e508bdfc19a1e971b4e389615e81a61589559f7b23d40df"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "7f726d83b8ad4323a0e416d2ece0c91a1c0d4ad04c2dd5cba25c8a0a827d4eaa",
+      "bytes": 550515,
+      "license": "FNISC RAS institutional trademark; project use only.",
+      "note": "Official sign silhouette in permitted white monochrome with original aspect ratio; Onest Medium 500 label embedded.",
+      "organization_names": {
+        "ru": "??????????? ??????-????????????????? ??????????????? ????? ?????????? ???????? ????",
+        "en": "Federal Center of Theoretical and Applied Sociology of the Russian Academy of Sciences"
+      },
+      "short_name": "FCTAS RAS"
+    },
+    {
+      "path": "brand/fnisc-en-light.svg",
+      "source": {
+        "type": "official_mark_with_local_transparent_source",
+        "url": "https://www.fnisc.ru/fnisc_logo.html",
+        "path": "C:\\Users\\arsen\\Downloads\\????? ???? ??????-Photoroom.png",
+        "source_sha256": "5781d5d035ad3e70ca8803a1b7af7d1df281b23400a76d7dadcbcd77afb6d462",
+        "embedded_mark_sha256": "ec4e0027ebf95ced8e508bdfc19a1e971b4e389615e81a61589559f7b23d40df"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "7a1dc969410d56e6edad2ef85af63e785aab9aedc6b6a26c4d153861ef0155d2",
+      "bytes": 550309,
+      "license": "FNISC RAS institutional trademark; project use only.",
+      "note": "Official sign crop with original aspect ratio and colors; Onest Medium 500 label embedded.",
+      "organization_names": {
+        "ru": "??????????? ??????-????????????????? ??????????????? ????? ?????????? ???????? ????",
+        "en": "Federal Center of Theoretical and Applied Sociology of the Russian Academy of Sciences"
+      },
+      "short_name": "FCTAS RAS"
+    },
+    {
+      "path": "brand/fnisc-ru-dark.svg",
+      "source": {
+        "type": "official_mark_with_local_transparent_source",
+        "url": "https://www.fnisc.ru/fnisc_logo.html",
+        "path": "C:\\Users\\arsen\\Downloads\\????? ???? ??????-Photoroom.png",
+        "source_sha256": "5781d5d035ad3e70ca8803a1b7af7d1df281b23400a76d7dadcbcd77afb6d462",
+        "embedded_mark_sha256": "ec4e0027ebf95ced8e508bdfc19a1e971b4e389615e81a61589559f7b23d40df"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "10b87f2f5d351f61c1b255f8fe5244f6c46c679742d383ad3737bc9db207cd4b",
+      "bytes": 550623,
+      "license": "FNISC RAS institutional trademark; project use only.",
+      "note": "Official sign silhouette in permitted white monochrome with original aspect ratio; Onest Medium 500 label embedded.",
+      "organization_names": {
+        "ru": "??????????? ??????-????????????????? ??????????????? ????? ?????????? ???????? ????",
+        "en": "Federal Center of Theoretical and Applied Sociology of the Russian Academy of Sciences"
+      },
+      "short_name": "????? ???"
+    },
+    {
+      "path": "brand/fnisc-ru-light.svg",
+      "source": {
+        "type": "official_mark_with_local_transparent_source",
+        "url": "https://www.fnisc.ru/fnisc_logo.html",
+        "path": "C:\\Users\\arsen\\Downloads\\????? ???? ??????-Photoroom.png",
+        "source_sha256": "5781d5d035ad3e70ca8803a1b7af7d1df281b23400a76d7dadcbcd77afb6d462",
+        "embedded_mark_sha256": "ec4e0027ebf95ced8e508bdfc19a1e971b4e389615e81a61589559f7b23d40df"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "3f75141e79fce0ff54983bc21fed5df1b98f261468d3825393994fa8dd779287",
+      "bytes": 550433,
+      "license": "FNISC RAS institutional trademark; project use only.",
+      "note": "Official sign crop with original aspect ratio and colors; Onest Medium 500 label embedded.",
+      "organization_names": {
+        "ru": "??????????? ??????-????????????????? ??????????????? ????? ?????????? ???????? ????",
+        "en": "Federal Center of Theoretical and Applied Sociology of the Russian Academy of Sciences"
+      },
+      "short_name": "????? ???"
+    },
+    {
+      "path": "brand/gir-en-dark.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "b03939418738a55f84919720938d6758de4cd38e55eec12d4994aef36549faa0",
+      "bytes": 98302,
+      "license": "Project-owned visual identity.",
+      "note": "Self-contained wordmark with embedded Onest Regular 400 and Medium 500; no remote runtime dependency.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/gir-en-light.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "71184d797bf728591081404a4802bf42ba51fdeee837909d7543c0cc506a56e4",
+      "bytes": 98307,
+      "license": "Project-owned visual identity.",
+      "note": "Self-contained wordmark with embedded Onest Regular 400 and Medium 500; no remote runtime dependency.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/gir-mark-dark.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "all",
+      "theme": "dark",
+      "sha256": "ef8d56f0da674bac39befd2a9097a00b033bcbca92c0ab444356dea1938feba9",
+      "bytes": 551,
+      "license": "Project-owned visual identity.",
+      "note": "Compact GIR ranking-bar mark.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/gir-mark-light.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "all",
+      "theme": "light",
+      "sha256": "ac873bc445898509ae904e74f6d05425c70274d54455fdd17da04a711f6ae402",
+      "bytes": 554,
+      "license": "Project-owned visual identity.",
+      "note": "Compact GIR ranking-bar mark.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/gir-ru-dark.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "4aa8ed6678c839c03d6ab23e8483fa3b5be0948bb1ddb4bebb78dd9b95fa2cc5",
+      "bytes": 98431,
+      "license": "Project-owned visual identity.",
+      "note": "Self-contained wordmark with embedded Onest Regular 400 and Medium 500; no remote runtime dependency.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/gir-ru-light.svg",
+      "source": {
+        "type": "project_identity",
+        "name": "Global Index Ranker",
+        "font_paths": [
+          "fonts/onest-regular.woff2",
+          "fonts/onest-medium.woff2"
+        ]
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "75e23402d17d1b77f1b11be91edcdc9a3473234cf496452a7b9f417dbeef2fe9",
+      "bytes": 98437,
+      "license": "Project-owned visual identity.",
+      "note": "Self-contained wordmark with embedded Onest Regular 400 and Medium 500; no remote runtime dependency.",
+      "palette": [
+        "#0A132D",
+        "#031E4F",
+        "#2947A0",
+        "#192F70",
+        "#539D96",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "path": "brand/mgimo-en-dark.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\mgimo-en-dark.svg",
+        "url": "https://mgimo.ru/",
+        "source_sha256": "ac484f4455fedf900d310c53ea5aef1580b10922c942563b8935001e4b80d6da"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "59220616eebb1a44fa32dbb601010d91f2dc8f44be4d970ce18b1507f807b746",
+      "bytes": 4320,
+      "license": "MGIMO institutional trademark; project use only.",
+      "note": "Verified local STP artwork; visual paths unchanged and accessibility wording normalized."
+    },
+    {
+      "path": "brand/mgimo-en-light.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\mgimo-en-light.svg",
+        "url": "https://mgimo.ru/",
+        "source_sha256": "3ee1c0874ebf61729f59f71384220c9ca9622bcf3fca6cd141867aff7eae99de"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "0c192fec2b77d7920fc7b91297e92b90edf6325b48c6d8ba1874e168209b6060",
+      "bytes": 4282,
+      "license": "MGIMO institutional trademark; project use only.",
+      "note": "Verified local STP artwork; visual paths unchanged and accessibility wording normalized."
+    },
+    {
+      "path": "brand/mgimo-ru-dark.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\mgimo-ru-dark.svg",
+        "url": "https://mgimo.ru/",
+        "source_sha256": "351beb420333b6d18151ad7ca286f64c49c1a5e4fc3844a6ca239faecf1b50ea"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "351beb420333b6d18151ad7ca286f64c49c1a5e4fc3844a6ca239faecf1b50ea",
+      "bytes": 7378,
+      "license": "MGIMO institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/mgimo-ru-light.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\mgimo-ru-light.svg",
+        "url": "https://mgimo.ru/",
+        "source_sha256": "09238e140bb71f1d6b9d19220354610293a0f270bbee9ad3806fb634a9de5e20"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "09238e140bb71f1d6b9d19220354610293a0f270bbee9ad3806fb634a9de5e20",
+      "bytes": 7372,
+      "license": "MGIMO institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/minobrnauki-en-dark.png",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\minobrnauki-en-dark.png",
+        "url": "https://minobrnauki.gov.ru/",
+        "source_sha256": "2787cb97c8696d128196a1231611af4d1aaf69d9095676ff0df333d5ce815fd1"
+      },
+      "status": "official",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "2787cb97c8696d128196a1231611af4d1aaf69d9095676ff0df333d5ce815fd1",
+      "bytes": 47787,
+      "license": "Ministry institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/minobrnauki-en-light.png",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\minobrnauki-en-light.png",
+        "url": "https://minobrnauki.gov.ru/",
+        "source_sha256": "87c1c1fb48fccba8955ae1d1527f9d2f864035a5cea11b47a6888957c7c05340"
+      },
+      "status": "official",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "87c1c1fb48fccba8955ae1d1527f9d2f864035a5cea11b47a6888957c7c05340",
+      "bytes": 64199,
+      "license": "Ministry institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/minobrnauki-ru-dark.png",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\minobrnauki-ru-dark.png",
+        "url": "https://minobrnauki.gov.ru/",
+        "source_sha256": "b39fbf0a009ecdf8e9c3e979bde95f4ae51facfefc3552edae0fd5d020493fe2"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "b39fbf0a009ecdf8e9c3e979bde95f4ae51facfefc3552edae0fd5d020493fe2",
+      "bytes": 34607,
+      "license": "Ministry institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/minobrnauki-ru-light.png",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\minobrnauki-ru-light.png",
+        "url": "https://minobrnauki.gov.ru/",
+        "source_sha256": "30e50c66f336c81481d16c74d4924f18e9fcf81cec9c286f23c2cc06ccccfcef"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "30e50c66f336c81481d16c74d4924f18e9fcf81cec9c286f23c2cc06ccccfcef",
+      "bytes": 45182,
+      "license": "Ministry institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/priority-en-dark.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\priority-en-dark.svg",
+        "url": "https://priority2030.ru/",
+        "source_sha256": "c602fed58d230cbe8670a5412848ede877d89f0cc4a1380c1ee4fc85373d8928"
+      },
+      "status": "official",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "c602fed58d230cbe8670a5412848ede877d89f0cc4a1380c1ee4fc85373d8928",
+      "bytes": 5796,
+      "license": "Priority 2030 institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/priority-en-light.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\priority-en-light.svg",
+        "url": "https://priority2030.ru/",
+        "source_sha256": "85b08681c3f12233cc65a6cb5e53efe5aa6a70aecd563e36c47dab4b1dfbee33"
+      },
+      "status": "official",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "85b08681c3f12233cc65a6cb5e53efe5aa6a70aecd563e36c47dab4b1dfbee33",
+      "bytes": 5854,
+      "license": "Priority 2030 institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/priority-ru-dark.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\priority-ru-dark.svg",
+        "url": "https://priority2030.ru/",
+        "source_sha256": "6c1155844cac60a71d5da4d014e0564a46bff2a8dc5fc70081871e3c4317684c"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "6c1155844cac60a71d5da4d014e0564a46bff2a8dc5fc70081871e3c4317684c",
+      "bytes": 5330,
+      "license": "Priority 2030 institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "brand/priority-ru-light.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\logos\\priority-ru-light.svg",
+        "url": "https://priority2030.ru/",
+        "source_sha256": "4aa23d511cbd13262d4b7d184e89c94a58e29537bad376fc89d4ba86aa51db3b"
+      },
+      "status": "official",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "4aa23d511cbd13262d4b7d184e89c94a58e29537bad376fc89d4ba86aa51db3b",
+      "bytes": 5304,
+      "license": "Priority 2030 institutional trademark; project use only.",
+      "note": "Verified local STP asset copied without visual changes."
+    },
+    {
+      "path": "flags/LICENSE-flag-icons.txt",
+      "source": {
+        "type": "official_package_license",
+        "package": "flag-icons",
+        "version": "7.5.0",
+        "url": "https://github.com/lipis/flag-icons/blob/main/LICENSE"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "8f1195d55a2fd315a07d812328470ca9ba2abb78c8d317ff19619d5125e00cea",
+      "bytes": 1087,
+      "license": "MIT.",
+      "note": "Upstream license for the local country-flag SVG collection."
+    },
+    {
+      "path": "flags/MANIFEST.json",
+      "source": {
+        "type": "official_package_collection",
+        "package": "flag-icons",
+        "version": "7.5.0",
+        "url": "https://github.com/lipis/flag-icons"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "af99b1c1fadeea0813d1ce82a057087eadfe51344823cd513f05d952a4bdec0c",
+      "bytes": 42845,
+      "license": "MIT; see flags/LICENSE-flag-icons.txt.",
+      "note": "Checksum manifest for the 225 local 4x3 ISO2 SVG flags used by the country UI."
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "source": {
+        "type": "official_upstream",
+        "url": "https://raw.githubusercontent.com/simpals/onest/f18c06a14512e43a6191849278d6f07fdaf347d6/OFL.txt",
+        "repository": "https://github.com/simpals/onest",
+        "commit": "f18c06a14512e43a6191849278d6f07fdaf347d6"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "071195d8806e226faeee60259c28ca67b458227af5195a73f5cfcab06e3003bc",
+      "bytes": 4384,
+      "license": "SIL Open Font License 1.1.",
+      "note": "License text for the local Onest files."
+    },
+    {
+      "path": "fonts/onest-medium.woff2",
+      "source": {
+        "type": "official_upstream",
+        "url": "https://raw.githubusercontent.com/simpals/onest/f18c06a14512e43a6191849278d6f07fdaf347d6/fonts/webfonts/Onest-Medium.woff2",
+        "repository": "https://github.com/simpals/onest",
+        "commit": "f18c06a14512e43a6191849278d6f07fdaf347d6"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "363efb88a552b25ca7fb9676a9882458be80281ec4ed263f8afbf84a94398b5b",
+      "bytes": 36988,
+      "license": "SIL Open Font License 1.1; see fonts/OFL.txt.",
+      "note": "Onest static WOFF2, normal style, weight 500.",
+      "font_family": "Onest",
+      "font_weight": 500
+    },
+    {
+      "path": "fonts/onest-regular.woff2",
+      "source": {
+        "type": "official_upstream",
+        "url": "https://raw.githubusercontent.com/simpals/onest/f18c06a14512e43a6191849278d6f07fdaf347d6/fonts/webfonts/Onest-Regular.woff2",
+        "repository": "https://github.com/simpals/onest",
+        "commit": "f18c06a14512e43a6191849278d6f07fdaf347d6"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "143e6377ae63baffb0a6fb0ef1acbe50e0a280d46018c744b51691f524e68d08",
+      "bytes": 35668,
+      "license": "SIL Open Font License 1.1; see fonts/OFL.txt.",
+      "note": "Onest static WOFF2, normal style, weight 400.",
+      "font_family": "Onest",
+      "font_weight": 400
+    },
+    {
+      "path": "icons/LICENSE-lucide-static.txt",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\icons\\lucide\\LICENSE-lucide-static.txt",
+        "url": "https://github.com/lucide-icons/lucide/blob/main/LICENSE",
+        "source_sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+      "bytes": 3208,
+      "license": "ISC and MIT notices.",
+      "note": "License notices covering the local Lucide SVG files."
+    },
+    {
+      "path": "icons/boxes.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/boxes"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "9acfa21a9567bd1283477ebabcb0e8587dd827c1040a55e07f411ca9e3a57396",
+      "bytes": 879,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Raw snapshots and archival pipeline icon."
+    },
+    {
+      "path": "icons/briefcase-business.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/briefcase-business"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "988a2783467ae6ef0d256e3cb51114dc613e37db3b22e154d3ce99ddece0d8a3",
+      "bytes": 456,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Corporate and investor audience icon."
+    },
+    {
+      "path": "icons/chart-no-axes-combined.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/chart-no-axes-combined"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "9a04454898930e1852a0a21f55ab37be299ec743ff63f694930f7a6bd2b6d05f",
+      "bytes": 504,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Index observations and analytical pipeline icon."
+    },
+    {
+      "path": "icons/clipboard-check.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/clipboard-check.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "c8125ca7dc6da93545fec6b323cbc82fafc218b1da68b676f6fa8373e7c35c97",
+      "bytes": 469,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/database.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/database.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "4b47a5dfd9274280323cbc6558f735279fda9973db50a5c66c561fac0e0c2b19",
+      "bytes": 408,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/flag.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/flag"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "dd8b38a09d3b8322c0a8a5a9c719ee22fa6843a9a3cc88d92bebf3ca6b4158dd",
+      "bytes": 424,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Decision and policy output icon."
+    },
+    {
+      "path": "icons/graduation-cap.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/graduation-cap"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "b460b00993f77d121f6ca39510870faf1aaa596fbb6acd469a69fb33d96eb789",
+      "bytes": 497,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Universities and research organizations audience icon."
+    },
+    {
+      "path": "icons/house.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/house"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "b6d0ff4d7b26c8e0ca5ab4d4ea76363158f5abc65f9d8cdb7de7770689552eef",
+      "bytes": 446,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Home route icon for the GIR sidebar."
+    },
+    {
+      "path": "icons/landmark.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/landmark"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "efc4a7232066b4725d077d2290812762e4e462f62f51d8fec46e5b3af668ed2e",
+      "bytes": 490,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Official sources and public-sector audience icon."
+    },
+    {
+      "path": "icons/mail.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/mail"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "ee8784894a5ea79bc89d6f86cb9becd6f1de4376636d9553e2a1886796d9cd77",
+      "bytes": 370,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Cooperation action icon for the GIR header."
+    },
+    {
+      "path": "icons/map.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/map"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "f30fc05eed7aad9b7b6013703d789b15db8e89dbc39a94f1f7a958edc365c387",
+      "bytes": 569,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Geographic coverage icon for the GIR landing scale section."
+    },
+    {
+      "path": "icons/menu.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/menu.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "30396d7a17d9234a75b7dfc86fe09cbf6232315109c037390c90827caf258710",
+      "bytes": 354,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/moon.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\icons\\lucide\\moon.svg",
+        "package": "lucide-static",
+        "version": "1.23.0",
+        "url": "https://unpkg.com/lucide-static@1.23.0/icons/moon.svg",
+        "source_sha256": "b6c7f13ecfbc1a0c9abef6d7b10cd079a0a43cb620ba7a776e0ba81669fca133"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "b6c7f13ecfbc1a0c9abef6d7b10cd079a0a43cb620ba7a776e0ba81669fca133",
+      "bytes": 409,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/network.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/network"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "4926a52f821aed1eee96e7fa53373b404a0e011d635a42ba435d709b752b30a5",
+      "bytes": 502,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Normalization and international cooperation icon."
+    },
+    {
+      "path": "icons/panel-left-close.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/panel-left-close.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "64bba4345e86a1a16c43343d697388fa3e6812fc8631bea86f24326f2b242180",
+      "bytes": 401,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/panel-left-open.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/panel-left-open.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "89833d0a874c95b9e9ec1f8ae4212049c3dab3965031f3f776b243bea84cf2c3",
+      "bytes": 399,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/server.svg",
+      "source": {
+        "type": "lucide_static",
+        "path": "https://lucide.dev/icons/server"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "fea4b6ef4eca6a7df1f83d67be9976a379649f4107d05159d8cacb1bbc299f4a",
+      "bytes": 469,
+      "license": "Lucide ISC License; see icons/LICENSE-lucide-static.txt.",
+      "note": "Data horizon and storage icon for the GIR landing scale section."
+    },
+    {
+      "path": "icons/sun.svg",
+      "source": {
+        "type": "verified_local_copy",
+        "path": "C:\\Codex projects\\mgimo-stp-landing\\assets\\icons\\lucide\\sun.svg",
+        "package": "lucide-static",
+        "version": "1.23.0",
+        "url": "https://unpkg.com/lucide-static@1.23.0/icons/sun.svg",
+        "source_sha256": "86965edba4c74212084c6f33fc767d26b816b55b64d665b255cb09a3c11f1d4e"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "86965edba4c74212084c6f33fc767d26b816b55b64d665b255cb09a3c11f1d4e",
+      "bytes": 559,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/table-2.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/table-2.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "1317089c2090b5dce2a89b89bb8cb1a2474e7869e3906298d1c362edd2adba34",
+      "bytes": 407,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "icons/user-round.svg",
+      "source": {
+        "type": "official_package",
+        "package": "lucide-static",
+        "version": "1.24.0",
+        "url": "https://unpkg.com/lucide-static@1.24.0/icons/user-round.svg"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "all",
+      "sha256": "bbff49a84d210d364126e3bdd294a00ea83a97444e8f2992b7811ac27fde9de3",
+      "bytes": 360,
+      "license": "ISC; Feather-origin icons additionally MIT. See icons/LICENSE-lucide-static.txt.",
+      "note": "Local 24x24 Lucide SVG with currentColor strokes."
+    },
+    {
+      "path": "landing/hero/hero-dark.png",
+      "source": {
+        "type": "user_provided",
+        "path": "User-provided GIR dark.png"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "dark",
+      "sha256": "66d3037bc06a468c93f62b8389fe205e9103cbf900ae355e7207d5c48c6339c1",
+      "bytes": 1715491,
+      "license": "Project-owned visual asset.",
+      "note": "Theme-aware GIR landing hero.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "landing/hero/hero-dark.webp",
+      "source": {
+        "type": "user_provided",
+        "path": "User-provided GIR dark.png"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "dark",
+      "sha256": "4562464d53c4d8c7a50e25d514f46db57d41e123e3722fa3d58ca86bc875b7ba",
+      "bytes": 149034,
+      "license": "Project-owned visual asset.",
+      "note": "Theme-aware GIR landing hero.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "landing/hero/hero-light.png",
+      "source": {
+        "type": "user_provided",
+        "path": "User-provided GIR light.png"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "light",
+      "sha256": "cf94bc13f5a15809aeaa02afa21f77c411e0af3114382b49b76ad45bf6f0bea7",
+      "bytes": 1556995,
+      "license": "Project-owned visual asset.",
+      "note": "Theme-aware GIR landing hero.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "landing/hero/hero-light.webp",
+      "source": {
+        "type": "user_provided",
+        "path": "User-provided GIR light.png"
+      },
+      "status": "official",
+      "locale": "all",
+      "theme": "light",
+      "sha256": "21f0e32a72807848a879a7e65d310e45cc24d8cbf7c2c1d36ee8d37eeda29fd9",
+      "bytes": 147290,
+      "license": "Project-owned visual asset.",
+      "note": "Theme-aware GIR landing hero.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "landing/product/country-en-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "3c1f4a82268137e8da320523a01ae4a36d4fbac162ec250496354e9cae007f3d",
+      "bytes": 92386,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-en-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "70c434dcd340d3226e42659a7a7490db1d5940fc4646ad63c50ff012520fdc24",
+      "bytes": 64306,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-en-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "10fb87eab64354624f769f5a5b83bb7964b3548149d2b25aeef9abe8ed670027",
+      "bytes": 94241,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-en-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "795686bb62c7a0f29f26b99db96fd61af7130abd3e0cdee23f0af516b0fb8bac",
+      "bytes": 64442,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-ru-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "3c7a05e627d0879027d2cda0b813bc8dc6937113783c189cb6b5ce6f9630910b",
+      "bytes": 109384,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-ru-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "dbf42e55684fb275b2b01aac530bc9420f5d8fffb1d2ade7ca64e81f5625f588",
+      "bytes": 72342,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-ru-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "289e2826c2c783c271a404f52eb686b39f104d5ffa507068cc1e491de2a757fa",
+      "bytes": 112156,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/country-ru-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: country"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "204aca95bcc5c0afc1bea102902af2630908b773ecfaf3da4cb9f9921d18c8aa",
+      "bytes": 70916,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-en-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "c70e29bd7455e4f84e909241c21bf79d805cf87162afe3bfb0c69d2704517f97",
+      "bytes": 98867,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-en-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "f3f390e9b21c079283a5d4df1ac134cc7d72852b4df547863e436685dd53cdb9",
+      "bytes": 63162,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-en-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "59ea0cda202c0c605c612c5b3f785c74a85bedb2b9c586c85be1a198e3d08815",
+      "bytes": 99491,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-en-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "0b4a6c47b72b037b66dfe9596feaa7f912c37eb0eb42996df03a8e523ec3a8f1",
+      "bytes": 61900,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-ru-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "d5038d10a7cf5832e9abf288ac87c99ec78404483447135418e45fa0c4a93151",
+      "bytes": 115133,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-ru-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "a8b4f2659bca51df71944974920f1b41a1142b927e03e83333e28a7104e706dd",
+      "bytes": 76754,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-ru-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "60a743e824adbff4cf1545b2fde724005afee6246c513dbedfda5b992c4f88df",
+      "bytes": 115973,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/htei-ru-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: htei"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "b85170fc5fa3d10874a7724e94c23fc76dcb091505cd8f8998bce1861a15ab82",
+      "bytes": 75670,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-en-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "4cf8b7b3a3df64c00498b9e0706bcc47b7acc9cbf9a6326a0f68362646d649df",
+      "bytes": 81276,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-en-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "112242b2c7929d707191e03a41cbb8b28b3864c9536fa7315f77e7f941c4c111",
+      "bytes": 48034,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-en-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "17f369f61125c6c129d5af5cac3e82967d8cae3e28afc716e83b5799aa19dbb7",
+      "bytes": 80354,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-en-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "02fee5dceff1546b9c39d4face7b4153029b1263190455354b4d9cae96bc56a2",
+      "bytes": 48488,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-ru-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "0b192899a22328ca4f8b1a11ce5d0f367c596c6885fcda957d3cd75809715b41",
+      "bytes": 93433,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-ru-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "a0531bb107089f18fdb002d922d8b4b5c2bb9fe5136aa8657dd7e8ef810a8c6c",
+      "bytes": 58902,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-ru-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "e94fcc13d5dbcc427d45d709c93048ac8b7e9df26a755821f3740fdde6a09f67",
+      "bytes": 92535,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/matrix-ru-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: matrix"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "c860b3d508f3e45b3b88d20855fb651c95661b8c11d637ac5d6a050cd14d498f",
+      "bytes": 59462,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-en-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "a60370f8678f269185452ea41c6eb740ad5b06e605f7d4617d0279f1860924ee",
+      "bytes": 105174,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-en-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "3073ad990842e64573802a6553f2b2568b28c0c8e7493a42702e5bba608b1531",
+      "bytes": 71952,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-en-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "637ada62cb495f2e6678b3c9f167814b4ef7a35a3582de1ee67c255540c8730e",
+      "bytes": 106163,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-en-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "9846059726137b40982049e4b475380d842d6df6ca5517e76371cf223b48041d",
+      "bytes": 69868,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-ru-dark.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "a0d0e50986419407565a9e8f74ef11128127ae4892db6583ff2a382ed1d26b11",
+      "bytes": 119224,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-ru-dark.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "4f9fc409f083db868048662a724765053c185be6d16a27d6df4d10f7722d113f",
+      "bytes": 83780,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-ru-light.png",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "247b485a581b722bbf065194a9cc30bea7b876353cb50a263b5bcf4da1472e33",
+      "bytes": 118873,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "landing/product/methodology-ru-light.webp",
+      "source": {
+        "type": "local_browser_capture",
+        "path": "Current GIR V6 browser capture: methodology"
+      },
+      "status": "derived",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "64284ca98fd1101034ca37f0ec808aa4e65d221ac70127b6e35202c5943e4de7",
+      "bytes": 80836,
+      "license": "Project-owned visual asset.",
+      "note": "Current product UI capture for the GIR landing page.",
+      "dimensions": "1280x720"
+    },
+    {
+      "path": "methodology/figures/en-dark/01_taxonomy.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "a84a5dedd30628c3febde37182ed6dd625ad06b281d2ba4f266ff3ed772c1616",
+      "bytes": 1709613,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/02_pipeline.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "478597e3d3c49ee5bda6e2d22b0e34dfe1f539c20f8eeeb60c38bcaf1db1f4d2",
+      "bytes": 1552750,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/03_database_layers.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "25ac9e68360b19b336d277706424c57901d14b5996b594d715fcb46ac313fd08",
+      "bytes": 1536142,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/04_htei_modes.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "6da6e6b468bfee8c78b96a4c91e0a752d8d1de40706adafd7350b3ea76b23114",
+      "bytes": 1449797,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/05_htei_weights.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "fbd809e8e13455864e134cab96a9b7210761875a231ab6ab19140f78c863385a",
+      "bytes": 1629996,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/06_index_coverage.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "587d2390638941dcbeb24022d8d2902e6e7ac843230a279bd3f26c8b20778df8",
+      "bytes": 1553392,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/07_primary_sources_archive.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "e1a14176bd4b86fa5d2397459a559f952672c9d5a034a4c6fa2464a3d4e1980d",
+      "bytes": 1682073,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/08_release_gates.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "1e0ee9acb1b954658ea0b9f7e581e73572643f768ebf44a0f82660b749eb02cf",
+      "bytes": 1538237,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-dark/09_methodology_page_architecture.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "dark",
+      "sha256": "cb3e64e2e3c45c8e9118d9b6231191953a32afaff09efaf80bfd5aec08b0a785",
+      "bytes": 1596327,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/01_taxonomy.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "903a90aff5a211c0e335bf6b03ccf85e669de2f36e6ce98103b13f40e88440f1",
+      "bytes": 1426275,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/02_pipeline.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "3860c840afc27203f800c730a2c8431dc8c708b8bdef3ba1a1f3b9f2e2f974af",
+      "bytes": 1450363,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/03_database_layers.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "7f04312e37452eecb24f65103a0ed45b5a25ed14ceaeb3d2fa27192c2b4ec309",
+      "bytes": 1372973,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/04_htei_modes.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "849e720355378c5021a23dfee29e7850b6076a43f9022676e40ec7700d4ad028",
+      "bytes": 1366940,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/05_htei_weights.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "7798005667abb892563a43106c3d5aa770d1c5340977dd20c3e4e9cd2b93c610",
+      "bytes": 1371978,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/06_index_coverage.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "abc31adcf386d4e031d9b08158d9ab07c7ac5c5ae5e9d22aeab5f3136b1cc153",
+      "bytes": 1166829,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/07_primary_sources_archive.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "37a90e45d159464b390adfe52f4e26ad274c3bbfb6e609556873beacf888b95a",
+      "bytes": 1174573,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/08_release_gates.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "031e0b49a344841fa25ea1922a4215bb613282f5e67462368846568512132cc8",
+      "bytes": 1452921,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/en-light/09_methodology_page_architecture.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "en",
+      "theme": "light",
+      "sha256": "b040b32e004e4d80ab90c2f8dc562421efe63312eb7464f9bfa13d42362131c9",
+      "bytes": 1400311,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/01_taxonomy.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "3a14fb008f0d2d2d515e4ebc29ced6b9eea959c31f83307711182d7d85715973",
+      "bytes": 1546938,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/02_pipeline.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "a419911fc586251aed24a3ae5e6a47e5061062fe72d6a759edc8d467dc52439b",
+      "bytes": 1558929,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/03_database_layers.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "0f8be68a090bb15ebf55c534528342b4d7c37cd34e0df31d115fe3187e47eda9",
+      "bytes": 1527798,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/04_htei_modes.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "4b56206e478d5c31e921d0b5825863f88476ca7536dc46df1b2f6cee8a55ebfe",
+      "bytes": 1580062,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/05_htei_weights.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "e7ae528dd5e9eebfe8df428432c079ce1792a346b92a8e7178a7cee322b6d16b",
+      "bytes": 1403831,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/06_index_coverage.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "a1d1142b0745dd82ce72506fc6f19bc05756cbfa19ec3bb3bd19352a86338a6e",
+      "bytes": 1316605,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/07_primary_sources_archive.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "507bc08f894a52e09f325c01325c2e74dc5798950f7f7a2a6ad509f8488a4d58",
+      "bytes": 1501508,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/08_release_gates.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "cb844855d70f9697fe0f2fe8cd214144f625d4dc2e2e050062bcd80aed837dd2",
+      "bytes": 1479304,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-dark/09_methodology_page_architecture.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "dark",
+      "sha256": "c71a6f68143207ae385412ffc8c35eca72b3026d416d6a5782db2f970084dbbd",
+      "bytes": 1481301,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/01_taxonomy.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "a3147c6c6261be4efd2719a0abd3a6d171bcc95f33451f411d03dfa83581e1a7",
+      "bytes": 1266860,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/02_pipeline.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "751502198d351ce9ce1fc36de18fc05109d2360e91157db1f6f2289db5c44dfc",
+      "bytes": 1305169,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/03_database_layers.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "82ab7f0e3d1cdd1b399180af515eba35416160e9cea1556ad88243ced405a819",
+      "bytes": 1290477,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/04_htei_modes.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "86dc31f35304a64080c89a108f50cf93aa364af77f672f540ca014014e0680a0",
+      "bytes": 1478175,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/05_htei_weights.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "26713b9f3f301a29859b2454356d95dc689eae1fca64507128deb8535b5db00a",
+      "bytes": 1306255,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/06_index_coverage.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "1e2ce55da9bb96696e4e05e9be1157c10084e8e8ee57d896a3bc84228b54349c",
+      "bytes": 1206729,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/07_primary_sources_archive.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "7f7184a9e1153b69a25a38a54907a33d971b77100a6425fba3f7f06bc107f1dc",
+      "bytes": 1288547,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/08_release_gates.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "93ab6da42ff7873910018f27cab458e51d00e66fa2499b4c9c88886db49fd888",
+      "bytes": 1336974,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    },
+    {
+      "path": "methodology/figures/ru-light/09_methodology_page_architecture.png",
+      "source": {
+        "type": "project_supplied_methodology_bundle",
+        "path": "GIR_methodology_web_bundle_bilingual_4variants_20260712(1).zip"
+      },
+      "status": "project_supplied",
+      "locale": "ru",
+      "theme": "light",
+      "sha256": "12e6bcb2604b5335f7086603e17f11dfd3d4e7e10dcb41b1e7996ca5da9b0341",
+      "bytes": 1379437,
+      "license": "Project-provided visual asset; rights status supplied with the project methodology bundle.",
+      "note": "Bilingual, theme-specific methodology figure integrated without visual alteration.",
+      "dimensions": "1672x941"
+    }
+  ],
+  "runtime_remote_services": [
+    {
+      "name": "FormSubmit",
+      "url": "https://formsubmit.co/ajax/project_office@inno.mgimo.ru",
+      "purpose": "User-initiated cooperation form delivery to the MGIMO project office",
+      "data": "Contact fields entered by the user after explicit consent"
+    }
+  ]
+}

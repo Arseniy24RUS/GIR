@@ -1,0 +1,90 @@
+rank,iso3,country_ru,country_en,score,percentile,confidence_score,coverage_class,freshness_class,available_components,available_weight,oldest_source_year,newest_source_year,average_lag,value_id
+1,ISR,Израиль,Israel,93.496652,100.0,0.7417,substantial,current,4,0.7,2023,2025,2.0,HTEI_V6:common_support:2026:ISR
+2,IRL,Ирландия,Ireland,87.113319,98.876404,0.7417,substantial,current,4,0.7,2022,2025,2.0,HTEI_V6:common_support:2026:IRL
+3,SGP,Сингапур,Singapore,82.547942,97.752809,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:SGP
+4,FIN,Финляндия,Finland,75.185406,96.629213,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:FIN
+5,KOR,Республика Корея,South Korea,72.972863,95.505618,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:KOR
+6,GBR,Великобритания,United Kingdom,70.982225,94.382022,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:GBR
+7,SWE,Швеция,Sweden,70.970366,93.258427,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:SWE
+8,USA,США,United States,69.11297,92.134831,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:USA
+9,EST,Эстония,Estonia,68.51782,91.011236,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:EST
+10,DEU,Германия,Germany,67.210046,89.88764,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:DEU
+11,SRB,Сербия,Serbia,65.447309,88.764045,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:SRB
+12,CHE,Швейцария,Switzerland,64.873241,87.640449,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:CHE
+13,AUS,Австралия,Australia,63.6249,86.516854,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:AUS
+14,DNK,Дания,Denmark,63.167183,85.393258,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:DNK
+15,AUT,Австрия,Austria,62.244323,84.269663,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:AUT
+16,TTO,Тринидад и Тобаго,Trinidad and Tobago,61.544705,83.146067,0.749,substantial,current,4,0.7,2024,2025,1.75,HTEI_V6:common_support:2026:TTO
+17,SVN,Словения,Slovenia,60.422408,82.022472,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:SVN
+18,CZE,Чехия,Czechia,59.274257,80.898876,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:CZE
+19,BEL,Бельгия,Belgium,59.094719,79.775281,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:BEL
+20,BLR,Беларусь,Belarus,58.242317,78.651685,0.7198,substantial,recent,4,0.7,2021,2024,2.75,HTEI_V6:common_support:2026:BLR
+21,NLD,Нидерланды,Netherlands,58.163179,77.52809,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:NLD
+22,LTU,Литва,Lithuania,57.953021,76.404494,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:LTU
+23,ARE,ОАЭ,United Arab Emirates,56.201999,75.280899,0.7417,substantial,current,4,0.7,2024,2024,2.0,HTEI_V6:common_support:2026:ARE
+24,LUX,Люксембург,Luxembourg,55.953335,74.157303,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:LUX
+25,HRV,Хорватия,Croatia,55.874906,73.033708,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:HRV
+26,HUN,Венгрия,Hungary,55.872279,71.910112,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:HUN
+27,NOR,Норвегия,Norway,55.708617,70.786517,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:NOR
+28,FRA,Франция,France,55.554706,69.662921,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:FRA
+29,BRN,Бруней,Brunei Darussalam,55.25255,68.539326,0.7417,substantial,current,4,0.7,2023,2025,2.0,HTEI_V6:common_support:2026:BRN
+30,UKR,Украина,Ukraine,55.227738,67.41573,0.6979,substantial,recent,4,0.7,2021,2024,3.5,HTEI_V6:common_support:2026:UKR
+31,BGR,Болгария,Bulgaria,54.901132,66.292135,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:BGR
+32,SVK,Словакия,Slovakia,54.571481,65.168539,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:SVK
+33,CYP,Кипр,Cyprus,53.467632,64.044944,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:CYP
+34,LVA,Латвия,Latvia,53.186184,62.921348,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:LVA
+35,PRT,Португалия,Portugal,52.88036,61.797753,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:PRT
+36,ISL,Исландия,Iceland,52.449269,60.674157,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ISL
+37,POL,Польша,Poland,52.4217,59.550562,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:POL
+38,MKD,Северная Македония,North Macedonia,51.398593,58.426966,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:MKD
+39,ROU,Румыния,Romania,51.109195,57.303371,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ROU
+40,MUS,Маврикий,Mauritius,50.687533,56.179775,0.7344,substantial,recent,4,0.7,2023,2024,2.25,HTEI_V6:common_support:2026:MUS
+41,MLT,Мальта,Malta,50.624849,55.05618,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:MLT
+42,CHL,Чили,Chile,49.583912,53.932584,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:CHL
+43,ESP,Испания,Spain,47.395051,52.808989,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ESP
+44,URY,Уругвай,Uruguay,47.091961,51.685393,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:URY
+45,CRI,Коста-Рика,Costa Rica,45.804455,50.561798,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:CRI
+46,ITA,Италия,Italy,45.782563,49.438202,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ITA
+47,IND,Индия,India,45.255175,48.314607,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:IND
+48,ARG,Аргентина,Argentina,43.978468,47.191011,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ARG
+49,GRC,Греция,Greece,43.913946,46.067416,0.7417,substantial,current,4,0.7,2022,2025,2.0,HTEI_V6:common_support:2026:GRC
+50,BRA,Бразилия,Brazil,42.876558,44.94382,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:BRA
+51,BIH,Босния и Герцеговина,Bosnia and Herzegovina,41.646042,43.820225,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:BIH
+52,COL,Колумбия,Colombia,40.544135,42.696629,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:COL
+53,MEX,Мексика,Mexico,40.316103,41.573034,0.7708,substantial,current,4,0.7,2023,2026,1.0,HTEI_V6:common_support:2026:MEX
+54,MDA,Молдова,Moldova,39.743533,40.449438,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:MDA
+55,TUN,Тунис,Tunisia,38.781114,39.325843,0.7052,substantial,recent,4,0.7,2021,2024,3.25,HTEI_V6:common_support:2026:TUN
+56,IRN,Иран,Iran,37.818963,38.202247,0.7052,substantial,recent,4,0.7,2021,2024,3.25,HTEI_V6:common_support:2026:IRN
+57,OMN,Оман,Oman,36.685439,37.078652,0.6979,substantial,recent,4,0.7,2021,2024,3.5,HTEI_V6:common_support:2026:OMN
+58,SYC,Сейшельские о-ва,Seychelles,36.655451,35.955056,0.7562,substantial,current,4,0.7,2024,2025,1.5,HTEI_V6:common_support:2026:SYC
+59,PSE,Палестинские территории,"Palestine, State of",36.165315,34.831461,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:PSE
+60,QAT,Катар,Qatar,33.956164,33.707865,0.749,substantial,current,4,0.7,2024,2025,1.75,HTEI_V6:common_support:2026:QAT
+61,JOR,Иордания,Jordan,33.739199,32.58427,0.7417,substantial,current,4,0.7,2024,2024,2.0,HTEI_V6:common_support:2026:JOR
+62,MNG,Монголия,Mongolia,32.496247,31.460674,0.7562,substantial,current,4,0.7,2024,2025,1.5,HTEI_V6:common_support:2026:MNG
+63,LKA,Шри-Ланка,Sri Lanka,31.286697,30.337079,0.7344,substantial,recent,4,0.7,2023,2024,2.25,HTEI_V6:common_support:2026:LKA
+64,GEO,Грузия,Georgia,31.251725,29.213483,0.7562,substantial,current,4,0.7,2024,2025,1.5,HTEI_V6:common_support:2026:GEO
+65,ALB,Албания,Albania,30.853502,28.089888,0.749,substantial,current,4,0.7,2024,2025,1.75,HTEI_V6:common_support:2026:ALB
+66,PHL,Филиппины,Philippines,30.835255,26.966292,0.7344,substantial,recent,4,0.7,2023,2025,2.25,HTEI_V6:common_support:2026:PHL
+67,KGZ,Киргизия,Kyrgyzstan,30.229314,25.842697,0.7344,substantial,recent,4,0.7,2023,2025,2.25,HTEI_V6:common_support:2026:KGZ
+68,SLV,Сальвадор,El Salvador,30.129639,24.719101,0.7417,substantial,current,4,0.7,2023,2025,2.0,HTEI_V6:common_support:2026:SLV
+69,BFA,Буркина-Фасо,Burkina Faso,29.301444,23.595506,0.7417,substantial,current,4,0.7,2023,2025,2.0,HTEI_V6:common_support:2026:BFA
+70,PAN,Панама,Panama,28.616794,22.47191,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:PAN
+71,THA,Таиланд,Thailand,26.708529,21.348315,0.7708,substantial,current,4,0.7,2025,2025,1.0,HTEI_V6:common_support:2026:THA
+72,MHL,Маршалловы о-ва,Marshall Islands,26.618596,20.224719,0.6979,substantial,recent,4,0.7,2021,2024,3.5,HTEI_V6:common_support:2026:MHL
+73,CMR,Камерун,Cameroon,26.027418,19.101124,0.6979,substantial,recent,4,0.7,2021,2024,3.5,HTEI_V6:common_support:2026:CMR
+74,ECU,Эквадор,Ecuador,25.892318,17.977528,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:ECU
+75,EGY,Египет,Egypt,25.880732,16.853933,0.7562,substantial,current,4,0.7,2024,2025,1.5,HTEI_V6:common_support:2026:EGY
+76,TUR,Турция,Türkiye,25.584525,15.730337,0.749,substantial,current,4,0.7,2023,2025,1.75,HTEI_V6:common_support:2026:TUR
+77,BEN,Бенин,Benin,24.782843,14.606742,0.6979,substantial,recent,4,0.7,2022,2024,3.5,HTEI_V6:common_support:2026:BEN
+78,WSM,Самоа,Samoa,24.78235,13.483146,0.7125,substantial,recent,4,0.7,2022,2025,3.0,HTEI_V6:common_support:2026:WSM
+79,LCA,Сент-Люсия,Saint Lucia,23.861649,12.359551,0.7562,substantial,current,4,0.7,2023,2025,1.5,HTEI_V6:common_support:2026:LCA
+80,HND,Гондурас,Honduras,23.771619,11.235955,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:HND
+81,DOM,Доминиканская Республика,Dominican Republic,22.971967,10.11236,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:DOM
+82,RWA,Руанда,Rwanda,21.987381,8.988764,0.7562,substantial,current,4,0.7,2024,2025,1.5,HTEI_V6:common_support:2026:RWA
+83,KEN,Кения,Kenya,20.927581,7.865169,0.6979,substantial,recent,4,0.7,2021,2024,3.5,HTEI_V6:common_support:2026:KEN
+84,ZWE,Зимбабве,Zimbabwe,20.334421,6.741573,0.7417,substantial,current,4,0.7,2024,2024,2.0,HTEI_V6:common_support:2026:ZWE
+85,BWA,Ботсвана,Botswana,19.587565,5.617978,0.7417,substantial,current,4,0.7,2024,2024,2.0,HTEI_V6:common_support:2026:BWA
+86,MDG,Мадагаскар,Madagascar,18.843597,4.494382,0.7052,substantial,recent,4,0.7,2022,2024,3.25,HTEI_V6:common_support:2026:MDG
+87,GHA,Гана,Ghana,14.481737,3.370787,0.749,substantial,current,4,0.7,2024,2025,1.75,HTEI_V6:common_support:2026:GHA
+88,TZA,Танзания,Tanzania,9.029442,2.247191,0.7417,substantial,current,4,0.7,2024,2024,2.0,HTEI_V6:common_support:2026:TZA
+89,GMB,Гамбия,Gambia,6.348909,1.123596,0.7635,substantial,current,4,0.7,2024,2025,1.25,HTEI_V6:common_support:2026:GMB

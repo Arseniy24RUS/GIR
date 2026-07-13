@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "package_name": "GIR_methodology_web_bundle_bilingual_4variants_20260712",
+  "created_for": "GIR methodology website integration",
+  "created_at_utc": "2026-07-12T15:07:32Z",
+  "content_files": {
+    "ru-light": "content/methodology.ru-light.md",
+    "ru-dark": "content/methodology.ru-dark.md",
+    "en-light": "content/methodology.en-light.md",
+    "en-dark": "content/methodology.en-dark.md",
+    "ru-default": "content/methodology.ru.md",
+    "en-default": "content/methodology.en.md"
+  },
+  "figure_sets": {
+    "ru-light": {
+      "01_taxonomy.png": "figures/ru-light/01_taxonomy.png",
+      "02_pipeline.png": "figures/ru-light/02_pipeline.png",
+      "03_database_layers.png": "figures/ru-light/03_database_layers.png",
+      "04_htei_modes.png": "figures/ru-light/04_htei_modes.png",
+      "05_htei_weights.png": "figures/ru-light/05_htei_weights.png",
+      "06_index_coverage.png": "figures/ru-light/06_index_coverage.png",
+      "07_primary_sources_archive.png": "figures/ru-light/07_primary_sources_archive.png",
+      "08_release_gates.png": "figures/ru-light/08_release_gates.png",
+      "09_methodology_page_architecture.png": "figures/ru-light/09_methodology_page_architecture.png"
+    },
+    "ru-dark": {
+      "01_taxonomy.png": "figures/ru-dark/01_taxonomy.png",
+      "02_pipeline.png": "figures/ru-dark/02_pipeline.png",
+      "03_database_layers.png": "figures/ru-dark/03_database_layers.png",
+      "04_htei_modes.png": "figures/ru-dark/04_htei_modes.png",
+      "05_htei_weights.png": "figures/ru-dark/05_htei_weights.png",
+      "06_index_coverage.png": "figures/ru-dark/06_index_coverage.png",
+      "07_primary_sources_archive.png": "figures/ru-dark/07_primary_sources_archive.png",
+      "08_release_gates.png": "figures/ru-dark/08_release_gates.png",
+      "09_methodology_page_architecture.png": "figures/ru-dark/09_methodology_page_architecture.png"
+    },
+    "en-light": {
+      "01_taxonomy.png": "figures/en-light/01_taxonomy.png",
+      "02_pipeline.png": "figures/en-light/02_pipeline.png",
+      "03_database_layers.png": "figures/en-light/03_database_layers.png",
+      "04_htei_modes.png": "figures/en-light/04_htei_modes.png",
+      "05_htei_weights.png": "figures/en-light/05_htei_weights.png",
+      "06_index_coverage.png": "figures/en-light/06_index_coverage.png",
+      "07_primary_sources_archive.png": "figures/en-light/07_primary_sources_archive.png",
+      "08_release_gates.png": "figures/en-light/08_release_gates.png",
+      "09_methodology_page_architecture.png": "figures/en-light/09_methodology_page_architecture.png"
+    },
+    "en-dark": {
+      "01_taxonomy.png": "figures/en-dark/01_taxonomy.png",
+      "02_pipeline.png": "figures/en-dark/02_pipeline.png",
+      "03_database_layers.png": "figures/en-dark/03_database_layers.png",
+      "04_htei_modes.png": "figures/en-dark/04_htei_modes.png",
+      "05_htei_weights.png": "figures/en-dark/05_htei_weights.png",
+      "06_index_coverage.png": "figures/en-dark/06_index_coverage.png",
+      "07_primary_sources_archive.png": "figures/en-dark/07_primary_sources_archive.png",
+      "08_release_gates.png": "figures/en-dark/08_release_gates.png",
+      "09_methodology_page_architecture.png": "figures/en-dark/09_methodology_page_architecture.png"
+    }
+  },
+  "selection_logic": {
+    "language_values": [
+      "ru",
+      "en"
+    ],
+    "theme_values": [
+      "light",
+      "dark"
+    ],
+    "recommended_rule": "Use content/methodology.{lang}-{theme}.md when rendering a static prebuilt page. If the website switches theme dynamically, keep one language file and switch the figure directory according to the current theme."
+  },
+  "figure_index": [
+    {
+      "order": 1,
+      "file": "01_taxonomy.png",
+      "title_ru": "Методологическая типология показателей GIR",
+      "title_en": "Methodological Typology of GIR Indicators",
+      "paths": {
+        "ru-light": "figures/ru-light/01_taxonomy.png",
+        "ru-dark": "figures/ru-dark/01_taxonomy.png",
+        "en-light": "figures/en-light/01_taxonomy.png",
+        "en-dark": "figures/en-dark/01_taxonomy.png"
+      }
+    },
+    {
+      "order": 2,
+      "file": "02_pipeline.png",
+      "title_ru": "Сквозной конвейер данных и воспроизводимость",
+      "title_en": "End-to-End Data Pipeline",
+      "paths": {
+        "ru-light": "figures/ru-light/02_pipeline.png",
+        "ru-dark": "figures/ru-dark/02_pipeline.png",
+        "en-light": "figures/en-light/02_pipeline.png",
+        "en-dark": "figures/en-dark/02_pipeline.png"
+      }
+    },
+    {
+      "order": 3,
+      "file": "03_database_layers.png",
+      "title_ru": "Логические слои базы данных",
+      "title_en": "Logical Layers of the Database",
+      "paths": {
+        "ru-light": "figures/ru-light/03_database_layers.png",
+        "ru-dark": "figures/ru-dark/03_database_layers.png",
+        "en-light": "figures/en-light/03_database_layers.png",
+        "en-dark": "figures/en-dark/03_database_layers.png"
+      }
+    },
+    {
+      "order": 4,
+      "file": "04_htei_modes.png",
+      "title_ru": "Четыре режима HTEI v6",
+      "title_en": "Four HTEI v6 Modes",
+      "paths": {
+        "ru-light": "figures/ru-light/04_htei_modes.png",
+        "ru-dark": "figures/ru-dark/04_htei_modes.png",
+        "en-light": "figures/en-light/04_htei_modes.png",
+        "en-dark": "figures/en-dark/04_htei_modes.png"
+      }
+    },
+    {
+      "order": 5,
+      "file": "05_htei_weights.png",
+      "title_ru": "Базовая структура HTEI v6",
+      "title_en": "Base Structure of HTEI v6",
+      "paths": {
+        "ru-light": "figures/ru-light/05_htei_weights.png",
+        "ru-dark": "figures/ru-dark/05_htei_weights.png",
+        "en-light": "figures/en-light/05_htei_weights.png",
+        "en-dark": "figures/en-dark/05_htei_weights.png"
+      }
+    },
+    {
+      "order": 6,
+      "file": "06_index_coverage.png",
+      "title_ru": "Охват индексных модулей в релизной базе",
+      "title_en": "Coverage of Index Modules in the Release Database",
+      "paths": {
+        "ru-light": "figures/ru-light/06_index_coverage.png",
+        "ru-dark": "figures/ru-dark/06_index_coverage.png",
+        "en-light": "figures/en-light/06_index_coverage.png",
+        "en-dark": "figures/en-dark/06_index_coverage.png"
+      }
+    },
+    {
+      "order": 7,
+      "file": "07_primary_sources_archive.png",
+      "title_ru": "Состав архива первичных источников",
+      "title_en": "Composition of the Primary Source Archive",
+      "paths": {
+        "ru-light": "figures/ru-light/07_primary_sources_archive.png",
+        "ru-dark": "figures/ru-dark/07_primary_sources_archive.png",
+        "en-light": "figures/en-light/07_primary_sources_archive.png",
+        "en-dark": "figures/en-dark/07_primary_sources_archive.png"
+      }
+    },
+    {
+      "order": 8,
+      "file": "08_release_gates.png",
+      "title_ru": "Контрольные шлюзы релиза",
+      "title_en": "Release Gates",
+      "paths": {
+        "ru-light": "figures/ru-light/08_release_gates.png",
+        "ru-dark": "figures/ru-dark/08_release_gates.png",
+        "en-light": "figures/en-light/08_release_gates.png",
+        "en-dark": "figures/en-dark/08_release_gates.png"
+      }
+    },
+    {
+      "order": 9,
+      "file": "09_methodology_page_architecture.png",
+      "title_ru": "Предлагаемая архитектура страницы «Методология»",
+      "title_en": "Proposed Architecture of the 'Methodology' Page",
+      "paths": {
+        "ru-light": "figures/ru-light/09_methodology_page_architecture.png",
+        "ru-dark": "figures/ru-dark/09_methodology_page_architecture.png",
+        "en-light": "figures/en-light/09_methodology_page_architecture.png",
+        "en-dark": "figures/en-dark/09_methodology_page_architecture.png"
+      }
+    }
+  ],
+  "notes": [
+    "The Russian full methodology is preserved in the reference folder as the master long-form source prepared earlier.",
+    "The English methodology included in this package is a full website-oriented English version prepared for bilingual publication.",
+    "Image content is identical by meaning across all four variants; only language and color theme differ."
+  ]
+}

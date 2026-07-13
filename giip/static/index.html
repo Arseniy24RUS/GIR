@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-sidebar="expanded">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0A132D">
+  <meta name="description" content="GIR объединяет официальные международные индексы, исторические ряды, методологии и рекомендации в единой доказательной среде для принятия решений.">
+  <title>GIR — Глобальный рейтинг индексов</title>
+  <link id="favicon" rel="icon" type="image/svg+xml" href="/static/brand/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="/static/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="/static/styles.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/landing.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/cooperation.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/country_profile_v2.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/htei-workspace.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/stage4.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/methodology.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/index-workspace.css?v=gir-u2-stage8-20260713-2">
+  <link rel="stylesheet" href="/static/stage7_comparison.css?v=gir-u2-stage8-20260713-2">
+</head>
+<body>
+  <a class="skip-link" href="#view" data-skip-link>Перейти к основному содержанию</a>
+  <div class="shell">
+    <header class="topbar institutional-header" aria-label="Institutional header">
+      <a class="header-gir-home" href="#landing" aria-label="GIR home">
+        <img data-gir-logo src="/static/brand/gir-ru-dark.svg" alt="GIR — Глобальный рейтинг индексов">
+      </a>
+
+      <div class="institutional-strip" aria-label="Institutional partners">
+        <a class="institution-link institution-mgimo" href="https://mgimo.ru/" target="_blank" rel="noopener noreferrer">
+          <img data-logo="mgimo" src="/static/brand/mgimo-ru-dark.svg" alt="МГИМО Университет">
+        </a>
+        <span class="institution-divider" aria-hidden="true"></span>
+        <a class="institution-link institution-fnisc" href="https://www.fnisc.ru/" target="_blank" rel="noopener noreferrer">
+          <img data-logo="fnisc" src="/static/brand/fnisc-ru-dark.svg" alt="ФНИСЦ РАН">
+        </a>
+        <span class="institution-divider" aria-hidden="true"></span>
+        <a class="institution-link institution-priority" href="https://priority2030.ru/" target="_blank" rel="noopener noreferrer">
+          <img data-logo="priority" src="/static/brand/priority-ru-dark.svg" alt="Приоритет 2030">
+        </a>
+        <a class="institution-link institution-ministry" href="https://minobrnauki.gov.ru/" target="_blank" rel="noopener noreferrer">
+          <img data-logo="ministry" src="/static/brand/minobrnauki-ru-dark.png" alt="Минобрнауки России">
+        </a>
+      </div>
+
+      <div class="top-actions" aria-label="Interface controls">
+        <button id="mobileMenuBtn" class="icon-control mobile-menu-control" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+          <img src="/static/icons/menu.svg" alt="" aria-hidden="true">
+        </button>
+        <button id="langBtn" class="lang-control" type="button" aria-label="Language"></button>
+        <button id="themeBtn" class="icon-control" type="button" aria-label="Theme">
+          <img id="themeIcon" src="/static/icons/sun.svg" alt="" aria-hidden="true">
+        </button>
+        <button id="cooperationHeaderBtn" class="cooperation-header-cta" type="button" data-open-cooperation aria-label="Сотрудничество">
+          <img src="/static/icons/mail.svg" alt="" aria-hidden="true">
+          <span data-cooperation-label>Сотрудничество</span>
+          <span class="cooperation-header-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="appFrame" class="app-frame">
+      <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+        <div class="sidebar-head">
+          <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true" aria-controls="sidebar">
+            <img id="sidebarToggleIcon" src="/static/icons/panel-left-close.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+
+        <nav id="nav" class="sidebar-nav" aria-label="Platform sections"></nav>
+
+        <div class="drawer-institutions" aria-label="Institutional partners">
+          <a href="https://mgimo.ru/" target="_blank" rel="noopener noreferrer"><img data-logo="mgimo" src="/static/brand/mgimo-ru-dark.svg" alt="МГИМО Университет"></a>
+          <a href="https://www.fnisc.ru/" target="_blank" rel="noopener noreferrer"><img data-logo="fnisc" src="/static/brand/fnisc-ru-dark.svg" alt="ФНИСЦ РАН"></a>
+          <a href="https://priority2030.ru/" target="_blank" rel="noopener noreferrer"><img data-logo="priority" src="/static/brand/priority-ru-dark.svg" alt="Приоритет 2030"></a>
+          <a href="https://minobrnauki.gov.ru/" target="_blank" rel="noopener noreferrer"><img data-logo="ministry" src="/static/brand/minobrnauki-ru-dark.png" alt="Минобрнауки России"></a>
+        </div>
+      </aside>
+
+      <button id="sidebarBackdrop" class="sidebar-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+
+      <div class="main-column">
+        <div id="contextBar" class="context-bar" aria-live="polite"></div>
+        <main id="view" class="view" tabindex="-1"></main>
+        <footer class="footer">
+          <span id="footerBrand">© 2026 GIR / МГИМО — ФНИСЦ РАН</span>
+          <span id="footerIndices"></span>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <div id="drawer" class="drawer" aria-hidden="true"></div>
+  <script src="/static/landing.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/cooperation.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/country_profile_v2.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/htei-workspace.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/stage4.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/methodology.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/stage7_comparison.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/index-workspace.js?v=gir-u2-stage8-20260713-2"></script>
+  <script src="/static/app.js?v=gir-u2-stage8-20260713-2"></script>
+</body>
+</html>
