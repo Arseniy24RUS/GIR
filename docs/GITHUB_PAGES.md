@@ -2,16 +2,17 @@
 
 The repository contains the complete customer release, including the SQLite database, permitted raw snapshots, derived exports, reproducibility recipes and provenance records. Large data objects are stored through Git LFS.
 
-GitHub Pages is a static host and cannot execute FastAPI or SQLite queries. The `pages-dist/` artifact therefore publishes an immutable, real-data snapshot of the premium interface:
+GitHub Pages cannot execute FastAPI or SQLite queries, so `pages-dist/` contains precomputed real-data workspaces consumed by the browser runtime. The public online platform includes:
 
-- the landing page and Russia 2026 country workspace;
-- current index workspaces and the HTEI comparable ranking;
-- the international comparison snapshot;
+- the landing page and 2026 country workspaces for every public country;
+- current workspaces for HDI, HCI+, GTCI, GII, IDI and QS E&T for every public country;
+- all four public HTEI workspace modes for every public country;
+- international comparison and cross-index matrix views;
 - training, policy and methodology workspaces;
 - Data Lab catalogue metadata and its default evidence query;
 - CSV downloads corresponding to the exported views.
 
-The complete dynamic platform remains available from the repository and runs with `open_platform.cmd` on Windows or `run_platform.sh` on Linux/macOS. No synthetic values are introduced by the Pages export.
+Server-only refresh, administration and arbitrary historical recomputation remain available from the repository through `open_platform.cmd` on Windows or `run_platform.sh` on Linux/macOS. No synthetic values are introduced by the Pages export.
 
 ## Rebuild
 

@@ -20,17 +20,9 @@ PATCH_ID = "GIR_CUMULATIVE_S1_S8_20260713_R1"
 DEFAULT_COUNTRY = "RUS"
 DEFAULT_YEAR = 2026
 INDEX_CODES = ("HDI", "HCI_PLUS", "GTCI", "GII", "IDI", "QS_ET")
+HTEI_MODES = ("direct_core", "common_support", "proxy_extended", "asof_diagnostic")
 
-NOTICE = """
-  <aside class="github-pages-notice" aria-label="GitHub Pages publication mode">
-    <span class="github-pages-notice__ru"><strong>Статическая публикация GIR.</strong> Зафиксированный срез России за 2026 год; полная FastAPI-платформа и все разрешённые данные находятся в репозитории.</span>
-    <span class="github-pages-notice__en"><strong>GIR static publication.</strong> Fixed Russia 2026 snapshot; the complete FastAPI platform and all permitted data are available in the repository.</span>
-    <a href="https://github.com/Arseniy24RUS/GIR" target="_blank" rel="noopener noreferrer">
-      <span class="github-pages-notice__ru">Репозиторий и данные</span>
-      <span class="github-pages-notice__en">Repository and data</span>
-    </a>
-  </aside>
-""".rstrip()
+NOTICE = ""
 
 
 def sha256(path: Path) -> str:
@@ -81,14 +73,10 @@ def write_platform_context(client: TestClient) -> list[dict[str, object]]:
     full_target.write_bytes(response.content)
 
     pages_payload = dict(full_payload)
-    pages_payload["countries"] = [
-        item for item in full_payload.get("countries", []) if item.get("iso3") == DEFAULT_COUNTRY
-    ]
     pages_payload["years"] = [DEFAULT_YEAR]
     pages_payload["default_year"] = DEFAULT_YEAR
     pages_payload["pages_publication"] = {
-        "scope": "fixed_country_year_snapshot",
-        "country": DEFAULT_COUNTRY,
+        "scope": "current_release_all_countries",
         "year": DEFAULT_YEAR,
         "full_context_path": "api/platform-context-full.json",
     }
@@ -109,7 +97,7 @@ def write_platform_context(client: TestClient) -> list[dict[str, object]]:
             "bytes": target.stat().st_size,
             "sha256": sha256(target),
             "content_type": "application/json",
-            "transformation": "country and year selectors restricted to the published RUS 2026 snapshot; full response retained alongside",
+            "transformation": "current release year with the complete public country selector; full historical context retained alongside",
         },
     ]
 
@@ -123,18 +111,14 @@ def write_app_data(client: TestClient) -> list[dict[str, object]]:
     full_target.write_bytes(response.content)
 
     pages_payload = dict(full_payload)
-    pages_payload["countries"] = [
-        item for item in full_payload.get("countries", []) if item.get("iso3") == DEFAULT_COUNTRY
-    ]
     pages_payload["years"] = [DEFAULT_YEAR]
     pages_payload["default_year"] = DEFAULT_YEAR
     pages_payload["pages_publication"] = {
-        "scope": "fixed_country_year_snapshot",
-        "country": DEFAULT_COUNTRY,
+        "scope": "current_release_all_countries",
         "year": DEFAULT_YEAR,
         "full_response_path": "api/app-data-RUS-2026-full.json",
     }
-    target = DESTINATION / "api" / "app-data-RUS-2026.json"
+    target = DESTINATION / "api" / "app-data.json"
     target.write_text(json.dumps(pages_payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     return [
         {
@@ -151,7 +135,7 @@ def write_app_data(client: TestClient) -> list[dict[str, object]]:
             "bytes": target.stat().st_size,
             "sha256": sha256(target),
             "content_type": "application/json",
-            "transformation": "country and year selectors restricted to the published RUS 2026 snapshot; full response retained alongside",
+            "transformation": "current release shell for all public countries; country and index workspaces are exported separately",
         },
     ]
 
@@ -223,6 +207,8 @@ def export_api_snapshot() -> list[dict[str, object]]:
     with TestClient(app) as client:
         records.extend(write_platform_context(client))
         records.extend(write_app_data(client))
+        context = require_response(client, "/api/platform-context").json()
+        countries = [item["iso3"] for item in context.get("countries", []) if item.get("iso3")]
         json_exports = {
             "landing-summary.json": f"/api/landing-summary?country={DEFAULT_COUNTRY}",
             "country-RUS-workspace.json": f"/api/country/{DEFAULT_COUNTRY}/workspace?year={DEFAULT_YEAR}",
@@ -265,6 +251,30 @@ def export_api_snapshot() -> list[dict[str, object]]:
         for name, endpoint in csv_exports.items():
             records.append(write_response(client, name, endpoint))
 
+        for iso3 in countries:
+            records.append(write_response(
+                client,
+                f"country-{iso3}-workspace.json",
+                f"/api/country/{iso3}/workspace?year={DEFAULT_YEAR}",
+            ))
+            records.append(write_response(
+                client,
+                f"training-{iso3}-workspace.json",
+                f"/api/training/workspace?country={iso3}&year={DEFAULT_YEAR}",
+            ))
+            for code in INDEX_CODES:
+                records.append(write_response(
+                    client,
+                    f"index-{code}-{iso3}-workspace.json",
+                    f"/api/index/{code}/workspace?country={iso3}&year={DEFAULT_YEAR}",
+                ))
+            for mode in HTEI_MODES:
+                records.append(write_response(
+                    client,
+                    f"htei-{iso3}-{mode}.json",
+                    f"/api/htei/workspace?iso3={iso3}&year={DEFAULT_YEAR}&mode={mode}",
+                ))
+
         schema = require_response(client, "/api/data-explorer/schema").json()
         explorer_query = default_explorer_query(schema)
         records.append(write_response(client, "data-explorer-query.json", f"/api/data-explorer/query?{explorer_query}"))
@@ -294,9 +304,9 @@ def write_manifest(api_records: list[dict[str, object]]) -> None:
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "source_database": "data/global_index_platform.sqlite",
         "source_database_sha256": sha256(DATABASE),
-        "country": DEFAULT_COUNTRY,
         "year": DEFAULT_YEAR,
-        "scope": "static real-data publication; complete dynamic platform remains in the repository",
+        "countries": "all public countries in platform context",
+        "scope": "GitHub Pages current-release platform with precomputed real-data API workspaces",
         "api_exports": api_records,
         "files": files,
     }

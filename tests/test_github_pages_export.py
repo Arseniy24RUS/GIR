@@ -31,9 +31,8 @@ def test_pages_export_uses_real_release_database_and_verified_files() -> None:
     manifest = json.loads((PAGES / "PAGES_EXPORT_MANIFEST.json").read_text(encoding="utf-8"))
     database = ROOT / manifest["source_database"]
     assert _sha256(database) == manifest["source_database_sha256"]
-    assert manifest["country"] == "RUS"
     assert manifest["year"] == 2026
-    assert len(manifest["api_exports"]) >= 59
+    assert len(manifest["api_exports"]) >= 2700
     for item in manifest["files"]:
         path = PAGES / item["path"]
         assert path.is_file(), item["path"]
@@ -54,11 +53,14 @@ def test_pages_landing_and_data_lab_contain_published_observations() -> None:
     assert all(row.get("source_id") for row in query["rows"])
 
 
-def test_pages_selector_scope_is_explicit_and_full_payload_is_retained() -> None:
-    scoped = json.loads((PAGES / "api" / "app-data-RUS-2026.json").read_text(encoding="utf-8"))
+def test_pages_current_release_exposes_all_countries_and_workspaces() -> None:
+    scoped = json.loads((PAGES / "api" / "app-data.json").read_text(encoding="utf-8"))
     full = json.loads((PAGES / "api" / "app-data-RUS-2026-full.json").read_text(encoding="utf-8"))
-    assert [country["iso3"] for country in scoped["countries"]] == ["RUS"]
+    assert len(scoped["countries"]) > 150
     assert scoped["years"] == [2026]
     assert len(full["countries"]) > 150
     assert scoped["country"] == full["country"]
     assert scoped["index_payloads"] == full["index_payloads"]
+    assert (PAGES / "api" / "country-USA-workspace.json").is_file()
+    assert (PAGES / "api" / "index-HDI-USA-workspace.json").is_file()
+    assert (PAGES / "api" / "htei-USA-common_support.json").is_file()
