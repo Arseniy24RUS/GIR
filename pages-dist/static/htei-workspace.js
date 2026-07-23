@@ -31,7 +31,7 @@
   const countryName = (ctx, item) => ctx.lang === "ru" ? item?.name_ru : item?.name_en;
   const flag = (item, className = "htei-flag") => {
     const iso2 = String(item?.iso2 || "").toLowerCase();
-    return iso2 ? `<img class="${className}" src="static/flags/${esc(iso2)}.svg" alt="" aria-hidden="true">` : "";
+    return iso2 ? `<img class="${className}" src="/static/flags/${esc(iso2)}.svg" alt="" aria-hidden="true">` : "";
   };
   const modeName = (ctx, item) => localized(ctx, item, "name");
   const modeShort = (ctx, item) => localized(ctx, item, "short");

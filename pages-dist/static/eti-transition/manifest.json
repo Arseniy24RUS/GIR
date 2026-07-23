@@ -1,0 +1,26 @@
+{
+  "schema_version": "gir-static-asset-manifest-v1",
+  "generated_at": "2026-07-17T18:00:00+02:00",
+  "dataset_id": "WEF_ENERGY_TRANSITION_INDEX_2026_HEADLINE",
+  "edition": 2026,
+  "core": {
+    "path": "eti-core.json",
+    "bytes": 205299,
+    "sha256": "636f20ce276de99316022f3ec63f8f25d666b13658a600850b840954e7a0e9a7"
+  },
+  "coverage": {
+    "countries": 120,
+    "score_observations": 360,
+    "headline_metrics": 3,
+    "method_tree_nodes": 68,
+    "active_indicators": 44,
+    "country_groups": 6
+  },
+  "scientific_contract": {
+    "official_eti_rank_preserved": true,
+    "scores_recomputed": false,
+    "release_spliced": false,
+    "nulls_coerced_to_zero": false,
+    "translation_is_official_wef": false
+  }
+}

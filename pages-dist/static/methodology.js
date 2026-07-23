@@ -2,8 +2,8 @@
 (() => {
   "use strict";
 
-  const CONTENT_ROOT = "static/methodology/content";
-  const FIGURE_ROOT = "static/methodology/figures";
+  const CONTENT_ROOT = "/static/methodology/content";
+  const FIGURE_ROOT = "/static/methodology/figures";
   const cache = new Map();
   let summaryPromise = null;
   let renderToken = 0;
@@ -168,12 +168,14 @@
   function renderScale() {
     const scale = wikiState.summary.scale;
     const metrics = [
-      [scale.countries, t("стран и территорий", "countries and territories")],
-      [scale.index_scores, t("индексных оценок", "index scores")],
-      [scale.component_values, t("компонентных значений", "component values")],
-      [scale.source_observations, t("исходных наблюдений", "source observations")],
+      [scale.current_modules ?? scale.index_modules, t("аналитических модулей", "analytical modules")],
+      [scale.portfolio_groups, t("тематических направлений", "thematic groups")],
+      [scale.data_explorer_datasets, t("наборов Data Explorer", "Data Explorer datasets")],
+      [scale.source_registry, t("зарегистрированных источника", "registered sources")],
+      [scale.database_tables, t("таблиц SQLite", "SQLite tables")],
       [scale.raw_snapshots, t("снимков источников", "source snapshots")],
       [scale.reproducibility_artifacts, t("артефактов воспроизводимости", "reproducibility artifacts")],
+      [scale.countries, t("стран и территорий", "countries and territories")],
     ];
     return `<section class="method-scale" aria-labelledby="methodScaleTitle"><div class="method-section-heading"><div><span>${t("Живой паспорт доказательной базы", "Live evidence-base passport")}</span><h2 id="methodScaleTitle">${t("Текст объясняет метод; база подтверждает масштаб", "The text explains the method; the database confirms the scale")}</h2></div><p>${t(`Архив первичных источников занимает ${humanBytes(scale.raw_archive_bytes)}. Цифры ниже получены из текущей SQLite-базы, а не захардкожены в странице.`, `The source archive occupies ${humanBytes(scale.raw_archive_bytes)}. The figures below are read from the current SQLite database rather than hard-coded in the page.`)}</p></div><div class="method-scale-grid">${metrics.map(([value, label]) => `<div><strong>${numberFormat(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("")}</div></section>`;
   }
@@ -254,7 +256,7 @@
   function renderContextRail() {
     const chapter = activeChapter();
     const headings = wikiState.mode === "chapter" ? (chapter?.headings || []).filter((item) => item.level <= 3).slice(1) : [];
-    return `<aside class="method-context-rail"><section><div class="method-context-title"><span>${t("В этой главе", "In this chapter")}</span><strong>${headings.length}</strong></div>${headings.length ? `<nav>${headings.map((item) => `<button type="button" data-method-anchor="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button>`).join("")}</nav>` : `<p>${t("Используйте поиск или навигацию слева для перехода между разделами.", "Use search or the navigation on the left to move between sections.")}</p>`}</section><section><div class="method-context-title"><span>${t("Паспорта индексов", "Index passports")}</span><strong>${wikiState.summary.index_registry.length}</strong></div><div class="method-index-list">${wikiState.summary.index_registry.map((item) => `<button type="button" data-method-index="${escapeHtml(item.code)}"><span class="method-index-code ${escapeHtml(item.classification)}">${escapeHtml(wikiState.lang === "ru" ? item.short_name_ru : item.short_name_en)}</span><span><strong>${escapeHtml(wikiState.lang === "ru" ? item.name_ru : item.name_en)}</strong><small>${escapeHtml(wikiState.lang === "ru" ? item.classification_ru : item.classification_en)}</small></span></button>`).join("")}</div></section><section><button type="button" class="method-atlas-button" data-method-atlas>${icon("image")}<span><strong>${t("Визуальный атлас", "Visual atlas")}</strong><small>${t("9 схем · RU/EN · light/dark", "9 figures · RU/EN · light/dark")}</small></span>${icon("arrow")}</button></section></aside>`;
+    return `<aside class="method-context-rail"><section><div class="method-context-title"><span>${t("В этой главе", "In this chapter")}</span><strong>${headings.length}</strong></div>${headings.length ? `<nav>${headings.map((item) => `<button type="button" data-method-anchor="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button>`).join("")}</nav>` : `<p>${t("Используйте поиск или навигацию слева для перехода между разделами.", "Use search or the navigation on the left to move between sections.")}</p>`}</section><section><div class="method-context-title"><span>${t("Паспорта индексов", "Index passports")}</span><strong>${wikiState.summary.index_registry.length}</strong></div><div class="method-index-list">${wikiState.summary.index_registry.map((item) => `<button type="button" data-method-index="${escapeHtml(item.code)}"><span class="method-index-code ${escapeHtml(item.classification)}">${escapeHtml(wikiState.lang === "ru" ? item.short_name_ru : item.short_name_en)}</span><span><strong>${escapeHtml(wikiState.lang === "ru" ? item.name_ru : item.name_en)}</strong><small>${escapeHtml(wikiState.lang === "ru" ? item.classification_ru : item.classification_en)}</small></span></button>`).join("")}</div></section><section><button type="button" class="method-atlas-button" data-method-atlas>${icon("image")}<span><strong>${t("Визуальный атлас", "Visual atlas")}</strong><small>${t("9 схем · RU/EN · светлая/тёмная тема", "9 figures · RU/EN · light/dark")}</small></span>${icon("arrow")}</button></section></aside>`;
   }
 
   function renderWorkspace() {

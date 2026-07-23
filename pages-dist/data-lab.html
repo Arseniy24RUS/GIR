@@ -1,19 +1,22 @@
 <!doctype html>
-<html lang="ru" data-theme="dark">
+<html lang="ru" data-theme="dark" data-auth-state="loading">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
+    <script src="./pages-runtime.js"></script>
+<script src="./static/user-context-core.js?v=gir-context-20260723-1"></script>
+  <script src="./static/user-context-bootstrap.js?v=gir-context-20260723-1"></script>
   <title>Данные и исследование · Global Index Research</title>
-  <link rel="icon" href="static/brand/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="static/stage5.css">
-  <link rel="stylesheet" href="static/pages.css?v=gir-pages-20260713-1">
+  <link rel="icon" href="./static/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./static/stage5.css?v=gir-ecology-data-lab-t12-20260718-1">
+  <link rel="stylesheet" href="./static/auth.css?v=gir-auth-t25-20260723-user-5">
+  <link rel="stylesheet" href="./pages.css">
 </head>
 <body>
-
-  <a class="dl-skip" href="#dl-main" data-i18n="skip">Перейти к содержанию</a>
+  <a class="dl-skip" href="#dl-main">Перейти к содержанию</a>
   <header class="dl-header">
-    <a class="dl-brand" href="./" aria-label="Global Index Research — главная" data-i18n-aria="brandHome">
+    <a class="dl-brand" href="/" aria-label="Global Index Research — главная">
       <span class="dl-brand-mark" aria-hidden="true">G</span>
       <span><strong>GLOBAL INDEX</strong><small>RESEARCH PLATFORM</small></span>
     </a>
@@ -26,16 +29,17 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.4A7 7 0 0 1 12 3Z"/></svg>
       </button>
       <button class="dl-lang" id="dl-lang" type="button" aria-label="Switch language">EN</button>
-      <a class="dl-back" href="./"><span data-i18n="back">Вернуться в платформу</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+      <div class="dl-auth-mount" data-gir-auth-mount></div>
+      <a class="dl-back" href="/"><span data-i18n="back">Вернуться в платформу</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
     </div>
   </header>
 
   <div class="dl-shell">
-    <aside class="dl-sidebar" aria-label="Навигация Data Lab" data-i18n-aria="navLabel">
-      <div class="dl-sidebar-intro"><span>DATA LAB</span><p data-i18n="sidebarIntro">Источники, файлы и наблюдения в едином доказательном контуре.</p></div>
-      <nav id="dl-tabs" class="dl-nav" aria-label="Разделы" data-i18n-aria="sections">
+    <aside class="dl-sidebar" aria-label="Навигация лаборатории данных">
+      <div class="dl-sidebar-intro"><span data-i18n="labName">ЛАБОРАТОРИЯ ДАННЫХ</span><p data-i18n="sidebarIntro">Источники, файлы и наблюдения в едином доказательном контуре.</p></div>
+      <nav id="dl-tabs" class="dl-nav" aria-label="Разделы">
         <button type="button" data-tab="overview" aria-current="page"><span>01</span><b data-i18n="navOverview">Обзор</b></button>
-        <button type="button" data-tab="explorer"><span>02</span><b>Data Explorer</b></button>
+        <a class="dl-nav-link" href="/data-explorer"><span>02</span><b data-i18n="navExplorer">Обозреватель данных</b></a>
         <button type="button" data-tab="sources"><span>03</span><b data-i18n="navSources">Источники</b></button>
         <button type="button" data-tab="files"><span>04</span><b data-i18n="navFiles">Файлы</b></button>
         <button type="button" data-tab="repro"><span>05</span><b data-i18n="navRepro">Воспроизводимость</b></button>
@@ -49,7 +53,7 @@
     <main id="dl-main" class="dl-main" tabindex="-1">
       <div id="dl-app" class="dl-loading" aria-live="polite">
         <div class="dl-loading-mark">G</div>
-        <p data-i18n="loading">Собирается каталог доказательной базы…</p>
+        <p>Собирается каталог доказательной базы…</p>
       </div>
     </main>
   </div>
@@ -57,14 +61,14 @@
   <dialog id="dl-dialog" class="dl-dialog" aria-labelledby="dl-dialog-title">
     <div class="dl-dialog-head">
       <div><span id="dl-dialog-kicker"></span><h2 id="dl-dialog-title"></h2><p id="dl-dialog-subtitle"></p></div>
-      <button type="button" id="dl-dialog-close" aria-label="Закрыть" data-i18n-aria="close">×</button>
+      <button type="button" id="dl-dialog-close" aria-label="Закрыть">×</button>
     </div>
     <div id="dl-dialog-body" class="dl-dialog-body"></div>
   </dialog>
   <div id="dl-tooltip" class="dl-tooltip" role="tooltip"></div>
   <div id="dl-toast" class="dl-toast" role="status" aria-live="polite"></div>
 
-  <script src="static/pages-runtime.js?v=gir-pages-20260713-1"></script>
-  <script src="static/stage5_data_lab.js" defer></script>
+  <script src="./static/auth.js?v=gir-auth-t25-20260723-user-5"></script>
+  <script src="./static/stage5_data_lab.js?v=gir-t24-20260720-3" defer></script>
 </body>
 </html>

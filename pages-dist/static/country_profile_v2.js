@@ -326,14 +326,19 @@
     document.addEventListener("keydown", (event) => {
       const drawer = $("#drawer");
       if (!drawer?.classList.contains("open")) return;
-      if (event.key === "Escape") { event.preventDefault(); closeDrawerV2(); return; }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        closeDrawerV2();
+        return;
+      }
       if (event.key !== "Tab") return;
       const focusable = $$('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',drawer).filter((node) => node.offsetParent !== null);
       if (!focusable.length) return;
       const first=focusable[0], last=focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    });
+    }, true);
   }
 
   window.GIRCountryProfileV2 = {render, clearCache: () => cache.clear(), openProvenance};

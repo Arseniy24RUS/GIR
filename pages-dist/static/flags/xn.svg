@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Northern Cyprus">
+  <rect width="640" height="480" fill="#fff"/>
+  <rect y="72" width="640" height="32" fill="#d71920"/>
+  <rect y="376" width="640" height="32" fill="#d71920"/>
+  <circle cx="298" cy="240" r="86" fill="#d71920"/>
+  <circle cx="326" cy="240" r="70" fill="#fff"/>
+  <path fill="#d71920" d="M388 191l11.5 35.4h37.2l-30.1 21.9 11.5 35.4-30.1-21.9-30.1 21.9 11.5-35.4-30.1-21.9h37.2z"/>
+</svg>

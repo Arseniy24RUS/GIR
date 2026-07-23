@@ -1,0 +1,149 @@
+{
+  "count": 5,
+  "index_code": "DHL_GCI",
+  "pillars": [
+    {
+      "description_en": "Composite of the trade, capital, information and people pillars across depth and breadth.",
+      "description_ru": "Композит торговли, капитала, информации и перемещения людей по измерениям глубины и широты.",
+      "flow_types": [],
+      "latest_coverage": 180,
+      "name_en": "Overall connectedness",
+      "name_ru": "Общая международная связанность",
+      "pillar_code": "overall",
+      "sort_order": 0,
+      "weight": null
+    },
+    {
+      "description_en": "Cross-border flows of goods and services.",
+      "description_ru": "Трансграничные потоки товаров и услуг.",
+      "flow_types": [
+        {
+          "code": "goods_trade",
+          "name_en": "Goods trade",
+          "name_ru": "Торговля товарами",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "services_trade",
+          "name_en": "Services trade",
+          "name_ru": "Торговля услугами",
+          "scope": "country_and_global"
+        }
+      ],
+      "latest_coverage": 180,
+      "name_en": "Trade",
+      "name_ru": "Торговля",
+      "pillar_code": "trade",
+      "sort_order": 1,
+      "weight": 0.35
+    },
+    {
+      "description_en": "Cross-border direct investment, M&A and portfolio equity connections.",
+      "description_ru": "Трансграничные прямые инвестиции, сделки M&A и портфельные долевые связи.",
+      "flow_types": [
+        {
+          "code": "announced_greenfield_fdi",
+          "name_en": "Announced greenfield FDI",
+          "name_ru": "Объявленные инвестиции greenfield",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "announced_ma_transactions",
+          "name_en": "Announced M&A transactions",
+          "name_ru": "Объявленные сделки M&A",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "fdi_flows",
+          "name_en": "FDI flows",
+          "name_ru": "Потоки ПИИ",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "fdi_stock",
+          "name_en": "FDI stock",
+          "name_ru": "Накопленные ПИИ",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "portfolio_equity_stock",
+          "name_en": "Portfolio equity stock",
+          "name_ru": "Портфельные долевые активы",
+          "scope": "country_and_global"
+        }
+      ],
+      "latest_coverage": 158,
+      "name_en": "Capital",
+      "name_ru": "Капитал",
+      "pillar_code": "capital",
+      "sort_order": 2,
+      "weight": 0.35
+    },
+    {
+      "description_en": "Cross-border information, knowledge and intellectual-property flows.",
+      "description_ru": "Трансграничные потоки информации, знаний и интеллектуальной собственности.",
+      "flow_types": [
+        {
+          "code": "online_news_traffic",
+          "name_en": "Online news traffic",
+          "name_ru": "Трафик онлайн-новостей",
+          "scope": "country_level_only"
+        },
+        {
+          "code": "scientific_research_collaboration",
+          "name_en": "Scientific research collaboration",
+          "name_ru": "Международное научное сотрудничество",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "ip_charges",
+          "name_en": "Charges for use of intellectual property",
+          "name_ru": "Платежи за использование интеллектуальной собственности",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "international_patenting",
+          "name_en": "International patenting",
+          "name_ru": "Международное патентование",
+          "scope": "global_trends_only"
+        }
+      ],
+      "latest_coverage": 144,
+      "name_en": "Information",
+      "name_ru": "Информация",
+      "pillar_code": "information",
+      "sort_order": 3,
+      "weight": 0.15
+    },
+    {
+      "description_en": "Cross-border movement and stocks of travelers, students and migrants.",
+      "description_ru": "Трансграничные перемещения и численность путешественников, студентов и мигрантов.",
+      "flow_types": [
+        {
+          "code": "international_travel",
+          "name_en": "International travel",
+          "name_ru": "Международные поездки",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "international_university_students",
+          "name_en": "International university students",
+          "name_ru": "Иностранные студенты университетов",
+          "scope": "country_and_global"
+        },
+        {
+          "code": "migrants_foreign_born",
+          "name_en": "Migrants (foreign-born population)",
+          "name_ru": "Мигранты (население, рождённое за рубежом)",
+          "scope": "country_and_global"
+        }
+      ],
+      "latest_coverage": 133,
+      "name_en": "People",
+      "name_ru": "Люди",
+      "pillar_code": "people",
+      "sort_order": 4,
+      "weight": 0.15
+    }
+  ]
+}

@@ -1,0 +1,785 @@
+/* GIR Digitalisation / AI — Stage 06: Oxford Insights Government AI Readiness Index research workspace. */
+.gari-workspace-host { padding-top: 22px; }
+.gari-workspace {
+  --gari-mint: #59dcff;
+  --gari-mint-rgb: 89, 220, 255;
+  --gari-blue: #728cff;
+  --gari-blue-rgb: 114, 140, 255;
+  --gari-violet: #c268f2;
+  --gari-violet-rgb: 194, 104, 242;
+  --gari-amber: #ffbc5c;
+  --gari-amber-rgb: 255, 188, 92;
+  --gari-coral: #ff7088;
+  --gari-coral-rgb: 255, 112, 136;
+  --gari-panel: rgba(255, 255, 255, .025);
+  --gari-panel-strong: rgba(255, 255, 255, .052);
+  --gari-solid: #071b39;
+  --gari-map-empty: rgba(255, 255, 255, .065);
+  --gari-t1: #59dcff;
+  --gari-t2: #728cff;
+  --gari-t3: #c268f2;
+  --gari-t4: #ffbc5c;
+  --gari-t5: #ff7088;
+  --gari-gap: 96px;
+  max-width: 100%;
+  color: var(--text);
+  isolation: isolate;
+}
+html[data-theme="light"] .gari-workspace {
+  --gari-mint: #08745c;
+  --gari-mint-rgb: 8, 116, 92;
+  --gari-blue: #285fc2;
+  --gari-blue-rgb: 40, 95, 194;
+  --gari-violet: #6946b3;
+  --gari-violet-rgb: 105, 70, 179;
+  --gari-amber: #946015;
+  --gari-amber-rgb: 148, 96, 21;
+  --gari-coral: #a33443;
+  --gari-coral-rgb: 163, 52, 67;
+  --gari-panel: #fff;
+  --gari-panel-strong: rgba(20, 43, 92, .045);
+  --gari-solid: #fff;
+  --gari-map-empty: #e7ebf1;
+  --gari-t1: #08745c;
+  --gari-t2: #285fc2;
+  --gari-t3: #6946b3;
+  --gari-t4: #946015;
+  --gari-t5: #a33443;
+}
+.gari-workspace *, .gari-workspace *::before, .gari-workspace *::after { box-sizing: border-box; }
+.gari-workspace button, .gari-workspace input, .gari-workspace select { font: inherit; }
+.gari-workspace button, .gari-workspace a { -webkit-tap-highlight-color: transparent; }
+.gari-workspace button { color: inherit; }
+.gari-workspace a { color: inherit; }
+.gari-icon { width: 15px; height: 15px; object-fit: contain; filter: brightness(0) invert(1); }
+html[data-theme="light"] .gari-icon { filter: none; }
+.gari-workspace .flag-img.inline { width: 25px; height: 17px; flex: 0 0 auto; object-fit: cover; border: 1px solid var(--line2); }
+.gari-flag-fallback { display: inline-flex; align-items: center; justify-content: center; min-width: 31px; height: 20px; border: 1px solid var(--line2); color: var(--muted); font-size: 8px; }
+.gari-workspace button:focus-visible, .gari-workspace a:focus-visible, .gari-workspace input:focus-visible, .gari-workspace select:focus-visible, .gari-map-country:focus-visible { outline: 3px solid rgba(var(--gari-mint-rgb), .45); outline-offset: 2px; }
+
+/* Controls and loading states */
+.gari-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 17px;
+  border: 1px solid var(--line2);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.gari-button:hover { transform: translateY(-1px); border-color: var(--gari-mint); background: rgba(var(--gari-mint-rgb), .09); }
+.gari-button.primary { border-color: var(--gari-mint); background: var(--gari-mint); color: #06172b; font-weight: 600; }
+html[data-theme="light"] .gari-button.primary { color: #fff; }
+.gari-button.quiet { border-color: transparent; color: var(--muted); }
+.gari-loading, .gari-error {
+  min-height: 640px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 68px 28px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: radial-gradient(circle at 50% 43%, rgba(var(--gari-blue-rgb), .12), transparent 31%), var(--panel);
+  text-align: center;
+}
+.gari-loading > span, .gari-error > span { margin-top: 27px; color: var(--gari-mint); font-size: 9px; letter-spacing: .17em; text-transform: uppercase; }
+.gari-loading h1, .gari-error h1 { max-width: 810px; margin: 16px 0 12px; font-size: clamp(38px, 5vw, 70px); line-height: .96; letter-spacing: -.04em; font-weight: 500; }
+.gari-loading p, .gari-error p { max-width: 730px; margin: 0 0 25px; color: var(--muted); font-size: 13px; line-height: 1.72; }
+.gari-loading-core { width: 180px; height: 180px; position: relative; display: grid; place-items: center; border: 1px solid rgba(var(--gari-mint-rgb), .28); clip-path: polygon(50% 0, 97% 35%, 79% 91%, 21% 91%, 3% 35%); animation: gari-core-pulse 3.8s ease-in-out infinite; }
+.gari-loading-core::before, .gari-loading-core::after { content: ""; position: absolute; inset: 21px; border: 1px solid var(--line2); clip-path: inherit; }
+.gari-loading-core::after { inset: 51px; border-color: rgba(var(--gari-violet-rgb), .58); box-shadow: 0 0 32px rgba(var(--gari-violet-rgb), .15); }
+.gari-loading-core b { position: relative; z-index: 2; font-size: 21px; letter-spacing: .11em; font-weight: 500; }
+.gari-loading-core i { width: 8px; height: 8px; position: absolute; z-index: 3; border-radius: 50%; background: var(--gari-mint); box-shadow: 0 0 19px rgba(var(--gari-mint-rgb), .78); }
+.gari-loading-core i:nth-child(1) { left: 9px; top: 61px; }
+.gari-loading-core i:nth-child(2) { left: 43px; top: 13px; background: var(--gari-blue); }
+.gari-loading-core i:nth-child(3) { right: 43px; top: 13px; background: var(--gari-violet); }
+.gari-loading-core i:nth-child(4) { right: 8px; top: 61px; background: var(--gari-amber); }
+.gari-loading-core i:nth-child(5) { left: 86px; bottom: 8px; background: var(--gari-coral); }
+@keyframes gari-core-pulse { 50% { filter: drop-shadow(0 0 24px rgba(var(--gari-mint-rgb), .17)); transform: scale(1.03); } }
+
+/* Hero */
+.gari-hero {
+  min-height: 700px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.34fr) minmax(410px, .66fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.gari-hero-copy {
+  min-width: 0;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 58px 59px 50px;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background: radial-gradient(circle at 89% 13%, rgba(var(--gari-mint-rgb), .13), transparent 23%), radial-gradient(circle at 16% 90%, rgba(var(--gari-violet-rgb), .11), transparent 27%), linear-gradient(136deg, rgba(var(--gari-blue-rgb), .10), transparent 57%);
+}
+html[data-theme="light"] .gari-hero-copy { background: radial-gradient(circle at 89% 13%, rgba(var(--gari-mint-rgb), .08), transparent 25%), radial-gradient(circle at 16% 90%, rgba(var(--gari-violet-rgb), .055), transparent 28%), linear-gradient(136deg, rgba(var(--gari-blue-rgb), .04), transparent 58%); }
+.gari-hero-copy::before { content: "GARI"; position: absolute; right: -7px; bottom: -33px; z-index: -2; color: transparent; -webkit-text-stroke: 1px rgba(var(--gari-blue-rgb), .18); font-size: clamp(150px, 17vw, 260px); font-weight: 500; line-height: .75; letter-spacing: -.09em; }
+.gari-circuit-field { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; opacity: .9; }
+.gari-circuit-field::before { content: ""; width: 380px; height: 380px; position: absolute; right: -154px; top: -126px; border: 1px solid rgba(var(--gari-mint-rgb), .22); clip-path: polygon(50% 0, 97% 35%, 79% 91%, 21% 91%, 3% 35%); }
+.gari-circuit-field::after { content: ""; width: 235px; height: 235px; position: absolute; right: 19px; top: 17px; border: 1px dashed rgba(var(--gari-blue-rgb), .27); clip-path: polygon(50% 0, 97% 35%, 79% 91%, 21% 91%, 3% 35%); }
+.gari-circuit-field i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--gari-mint); box-shadow: 0 0 22px rgba(var(--gari-mint-rgb), .8); }
+.gari-circuit-field i::after { content: ""; width: 90px; height: 1px; position: absolute; top: 3px; left: 7px; background: linear-gradient(90deg, currentColor, transparent); opacity: .35; }
+.gari-circuit-field i:nth-child(1) { right: 92px; top: 57px; }
+.gari-circuit-field i:nth-child(2) { right: 245px; top: 106px; color: var(--gari-blue); background: var(--gari-blue); }
+.gari-circuit-field i:nth-child(3) { right: 166px; top: 236px; color: var(--gari-violet); background: var(--gari-violet); }
+.gari-circuit-field i:nth-child(4) { right: 35px; top: 188px; color: var(--gari-amber); background: var(--gari-amber); }
+.gari-circuit-field i:nth-child(5) { left: 61px; bottom: 93px; color: var(--gari-coral); background: var(--gari-coral); }
+.gari-circuit-field i:nth-child(6) { left: 238px; bottom: 137px; color: var(--gari-blue); background: var(--gari-blue); }
+.gari-overline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--muted); font-size: 9px; letter-spacing: .11em; text-transform: uppercase; }
+.gari-overline span { color: var(--gari-mint); }
+.gari-overline b, .gari-overline em { font-style: normal; font-weight: 400; }
+.gari-overline b::before, .gari-overline em::before { content: ""; width: 24px; height: 1px; display: inline-block; margin: 0 9px 3px 0; background: var(--line2); }
+.gari-hero h1 { max-width: 900px; margin: 40px 0 21px; font-size: clamp(53px, 5.8vw, 90px); line-height: .91; letter-spacing: -.052em; font-weight: 500; }
+.gari-hero-lead { max-width: 790px; margin: 0; color: var(--muted); font-size: clamp(14px, 1.26vw, 18px); line-height: 1.61; }
+.gari-edition-line { display: flex; flex-wrap: wrap; gap: 9px 24px; margin-top: 29px; color: var(--muted); font-size: 9px; }
+.gari-edition-line span { display: inline-flex; gap: 6px; }
+.gari-edition-line b { color: var(--text); font-weight: 500; text-transform: uppercase; }
+.gari-formula-strip { width: min(700px, 100%); display: flex; align-items: center; gap: 7px; margin-top: 25px; padding: 10px; border: 1px solid var(--line); background: rgba(var(--gari-blue-rgb), .045); }
+.gari-formula-strip span, .gari-formula-strip strong { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; border: 1px solid rgba(var(--gari-mint-rgb), .17); background: rgba(var(--gari-mint-rgb), .055); font-size: 10px; letter-spacing: .08em; }
+.gari-formula-strip i, .gari-formula-strip em { color: var(--muted); font-style: normal; font-size: 10px; }
+.gari-formula-strip strong { margin-left: auto; border-color: var(--gari-mint); color: var(--gari-mint); }
+.gari-hero-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 25px; }
+.gari-no-rank-banner { max-width: 760px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; margin-top: 25px; padding-top: 18px; border-top: 1px solid var(--line); }
+.gari-no-rank-banner span { color: var(--gari-amber); font-size: 8px; letter-spacing: .12em; white-space: nowrap; }
+.gari-no-rank-banner p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.gari-command-card { min-width: 0; display: flex; flex-direction: column; padding: 31px; background: linear-gradient(180deg, rgba(var(--gari-mint-rgb), .055), transparent 39%), var(--gari-panel); }
+.gari-command-card > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.gari-command-card > header > div { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.gari-command-card > header strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 500; }
+.gari-command-card > header small, .gari-command-card > header span { display: block; margin-top: 4px; color: var(--muted); font-size: 8px; letter-spacing: .07em; text-transform: uppercase; }
+.gari-live-chip { display: inline-flex !important; align-items: center; gap: 6px; margin: 0 !important; color: var(--gari-mint) !important; white-space: nowrap; }
+.gari-live-chip i { width: 6px; height: 6px; border-radius: 50%; background: var(--gari-mint); box-shadow: 0 0 13px rgba(var(--gari-mint-rgb), .8); }
+.gari-score-core { flex: 1; display: grid; place-items: center; align-content: center; min-height: 335px; padding: 18px 0 8px; }
+.gari-score-core svg { width: min(270px, 78%); height: auto; overflow: visible; }
+.gari-score-core circle { fill: none; }
+.gari-score-core .track { stroke: var(--line2); stroke-width: 2; }
+.gari-score-core .score-ring { stroke: var(--gari-t2); stroke-width: 6; stroke-linecap: square; transform: rotate(-90deg); transform-origin: 120px 120px; filter: drop-shadow(0 0 8px rgba(var(--gari-blue-rgb), .35)); }
+.gari-score-core .score-ring.tier-1 { stroke: var(--gari-t1); }
+.gari-score-core .score-ring.tier-2 { stroke: var(--gari-t2); }
+.gari-score-core .score-ring.tier-3 { stroke: var(--gari-t3); }
+.gari-score-core .score-ring.tier-4 { stroke: var(--gari-t4); }
+.gari-score-core .score-ring.tier-5 { stroke: var(--gari-t5); }
+.gari-score-core .pillar { stroke-width: 2.2; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 120px 120px; opacity: .78; }
+.gari-score-core .p1 { stroke: var(--gari-mint); }
+.gari-score-core .p2 { stroke: var(--gari-blue); }
+.gari-score-core .p3 { stroke: var(--gari-violet); }
+.gari-score-core .p4 { stroke: var(--gari-amber); }
+.gari-score-core .p5 { stroke: var(--gari-coral); }
+.gari-score-core text.number { fill: var(--text); font-size: 25px; font-weight: 500; letter-spacing: -.04em; }
+.gari-score-core text.scale { fill: var(--muted); font-size: 7px; letter-spacing: .11em; }
+.gari-score-core-label { display: flex; align-items: center; gap: 9px; margin-top: -19px; padding: 7px 10px; border: 1px solid var(--line2); background: var(--gari-solid); }
+.gari-score-core-label span { color: var(--gari-t2); font-size: 10px; font-weight: 600; }
+.gari-score-core-label.tier-1 span { color: var(--gari-t1); } .gari-score-core-label.tier-3 span { color: var(--gari-t3); } .gari-score-core-label.tier-4 span { color: var(--gari-t4); } .gari-score-core-label.tier-5 span { color: var(--gari-t5); }
+.gari-score-core-label strong { font-size: 9px; font-weight: 500; }
+.gari-command-facts { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.gari-command-facts > div { min-height: 89px; padding: 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.gari-command-facts span, .gari-command-facts small { display: block; color: var(--muted); font-size: 8px; line-height: 1.35; }
+.gari-command-facts strong { display: block; margin: 8px 0 4px; font-size: 18px; font-weight: 500; }
+.gari-evidence-link { min-height: 43px; display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 13px; border: 1px solid var(--line2); background: transparent; color: var(--muted); font-size: 9px; cursor: pointer; }
+.gari-evidence-link:hover { border-color: var(--gari-mint); color: var(--text); }
+
+/* Tier ladder and jump navigation */
+.gari-tier-ladder { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); }
+.gari-tier-ladder > div { min-width: 0; position: relative; padding: 15px; border-right: 1px solid var(--line); background: var(--gari-panel); }
+.gari-tier-ladder > div:last-child { border-right: 0; }
+.gari-tier-ladder > div.active { background: rgba(var(--gari-blue-rgb), .08); box-shadow: inset 0 2px 0 currentColor; }
+.gari-tier-ladder > div.tier-1 { color: var(--gari-t1); } .gari-tier-ladder > div.tier-2 { color: var(--gari-t2); } .gari-tier-ladder > div.tier-3 { color: var(--gari-t3); } .gari-tier-ladder > div.tier-4 { color: var(--gari-t4); } .gari-tier-ladder > div.tier-5 { color: var(--gari-t5); }
+.gari-tier-ladder span { display: flex; align-items: center; gap: 7px; }
+.gari-tier-ladder i { font-style: normal; font-size: 10px; }
+.gari-tier-ladder b { overflow: hidden; color: var(--text); font-size: 9px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.gari-tier-ladder em, .gari-tier-ladder small { display: block; margin-top: 8px; color: var(--muted); font-size: 8px; font-style: normal; }
+.gari-tier-ladder mark { position: absolute; right: 9px; bottom: 8px; padding: 2px 4px; background: currentColor; color: #06172b; font-size: 8px; }
+.gari-tier-ladder.compact { margin-top: 27px; }
+.gari-tier-ladder.compact > div { padding: 11px 9px; }
+.gari-tier-ladder.compact small, .gari-tier-ladder.compact mark { display: none; }
+.gari-jump { position: sticky; top: var(--header-h, 72px); z-index: 20; display: flex; align-items: stretch; min-height: 56px; margin-top: 13px; border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 91%, transparent); backdrop-filter: blur(18px); }
+.gari-jump > span { display: flex; align-items: center; padding: 0 18px; border-right: 1px solid var(--line); color: var(--gari-mint); font-size: 9px; letter-spacing: .12em; white-space: nowrap; }
+.gari-jump button { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 7px; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 9px; cursor: pointer; }
+.gari-jump button:last-child { border-right: 0; }
+.gari-jump button i { color: var(--gari-mint); font-size: 7px; font-style: normal; }
+.gari-jump button:hover { background: rgba(var(--gari-mint-rgb), .06); color: var(--text); }
+
+/* Sections and headings */
+.gari-section { margin-top: var(--gari-gap); scroll-margin-top: 145px; }
+.gari-section-heading { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 26px; align-items: start; margin-bottom: 35px; }
+.gari-section-heading > span { padding-top: 7px; color: var(--gari-mint); font-size: 11px; letter-spacing: .11em; }
+.gari-section-heading > span::after { content: ""; width: 40px; height: 1px; display: block; margin-top: 11px; background: var(--gari-mint); opacity: .55; }
+.gari-section-heading small { color: var(--muted); font-size: 8px; letter-spacing: .13em; text-transform: uppercase; }
+.gari-section-heading h2 { max-width: 980px; margin: 12px 0 15px; font-size: clamp(36px, 4.4vw, 66px); line-height: .98; letter-spacing: -.043em; font-weight: 500; }
+.gari-section-heading p { max-width: 910px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+/* Posture */
+.gari-insight-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.gari-insight-card { min-height: 210px; position: relative; padding: 23px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--gari-panel); overflow: hidden; }
+.gari-insight-card::after { content: ""; width: 95px; height: 95px; position: absolute; right: -38px; bottom: -38px; border: 1px solid currentColor; transform: rotate(45deg); opacity: .11; }
+.gari-insight-card.strong { color: var(--gari-mint); } .gari-insight-card.constraint { color: var(--gari-coral); } .gari-insight-card.path { color: var(--gari-blue); } .gari-insight-card.balance { color: var(--gari-violet); }
+.gari-insight-card > span { color: var(--muted); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
+.gari-insight-card > div { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-top: 27px; }
+.gari-insight-card strong { color: var(--text); font-size: 20px; font-weight: 500; }
+.gari-insight-card b { font-size: 31px; line-height: 1; font-weight: 500; letter-spacing: -.04em; }
+.gari-insight-card b small { color: var(--muted); font-size: 9px; font-weight: 400; }
+.gari-insight-card p { min-height: 39px; margin: 20px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.gari-insight-card button { margin-top: 15px; padding: 0; border: 0; background: transparent; color: currentColor; font-size: 8px; cursor: pointer; }
+.gari-posture-layout { display: grid; grid-template-columns: minmax(390px, .76fr) minmax(0, 1.24fr); margin-top: 15px; border: 1px solid var(--line); }
+.gari-radar-card, .gari-pulse-card { min-width: 0; background: var(--gari-panel); }
+.gari-radar-card { padding: 26px; border-right: 1px solid var(--line); }
+.gari-radar-card > header, .gari-pulse-card > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.gari-radar-card > header span, .gari-pulse-card > header span { color: var(--gari-mint); font-size: 8px; letter-spacing: .11em; }
+.gari-radar-card > header h3, .gari-pulse-card > header h3 { margin: 8px 0 0; font-size: 18px; font-weight: 500; }
+.gari-radar-card > header > b { padding: 7px 9px; border: 1px solid var(--gari-blue); color: var(--gari-blue); font-size: 10px; }
+.gari-radar-wrap { display: grid; justify-items: center; padding: 24px 0 2px; }
+.gari-radar { width: min(400px, 100%); height: auto; overflow: visible; }
+.gari-radar .grid polygon, .gari-radar .grid line { fill: none; stroke: var(--line2); stroke-width: 1; }
+.gari-radar .series { stroke-width: 1.5; }
+.gari-radar .series.selected { fill: rgba(var(--gari-mint-rgb), .18); stroke: var(--gari-mint); }
+.gari-radar .series.region { fill: rgba(var(--gari-blue-rgb), .06); stroke: var(--gari-blue); stroke-dasharray: 3 3; }
+.gari-radar .series.global { fill: transparent; stroke: var(--gari-violet); stroke-dasharray: 2 4; }
+.gari-radar .series.role { fill: transparent; stroke: var(--gari-amber); stroke-dasharray: 6 3; }
+.gari-radar .labels text { fill: var(--text); font-size: 9px; font-weight: 500; }
+.gari-radar-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 17px; margin-top: -3px; color: var(--muted); font-size: 8px; }
+.gari-radar-legend span::before { content: ""; width: 18px; height: 2px; display: inline-block; margin: 0 6px 2px 0; background: currentColor; }
+.gari-radar-legend .selected { color: var(--gari-mint); } .gari-radar-legend .region { color: var(--gari-blue); } .gari-radar-legend .global { color: var(--gari-violet); } .gari-radar-legend .role { color: var(--gari-amber); }
+.gari-pulse-card { padding: 26px; }
+.gari-pulse-card > header small { color: var(--muted); font-size: 8px; }
+.gari-pulse-card > div { margin-top: 9px; }
+.gari-pulse { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.gari-pulse header { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: baseline; }
+.gari-pulse header > span { color: var(--gari-mint); font-size: 8px; }
+.gari-pulse:nth-child(2) header > span { color: var(--gari-blue); } .gari-pulse:nth-child(3) header > span { color: var(--gari-violet); } .gari-pulse:nth-child(4) header > span { color: var(--gari-amber); } .gari-pulse:nth-child(5) header > span { color: var(--gari-coral); }
+.gari-pulse header strong { font-size: 10px; font-weight: 500; }
+.gari-pulse header b { font-size: 13px; font-weight: 500; }
+.gari-pulse header b small { color: var(--muted); font-size: 8px; font-weight: 400; }
+.gari-pulse-track { height: 6px; position: relative; margin-top: 11px; background: var(--line); }
+.gari-pulse-track i { height: 100%; display: block; background: var(--gari-mint); }
+.gari-pulse:nth-child(2) .gari-pulse-track i { background: var(--gari-blue); } .gari-pulse:nth-child(3) .gari-pulse-track i { background: var(--gari-violet); } .gari-pulse:nth-child(4) .gari-pulse-track i { background: var(--gari-amber); } .gari-pulse:nth-child(5) .gari-pulse-track i { background: var(--gari-coral); }
+.gari-pulse-track mark { width: 2px; height: 12px; position: absolute; top: -3px; margin-left: -1px; background: var(--text); }
+.gari-pulse footer { display: flex; justify-content: space-between; margin-top: 8px; color: var(--muted); font-size: 8px; }
+.gari-pulse footer b { font-weight: 500; }
+.gari-pulse-card > footer { display: grid; grid-template-columns: 1fr auto; gap: 4px 18px; align-items: end; margin-top: 18px; padding: 17px; border: 1px solid var(--line); background: rgba(var(--gari-blue-rgb), .045); }
+.gari-pulse-card > footer span { color: var(--muted); font-size: 8px; }
+.gari-pulse-card > footer strong { grid-row: span 2; font-size: 20px; font-weight: 500; }
+.gari-pulse-card > footer small { color: var(--muted); font-size: 8px; }
+.positive { color: var(--gari-mint) !important; } .negative { color: var(--gari-coral) !important; } .neutral { color: var(--muted) !important; }
+
+/* Global atlas */
+.gari-atlas-layout { display: grid; grid-template-columns: minmax(0, 1.46fr) minmax(330px, .54fr); border: 1px solid var(--line); }
+.gari-map-card { min-width: 0; background: var(--gari-panel); border-right: 1px solid var(--line); }
+.gari-map-card > header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 21px 24px; border-bottom: 1px solid var(--line); }
+.gari-map-card > header span { display: block; color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.gari-map-card > header strong { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; }
+.gari-map-toggle { display: flex; border: 1px solid var(--line2); }
+.gari-map-toggle button { min-height: 35px; padding: 0 12px; border: 0; border-right: 1px solid var(--line2); background: transparent; color: var(--muted); font-size: 8px; cursor: pointer; }
+.gari-map-toggle button:last-child { border-right: 0; }
+.gari-map-toggle button.active { background: var(--gari-mint); color: #06172b; }
+html[data-theme="light"] .gari-map-toggle button.active { color: #fff; }
+.gari-map-stage { min-height: 480px; display: grid; place-items: center; padding: 26px 18px 8px; overflow: hidden; background: radial-gradient(circle at 50% 52%, rgba(var(--gari-blue-rgb), .08), transparent 45%); }
+.gari-world-map { width: 100%; height: auto; max-height: 470px; overflow: visible; }
+.gari-map-country { fill: var(--gari-map-empty); stroke: var(--bg); stroke-width: .65; transition: opacity .18s ease, filter .18s ease, stroke-width .18s ease; cursor: default; }
+html[data-theme="light"] .gari-map-country { stroke: #fff; }
+.gari-map-country.tier-1, .gari-map-legend .tier-1 i, .gari-map-country.score-5, .gari-map-legend .score-5 i { fill: var(--gari-t1); background: var(--gari-t1); }
+.gari-map-country.tier-2, .gari-map-legend .tier-2 i, .gari-map-country.score-4, .gari-map-legend .score-4 i { fill: var(--gari-t2); background: var(--gari-t2); }
+.gari-map-country.tier-3, .gari-map-legend .tier-3 i, .gari-map-country.score-3, .gari-map-legend .score-3 i { fill: var(--gari-t3); background: var(--gari-t3); }
+.gari-map-country.tier-4, .gari-map-legend .tier-4 i, .gari-map-country.score-2, .gari-map-legend .score-2 i { fill: var(--gari-t4); background: var(--gari-t4); }
+.gari-map-country.tier-5, .gari-map-legend .tier-5 i, .gari-map-country.score-1, .gari-map-legend .score-1 i { fill: var(--gari-t5); background: var(--gari-t5); }
+.gari-map-country[tabindex="0"] { cursor: pointer; }
+.gari-map-country[tabindex="0"]:hover { opacity: .75; filter: brightness(1.2); }
+.gari-map-country.selected { stroke: #fff; stroke-width: 3; filter: drop-shadow(0 0 7px rgba(var(--gari-mint-rgb), .75)); }
+html[data-theme="light"] .gari-map-country.selected { stroke: #07172b; }
+.gari-map-unavailable { color: var(--muted); font-size: 11px; }
+.gari-map-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; padding: 17px 23px 21px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8px; }
+.gari-map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.gari-map-legend i { width: 8px; height: 8px; display: inline-block; }
+.gari-map-legend b { color: var(--text); font-weight: 500; }
+.gari-region-card { min-width: 0; padding: 25px; background: linear-gradient(180deg, rgba(var(--gari-violet-rgb), .045), transparent), var(--gari-panel); }
+.gari-region-card > header { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.gari-region-card > header span { color: var(--gari-mint); font-size: 8px; letter-spacing: .1em; }
+.gari-region-card > header h3 { margin: 10px 0 8px; font-size: 20px; font-weight: 500; }
+.gari-region-card > header p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-region-list article { display: grid; grid-template-columns: 27px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.gari-region-list article > span { color: var(--gari-mint); font-size: 8px; }
+.gari-region-list strong { display: block; font-size: 10px; font-weight: 500; }
+.gari-region-list small { display: block; margin-top: 4px; color: var(--muted); font-size: 7px; line-height: 1.4; }
+.gari-region-list article > b { font-size: 12px; font-weight: 500; }
+.gari-region-list button { display: flex; align-items: center; gap: 5px; padding: 4px; border: 1px solid var(--line); background: transparent; cursor: pointer; }
+.gari-region-list button em { color: var(--muted); font-size: 8px; font-style: normal; }
+
+/* Five pillar command deck */
+.gari-pillar-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.gari-pillar-card { min-width: 0; position: relative; padding: 23px 20px 19px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--gari-panel); overflow: hidden; }
+.gari-pillar-card::before { content: ""; width: 130px; height: 130px; position: absolute; right: -76px; top: 74px; border: 1px solid currentColor; border-radius: 50%; opacity: .1; }
+.gari-pillar-card.pillar-1 { color: var(--gari-mint); } .gari-pillar-card.pillar-2 { color: var(--gari-blue); } .gari-pillar-card.pillar-3 { color: var(--gari-violet); } .gari-pillar-card.pillar-4 { color: var(--gari-amber); } .gari-pillar-card.pillar-5 { color: var(--gari-coral); }
+.gari-pillar-card > header { display: flex; justify-content: space-between; align-items: center; }
+.gari-pillar-card > header span { font-size: 8px; letter-spacing: .1em; }
+.gari-pillar-card > header button { width: 27px; height: 27px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.gari-pillar-orbit { width: 116px; height: 116px; display: grid; place-content: center; justify-items: center; margin: 28px auto 20px; position: relative; border-radius: 50%; background: conic-gradient(currentColor var(--score), var(--line) 0); }
+.gari-pillar-orbit::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--gari-solid); }
+.gari-pillar-orbit::after { content: ""; position: absolute; inset: 16px; border: 1px dashed currentColor; border-radius: 50%; opacity: .28; }
+.gari-pillar-orbit strong, .gari-pillar-orbit small { position: relative; z-index: 2; }
+.gari-pillar-orbit strong { color: var(--text); font-size: 22px; line-height: 1; font-weight: 500; }
+.gari-pillar-orbit small { margin-top: 5px; color: var(--muted); font-size: 8px; }
+.gari-pillar-card h3 { min-height: 44px; margin: 0; color: var(--text); font-size: 18px; line-height: 1.15; font-weight: 500; }
+.gari-pillar-card > p { min-height: 56px; margin: 12px 0 18px; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-pillar-bench { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); }
+.gari-pillar-bench span { min-width: 0; padding: 8px 6px; border-right: 1px solid var(--line); color: var(--muted); font-size: 7px; }
+.gari-pillar-bench span:last-child { border-right: 0; }
+.gari-pillar-bench b { display: block; margin-top: 5px; color: var(--text); font-size: 10px; font-weight: 500; }
+.gari-signal-dots { display: flex; gap: 5px; align-items: flex-end; height: 58px; margin-top: 16px; }
+.gari-signal-dots button { min-width: 0; flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 5px; padding: 0; border: 0; background: transparent; color: currentColor; cursor: pointer; }
+.gari-signal-dots button i { width: 100%; min-height: 3px; height: var(--v); display: block; background: currentColor; opacity: .7; }
+.gari-signal-dots button span { color: var(--muted); font-size: 6px; }
+.gari-signal-dots button.missing i { height: 3px !important; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px); opacity: .35; }
+.gari-pillar-card > footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 7px; }
+.gari-pillar-card > footer b { font-weight: 500; }
+
+/* Indicator intelligence */
+.gari-signal-toolbar { display: grid; grid-template-columns: minmax(260px, .75fr) minmax(400px, 1.25fr) auto; gap: 15px; align-items: end; padding: 21px; border: 1px solid var(--line); background: var(--gari-panel); }
+.gari-signal-toolbar label > span { display: block; margin-bottom: 7px; color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.gari-signal-toolbar input { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 0; background: transparent; color: var(--text); font-size: 10px; }
+.gari-signal-toolbar > div { display: flex; flex-wrap: wrap; border: 1px solid var(--line2); }
+.gari-signal-toolbar > div button { flex: 1; min-height: 42px; padding: 0 11px; border: 0; border-right: 1px solid var(--line2); background: transparent; color: var(--muted); font-size: 8px; cursor: pointer; white-space: nowrap; }
+.gari-signal-toolbar > div button:last-child { border-right: 0; }
+.gari-signal-toolbar > div button.active { background: rgba(var(--gari-mint-rgb), .13); color: var(--gari-mint); }
+.gari-signal-toolbar > p { margin: 0 0 13px; color: var(--muted); font-size: 8px; white-space: nowrap; }
+.gari-signal-toolbar > p b { color: var(--text); font-size: 13px; font-weight: 500; }
+.gari-signal-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-left: 1px solid var(--line); }
+.gari-signal-card { min-width: 0; min-height: 285px; padding: 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--gari-panel); }
+.gari-signal-card > header { display: flex; justify-content: space-between; align-items: center; }
+.gari-signal-card > header span { padding: 5px 7px; border: 1px solid currentColor; color: var(--gari-mint); font-size: 7px; }
+.gari-signal-card > header span.ts { color: var(--gari-blue); } .gari-signal-card > header span.os { color: var(--gari-violet); } .gari-signal-card > header span.cds { color: var(--gari-amber); } .gari-signal-card > header span.cs { color: var(--gari-coral); }
+.gari-signal-card > header button { width: 27px; height: 27px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.gari-signal-card h3 { min-height: 39px; margin: 17px 0 6px; font-size: 14px; line-height: 1.33; font-weight: 500; }
+.gari-signal-card > small { display: block; min-height: 23px; color: var(--muted); font-size: 7px; line-height: 1.4; }
+.gari-signal-value { display: flex; align-items: baseline; gap: 5px; margin-top: 20px; }
+.gari-signal-value strong { font-size: 26px; font-weight: 500; letter-spacing: -.035em; }
+.gari-signal-value span { color: var(--muted); font-size: 8px; }
+.gari-signal-track { height: 5px; position: relative; margin-top: 12px; background: var(--line); }
+.gari-signal-track i { height: 100%; display: block; background: var(--gari-mint); }
+.gari-signal-track mark { width: 2px; height: 11px; position: absolute; top: -3px; margin-left: -1px; background: var(--text); }
+.gari-signal-card footer { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; border: 1px solid var(--line); }
+.gari-signal-card footer span { min-width: 0; padding: 8px; border-right: 1px solid var(--line); color: var(--muted); font-size: 7px; }
+.gari-signal-card footer span:last-child { border-right: 0; }
+.gari-signal-card footer b { display: block; margin-top: 5px; color: var(--text); font-size: 9px; font-weight: 500; }
+.gari-signal-card.unavailable { background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(var(--gari-coral-rgb), .025) 12px 24px), var(--gari-panel); }
+.gari-na-panel { margin-top: 22px; padding: 17px; border: 1px dashed rgba(var(--gari-coral-rgb), .45); }
+.gari-na-panel strong { color: var(--gari-coral); font-size: 24px; font-weight: 500; }
+.gari-na-panel p { margin: 10px 0 0; color: var(--muted); font-size: 8px; line-height: 1.55; }
+.gari-empty { grid-column: 1 / -1; padding: 45px; color: var(--muted); text-align: center; font-size: 11px; }
+
+/* Tiers */
+.gari-tier-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(410px, .8fr); border: 1px solid var(--line); }
+.gari-tier-distribution, .gari-maturity-card { min-width: 0; padding: 27px; background: var(--gari-panel); }
+.gari-tier-distribution { border-right: 1px solid var(--line); }
+.gari-tier-distribution > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.gari-tier-distribution > header span, .gari-maturity-card > header > span { color: var(--gari-mint); font-size: 8px; letter-spacing: .11em; }
+.gari-tier-distribution > header h3, .gari-maturity-card > header h3 { margin: 9px 0 0; font-size: 20px; font-weight: 500; }
+.gari-tier-distribution > header > strong { padding: 8px 11px; border: 1px solid var(--gari-blue); color: var(--gari-blue); font-size: 10px; }
+.gari-tier-row { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--gari-t2); }
+.gari-tier-row.tier-1 { color: var(--gari-t1); } .gari-tier-row.tier-3 { color: var(--gari-t3); } .gari-tier-row.tier-4 { color: var(--gari-t4); } .gari-tier-row.tier-5 { color: var(--gari-t5); }
+.gari-tier-row header { display: grid; grid-template-columns: 35px minmax(0, 1fr) 45px 52px; gap: 10px; align-items: center; }
+.gari-tier-row header > span { font-size: 10px; font-weight: 500; }
+.gari-tier-row strong { display: block; color: var(--text); font-size: 10px; font-weight: 500; }
+.gari-tier-row small { display: block; margin-top: 3px; color: var(--muted); font-size: 7px; }
+.gari-tier-row header > b, .gari-tier-row header > em { text-align: right; font-size: 10px; font-style: normal; font-weight: 500; }
+.gari-tier-row > div { height: 7px; position: relative; margin-top: 9px; background: var(--line); }
+.gari-tier-row > div i { height: 100%; display: block; background: currentColor; }
+.gari-tier-row > div mark { position: absolute; top: -19px; padding: 2px 4px; transform: translateX(-50%); background: currentColor; color: #06172b; font-size: 7px; }
+.gari-maturity-card > header p { margin: 11px 0 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-maturity-scale { position: relative; margin: 61px 4px 40px; }
+.gari-maturity-scale .bands { height: 20px; display: flex; }
+.gari-maturity-scale .bands span { display: flex; align-items: center; justify-content: center; color: #06172b; font-size: 7px; }
+.gari-maturity-scale .bands .tier-1 { background: var(--gari-t1); } .gari-maturity-scale .bands .tier-2 { background: var(--gari-t2); } .gari-maturity-scale .bands .tier-3 { background: var(--gari-t3); } .gari-maturity-scale .bands .tier-4 { background: var(--gari-t4); } .gari-maturity-scale .bands .tier-5 { background: var(--gari-t5); }
+.gari-maturity-scale > mark { position: absolute; top: -48px; transform: translateX(-50%); background: transparent; color: var(--text); text-align: center; }
+.gari-maturity-scale > mark i { width: 1px; height: 47px; position: absolute; left: 50%; top: 27px; background: var(--text); }
+.gari-maturity-scale > mark b { display: block; font-size: 12px; font-weight: 500; }
+.gari-maturity-scale > mark small { display: block; margin-top: 3px; color: var(--gari-mint); font-size: 7px; }
+.gari-maturity-scale .ticks { position: relative; display: flex; justify-content: space-between; margin-top: 8px; color: var(--muted); font-size: 7px; }
+.gari-maturity-scale .ticks span[style] { position: absolute; transform: translateX(-50%); }
+.gari-role-card { margin-top: 15px; padding: 27px; border: 1px solid var(--line); background: var(--gari-panel); }
+.gari-role-card > header { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.gari-role-card > header span { color: var(--gari-mint); font-size: 8px; letter-spacing: .11em; }
+.gari-role-card > header h3 { margin: 9px 0 7px; font-size: 20px; font-weight: 500; }
+.gari-role-card > header p { max-width: 720px; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-role-card > header > b { color: var(--gari-mint); font-size: 38px; line-height: 1; font-weight: 500; }
+.gari-role-model-cluster { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 19px; }
+.gari-role-model-cluster button { min-width: 0; min-height: 67px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 11px; border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; text-align: left; cursor: pointer; }
+.gari-role-model-cluster button:hover { background: rgba(var(--gari-mint-rgb), .07); }
+.gari-role-model-cluster strong { display: block; overflow: hidden; font-size: 9px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.gari-role-model-cluster small { display: block; margin-top: 4px; color: var(--muted); font-size: 7px; }
+.gari-role-model-cluster button > b { color: var(--gari-mint); font-size: 10px; font-weight: 500; }
+
+/* Economy directory */
+.gari-directory-shell { border: 1px solid var(--line); background: var(--gari-panel); }
+.gari-directory-toolbar { display: grid; grid-template-columns: minmax(220px, 1.1fr) repeat(3, minmax(150px, .7fr)) auto; gap: 10px; align-items: end; padding: 19px; border-bottom: 1px solid var(--line); }
+.gari-directory-toolbar label > span { display: block; margin-bottom: 7px; color: var(--muted); font-size: 7px; text-transform: uppercase; }
+.gari-directory-toolbar input, .gari-directory-toolbar select { width: 100%; min-height: 42px; padding: 0 11px; border: 1px solid var(--line2); border-radius: 0; background: var(--gari-solid); color: var(--text); font-size: 9px; }
+.gari-directory-meta { display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 13px 19px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8px; }
+.gari-directory-meta b { color: var(--text); font-size: 12px; font-weight: 500; }
+.gari-directory-meta p { margin: 0; }
+.gari-directory-meta p i { width: 6px; height: 6px; display: inline-block; margin-right: 6px; border-radius: 50%; background: var(--gari-amber); }
+.gari-directory-table-wrap { width: 100%; overflow-x: auto; }
+.gari-directory-table { width: 100%; min-width: 1060px; border-collapse: collapse; font-size: 9px; }
+.gari-directory-table th { padding: 13px 12px; border-bottom: 1px solid var(--line); color: var(--muted); text-align: left; font-size: 7px; font-weight: 400; letter-spacing: .07em; text-transform: uppercase; }
+.gari-directory-table td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.gari-directory-table tr.selected td { background: rgba(var(--gari-mint-rgb), .055); }
+.gari-directory-table td > strong { font-size: 12px; font-weight: 500; }
+.gari-directory-table td > small, .gari-directory-table td > span + small { display: block; margin-top: 4px; color: var(--muted); font-size: 7px; }
+.gari-tier-pill { min-width: 29px; display: inline-flex; justify-content: center; padding: 5px 6px; border: 1px solid currentColor; color: var(--gari-t2); font-size: 8px; }
+.gari-tier-pill.tier-1 { color: var(--gari-t1); } .gari-tier-pill.tier-3 { color: var(--gari-t3); } .gari-tier-pill.tier-4 { color: var(--gari-t4); } .gari-tier-pill.tier-5 { color: var(--gari-t5); }
+.gari-country-cell { max-width: 260px; display: flex; align-items: center; gap: 9px; padding: 0; border: 0; background: transparent; text-align: left; cursor: pointer; }
+.gari-country-cell strong { display: block; overflow: hidden; font-size: 10px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.gari-country-cell small { display: block; margin-top: 4px; color: var(--muted); font-size: 7px; }
+.gari-mini-pillars { height: 34px; display: flex; gap: 3px; align-items: end; }
+.gari-mini-pillars span { width: 13px; height: 30px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 3px; }
+.gari-mini-pillars i { width: 100%; display: block; background: var(--gari-mint); opacity: .72; }
+.gari-mini-pillars span:nth-child(2) i { background: var(--gari-blue); } .gari-mini-pillars span:nth-child(3) i { background: var(--gari-violet); } .gari-mini-pillars span:nth-child(4) i { background: var(--gari-amber); } .gari-mini-pillars span:nth-child(5) i { background: var(--gari-coral); }
+.gari-mini-pillars small { color: var(--muted); font-size: 5px; }
+.gari-row-evidence { width: 29px; height: 29px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.gari-pagination { display: flex; justify-content: space-between; align-items: center; padding: 16px 19px; color: var(--muted); font-size: 8px; }
+.gari-pagination > div { display: flex; align-items: center; gap: 12px; }
+.gari-pagination button { min-height: 34px; padding: 0 11px; border: 1px solid var(--line2); background: transparent; color: var(--text); font-size: 8px; cursor: pointer; }
+.gari-pagination button:disabled { opacity: .35; cursor: default; }
+.gari-pagination b { font-weight: 500; }
+
+/* Methodology and evidence */
+.gari-method-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.gari-method-card { min-height: 205px; padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--gari-panel); }
+.gari-method-card .gari-icon { width: 22px; height: 22px; opacity: .72; }
+.gari-method-card > span { display: block; margin-top: 24px; color: var(--muted); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+.gari-method-card strong { display: block; margin-top: 9px; color: var(--gari-mint); font-size: 27px; font-weight: 500; }
+.gari-method-card p { margin: 11px 0 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-method-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(360px, .65fr); margin-top: 15px; border: 1px solid var(--line); }
+.gari-formula-card, .gari-trust-card { min-width: 0; padding: 28px; background: var(--gari-panel); }
+.gari-formula-card { border-right: 1px solid var(--line); }
+.gari-formula-card > header span, .gari-trust-card > header span { color: var(--gari-mint); font-size: 8px; letter-spacing: .1em; }
+.gari-formula-card > header h3, .gari-trust-card > header h3 { margin: 9px 0 0; font-size: 20px; font-weight: 500; }
+.gari-formula-big { display: flex; align-items: stretch; gap: 7px; margin: 29px 0 23px; }
+.gari-formula-big span, .gari-formula-big strong { flex: 1; min-width: 0; display: grid; place-content: center; justify-items: center; padding: 13px 8px; border: 1px solid var(--line2); color: var(--gari-mint); font-size: 13px; font-weight: 500; }
+.gari-formula-big span:nth-of-type(2) { color: var(--gari-blue); } .gari-formula-big span:nth-of-type(3) { color: var(--gari-violet); } .gari-formula-big span:nth-of-type(4) { color: var(--gari-amber); } .gari-formula-big span:nth-of-type(5) { color: var(--gari-coral); }
+.gari-formula-big strong { border-color: var(--gari-mint); background: rgba(var(--gari-mint-rgb), .06); }
+.gari-formula-big small { margin-top: 5px; color: var(--muted); font-size: 7px; font-weight: 400; }
+.gari-formula-big i, .gari-formula-big em { display: grid; place-content: center; color: var(--muted); font-size: 9px; font-style: normal; }
+.gari-formula-card > p { margin: 0; color: var(--text); font-size: 11px; line-height: 1.65; }
+.gari-formula-card > small { display: block; margin-top: 15px; color: var(--muted); font-size: 8px; line-height: 1.55; }
+.gari-trust-card ol { margin: 24px 0; padding: 0; list-style: none; }
+.gari-trust-card li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.gari-trust-card li b { color: var(--gari-mint); font-size: 8px; font-weight: 500; }
+.gari-trust-card li span { overflow-wrap: anywhere; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.gari-trust-card .gari-button { width: 100%; }
+.gari-policy-note { display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; margin-top: 15px; padding: 20px 22px; border: 1px solid rgba(var(--gari-amber-rgb), .36); background: rgba(var(--gari-amber-rgb), .04); }
+.gari-policy-note strong { color: var(--gari-amber); font-size: 9px; text-transform: uppercase; }
+.gari-policy-note p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+.gari-policy-note a { color: var(--text); font-size: 8px; text-decoration: none; white-space: nowrap; }
+
+/* Responsive design */
+@media (max-width: 1320px) {
+  .gari-hero { grid-template-columns: minmax(0, 1.18fr) minmax(380px, .82fr); }
+  .gari-hero-copy { padding: 48px 43px; }
+  .gari-pillar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gari-signal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gari-directory-toolbar { grid-template-columns: minmax(230px, 1fr) repeat(2, minmax(150px, .6fr)); }
+  .gari-directory-toolbar label:nth-of-type(4) { grid-column: auto; }
+  .gari-directory-toolbar .gari-button { min-height: 42px; }
+}
+@media (max-width: 1080px) {
+  .gari-workspace { --gari-gap: 78px; }
+  .gari-hero { grid-template-columns: 1fr; }
+  .gari-hero-copy { border-right: 0; border-bottom: 1px solid var(--line); }
+  .gari-command-card { min-height: 640px; }
+  .gari-score-core { min-height: 315px; }
+  .gari-jump { overflow-x: auto; justify-content: flex-start; }
+  .gari-jump button { flex: 0 0 auto; min-width: 110px; padding: 0 12px; }
+  .gari-insight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gari-posture-layout, .gari-atlas-layout, .gari-tier-layout, .gari-method-layout { grid-template-columns: 1fr; }
+  .gari-radar-card, .gari-map-card, .gari-tier-distribution, .gari-formula-card { border-right: 0; border-bottom: 1px solid var(--line); }
+  .gari-signal-toolbar { grid-template-columns: 1fr; align-items: stretch; }
+  .gari-signal-toolbar > p { margin: 0; }
+  .gari-role-model-cluster { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gari-method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gari-policy-note { grid-template-columns: 1fr; }
+  .gari-policy-note a { white-space: normal; }
+}
+@media (max-width: 820px) {
+  .gari-workspace-host { padding-top: 10px; }
+  .gari-workspace { --gari-gap: 66px; }
+  .gari-hero-copy { padding: 40px 28px; }
+  .gari-hero h1 { font-size: clamp(45px, 10vw, 72px); }
+  .gari-command-card { padding: 25px; }
+  .gari-no-rank-banner { grid-template-columns: 1fr; gap: 8px; }
+  .gari-tier-ladder { grid-template-columns: 1fr; }
+  .gari-tier-ladder > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .gari-tier-ladder > div:last-child { border-bottom: 0; }
+  .gari-tier-ladder.compact { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .gari-tier-ladder.compact > div { border-right: 1px solid var(--line); border-bottom: 0; }
+  .gari-tier-ladder.compact b { display: none; }
+  .gari-section-heading { grid-template-columns: 45px minmax(0, 1fr); gap: 14px; }
+  .gari-section-heading h2 { font-size: clamp(34px, 8vw, 55px); }
+  .gari-pillar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gari-signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gari-role-model-cluster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gari-directory-toolbar { grid-template-columns: 1fr 1fr; }
+  .gari-directory-toolbar .search { grid-column: 1 / -1; }
+  .gari-directory-meta { align-items: flex-start; flex-direction: column; }
+  .gari-formula-big { flex-wrap: wrap; }
+  .gari-formula-big span, .gari-formula-big strong { flex: 1 1 92px; }
+  .gari-formula-big i, .gari-formula-big em { flex: 0 0 14px; }
+}
+@media (max-width: 560px) {
+  .gari-workspace { --gari-gap: 54px; }
+  .gari-hero { min-height: 0; }
+  .gari-hero-copy { padding: 34px 20px 31px; }
+  .gari-overline em { display: none; }
+  .gari-hero h1 { margin-top: 31px; font-size: clamp(34px, 9.2vw, 44px); overflow-wrap: normal; word-break: normal; }
+  .gari-hero-lead { font-size: 13px; }
+  .gari-edition-line { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .gari-edition-line span { display: block; }
+  .gari-edition-line b { display: block; margin-bottom: 3px; }
+  .gari-formula-strip { overflow-x: auto; justify-content: flex-start; }
+  .gari-formula-strip span, .gari-formula-strip strong { flex: 0 0 auto; }
+  .gari-hero-actions { display: grid; grid-template-columns: 1fr; }
+  .gari-command-card { min-height: 0; padding: 20px; }
+  .gari-command-card > header { align-items: center; }
+  .gari-live-chip { font-size: 0 !important; }
+  .gari-score-core { min-height: 285px; }
+  .gari-command-facts { grid-template-columns: 1fr 1fr; }
+  .gari-command-facts > div { min-height: 83px; padding: 12px; }
+  .gari-command-facts strong { font-size: 15px; }
+  .gari-jump { top: 60px; min-height: 50px; }
+  .gari-jump > span { display: none; }
+  .gari-jump button { min-width: 95px; }
+  .gari-section-heading { grid-template-columns: 1fr; gap: 6px; }
+  .gari-section-heading > span { padding: 0; }
+  .gari-section-heading > span::after { display: none; }
+  .gari-section-heading h2 { margin-top: 9px; font-size: 39px; }
+  .gari-section-heading p { font-size: 11px; }
+  .gari-insight-grid { grid-template-columns: 1fr; }
+  .gari-insight-card { min-height: 180px; }
+  .gari-radar-card, .gari-pulse-card, .gari-map-card, .gari-region-card, .gari-tier-distribution, .gari-maturity-card, .gari-role-card, .gari-formula-card, .gari-trust-card { padding: 19px; }
+  .gari-pulse header { grid-template-columns: 32px 1fr auto; }
+  .gari-pulse footer { gap: 10px; }
+  .gari-map-card > header { align-items: flex-start; padding: 17px; }
+  .gari-map-stage { min-height: 270px; padding: 10px 4px; }
+  .gari-map-legend { padding: 14px 17px; }
+  .gari-region-list article { grid-template-columns: 24px minmax(0, 1fr) auto; }
+  .gari-region-list button { display: none; }
+  .gari-pillar-grid, .gari-signal-grid { grid-template-columns: 1fr; }
+  .gari-pillar-card { min-height: 470px; padding: 22px; }
+  .gari-pillar-card h3, .gari-pillar-card > p { min-height: 0; }
+  .gari-signal-toolbar { padding: 15px; }
+  .gari-signal-toolbar > div { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .gari-signal-toolbar > div button { border-bottom: 1px solid var(--line2); }
+  .gari-signal-card { min-height: 250px; }
+  .gari-tier-row header { grid-template-columns: 31px minmax(0, 1fr) 33px 43px; gap: 7px; }
+  .gari-tier-ladder.compact { overflow-x: auto; grid-template-columns: repeat(5, 72px); }
+  .gari-role-model-cluster { grid-template-columns: 1fr; }
+  .gari-directory-toolbar { grid-template-columns: 1fr; }
+  .gari-directory-toolbar .search { grid-column: auto; }
+  .gari-method-grid { grid-template-columns: 1fr; }
+  .gari-method-card { min-height: 170px; }
+  .gari-formula-big { gap: 4px; }
+  .gari-formula-big span, .gari-formula-big strong { flex-basis: 72px; padding: 10px 4px; }
+  .gari-formula-big i, .gari-formula-big em { display: none; }
+  .gari-pagination { align-items: flex-start; flex-direction: column; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gari-workspace *, .gari-workspace *::before, .gari-workspace *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+
+/* Stage 08 GARI-specific visual system. */
+.gari-workspace {
+  --gari-p1: #59dcff;
+  --gari-p2: #728cff;
+  --gari-p3: #c268f2;
+  --gari-p4: #ffbc5c;
+  --gari-p5: #ff7088;
+  --gari-p6: #aa84ff;
+  --gari-rank1: #59dcff;
+  --gari-rank2: #728cff;
+  --gari-rank3: #a678ff;
+  --gari-rank4: #d06dd7;
+  --gari-rank5: #ed8d99;
+  --gari-rank6: #a797a9;
+}
+html[data-theme="light"] .gari-workspace {
+  --gari-p1: #087ea0;
+  --gari-p2: #405fc4;
+  --gari-p3: #8145a8;
+  --gari-p4: #9c6414;
+  --gari-p5: #a73d54;
+  --gari-p6: #6844a4;
+  --gari-rank1: #087ea0;
+  --gari-rank2: #405fc4;
+  --gari-rank3: #6844a4;
+  --gari-rank4: #814f8d;
+  --gari-rank5: #a85d68;
+  --gari-rank6: #776a79;
+}
+.gari-workspace-host { padding-top: 22px; }
+.gari-workspace { --gari-gap: 92px; }
+.gari-hero { min-height: 700px; grid-template-columns: minmax(0, 1.42fr) minmax(390px, .64fr); }
+.gari-hero-copy { padding: 55px 58px 48px; background: radial-gradient(circle at 91% 8%, rgba(var(--gari-mint-rgb), .13), transparent 26%), radial-gradient(circle at 18% 93%, rgba(var(--gari-violet-rgb), .10), transparent 28%), linear-gradient(139deg, rgba(var(--gari-blue-rgb), .10), transparent 60%); }
+.gari-hero-copy::before { content: "AI"; right: 1%; bottom: -22px; font-size: clamp(180px, 20vw, 310px); opacity: .85; }
+.gari-neural-field { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.gari-neural-field::before { content: ""; width: 355px; height: 355px; position: absolute; right: -70px; top: -145px; border: 1px solid rgba(var(--gari-mint-rgb), .19); border-radius: 50%; }
+.gari-neural-field::after { content: ""; width: 230px; height: 230px; position: absolute; right: 57px; top: 37px; border: 1px dashed rgba(var(--gari-blue-rgb), .28); border-radius: 50%; }
+.gari-neural-field i { width: 8px; height: 8px; position: absolute; border-radius: 50%; background: var(--gari-p1); box-shadow: 0 0 18px rgba(var(--gari-mint-rgb), .75); }
+.gari-neural-field i::after { content: ""; width: 112px; height: 1px; position: absolute; left: 7px; top: 3px; transform-origin: left center; background: linear-gradient(90deg, currentColor, transparent); opacity: .45; }
+.gari-neural-field i:nth-child(1) { right: 92px; top: 53px; color: var(--gari-p1); }
+.gari-neural-field i:nth-child(2) { right: 246px; top: 104px; color: var(--gari-p2); background: var(--gari-p2); }
+.gari-neural-field i:nth-child(2)::after { transform: rotate(39deg); }
+.gari-neural-field i:nth-child(3) { right: 167px; top: 241px; color: var(--gari-p3); background: var(--gari-p3); }
+.gari-neural-field i:nth-child(3)::after { transform: rotate(-52deg); }
+.gari-neural-field i:nth-child(4) { right: 31px; top: 184px; color: var(--gari-p4); background: var(--gari-p4); }
+.gari-neural-field i:nth-child(4)::after { transform: rotate(180deg); }
+.gari-neural-field i:nth-child(5) { left: 59px; bottom: 95px; color: var(--gari-p5); background: var(--gari-p5); }
+.gari-neural-field i:nth-child(6) { left: 244px; bottom: 136px; color: var(--gari-p6); background: var(--gari-p6); }
+.gari-hero h1 { max-width: 900px; margin: 37px 0 22px; font-size: clamp(55px, 5.5vw, 88px); }
+.gari-formula-strip { width: min(760px, 100%); gap: 5px; }
+.gari-formula-strip span { flex: 1; min-width: 63px; flex-direction: column; gap: 3px; padding: 7px 6px; }
+.gari-formula-strip span small { color: var(--gari-mint); font-size: 7px; }
+.gari-formula-strip strong { flex: 0 0 auto; }
+.gari-correction-banner { max-width: 790px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
+.gari-correction-banner span { color: var(--gari-amber); font-size: 8px; letter-spacing: .13em; white-space: nowrap; }
+.gari-correction-banner p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.gari-command-card > header > div > span { min-width: 0; }
+.gari-command-card > header mark { display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 0; background: transparent; color: var(--gari-mint); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.gari-command-card > header mark i { width: 6px; height: 6px; border-radius: 50%; background: var(--gari-mint); box-shadow: 0 0 12px rgba(var(--gari-mint-rgb), .8); }
+.gari-score-dial { flex: 1; min-height: 320px; display: grid; place-items: center; padding: 14px 0; }
+.gari-score-dial svg { width: min(300px, 82%); height: auto; overflow: visible; }
+.gari-score-dial circle { fill: none; }
+.gari-score-dial .track { stroke: var(--line2); stroke-width: 3; }
+.gari-score-dial .value { stroke: var(--gari-mint); stroke-width: 7; transform: rotate(-90deg); transform-origin: 120px 120px; filter: drop-shadow(0 0 9px rgba(var(--gari-mint-rgb), .4)); }
+.gari-score-dial .node { stroke: var(--bg); stroke-width: 2; }
+.gari-score-dial .p1 { fill: var(--gari-p1); } .gari-score-dial .p2 { fill: var(--gari-p2); } .gari-score-dial .p3 { fill: var(--gari-p3); }
+.gari-score-dial .p4 { fill: var(--gari-p4); } .gari-score-dial .p5 { fill: var(--gari-p5); } .gari-score-dial .p6 { fill: var(--gari-p6); }
+.gari-score-dial text.rank { fill: var(--text); font-size: 28px; font-weight: 500; letter-spacing: -.04em; }
+.gari-score-dial text.official { fill: var(--gari-mint); font-size: 6.5px; letter-spacing: .14em; }
+.gari-score-dial text.derived { fill: var(--text); font-size: 19px; font-weight: 500; }
+.gari-score-dial text.scale { fill: var(--muted); font-size: 6px; letter-spacing: .14em; }
+.gari-command-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.gari-command-grid > div { min-height: 88px; padding: 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.gari-command-grid span, .gari-command-grid small { display: block; color: var(--muted); font-size: 8px; line-height: 1.35; }
+.gari-command-grid strong { display: block; margin: 8px 0 4px; font-size: 18px; font-weight: 500; }
+.gari-loading-orbit { width: 180px; height: 180px; position: relative; display: grid; place-items: center; border: 1px solid rgba(var(--gari-mint-rgb), .32); border-radius: 50%; }
+.gari-loading-orbit::before, .gari-loading-orbit::after { content: ""; position: absolute; inset: 24px; border: 1px dashed rgba(var(--gari-blue-rgb), .4); border-radius: 50%; }
+.gari-loading-orbit::after { inset: 53px; border-color: rgba(var(--gari-violet-rgb), .55); }
+.gari-loading-orbit b { font-size: 21px; font-weight: 500; letter-spacing: .13em; }
+.gari-loading-orbit i { width: 8px; height: 8px; position: absolute; left: calc(50% - 4px); top: calc(50% - 4px); border-radius: 50%; background: var(--gari-p1); transform: rotate(calc(var(--n) * 60deg)) translateY(-90px); transform-origin: center; }
+.gari-loading-orbit i:nth-child(1){--n:0}.gari-loading-orbit i:nth-child(2){--n:1;background:var(--gari-p2)}.gari-loading-orbit i:nth-child(3){--n:2;background:var(--gari-p3)}.gari-loading-orbit i:nth-child(4){--n:3;background:var(--gari-p4)}.gari-loading-orbit i:nth-child(5){--n:4;background:var(--gari-p5)}.gari-loading-orbit i:nth-child(6){--n:5;background:var(--gari-p6)}
+
+/* Architecture */
+.gari-architecture-top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(370px, .8fr); gap: 13px; }
+.gari-radar-card, .gari-diagnostic-card, .gari-map-card, .gari-region-card, .gari-runway-card, .gari-audit-card, .gari-formula-card, .gari-chain-card { border: 1px solid var(--line); background: var(--gari-panel); }
+.gari-radar-card { padding: 28px; }
+.gari-radar-card > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.gari-radar-card > header span, .gari-diagnostic-card > span, .gari-runway-card > header span, .gari-audit-card > header span { color: var(--gari-mint); font-size: 8px; letter-spacing: .13em; }
+.gari-radar-card > header h3, .gari-diagnostic-card h3, .gari-runway-card h3, .gari-audit-card h3 { margin: 7px 0 0; font-size: 23px; line-height: 1.1; font-weight: 500; }
+.gari-radar-card > header mark { padding: 0; background: transparent; color: var(--text); font-size: 25px; }
+.gari-radar-card > header mark small { display: block; color: var(--muted); font-size: 7px; font-weight: 400; text-transform: uppercase; }
+.gari-radar { width: 100%; max-height: 470px; margin-top: 12px; overflow: visible; }
+.gari-radar .grid polygon, .gari-radar .grid line { fill: none; stroke: var(--line2); stroke-width: 1; }
+.gari-radar .area { fill: rgba(var(--gari-mint-rgb), .14); stroke: none; }
+.gari-radar .line { fill: none; stroke: var(--gari-mint); stroke-width: 2; filter: drop-shadow(0 0 7px rgba(var(--gari-mint-rgb), .35)); }
+.gari-radar circle { stroke: var(--bg); stroke-width: 3; }
+.gari-radar .p1{fill:var(--gari-p1)}.gari-radar .p2{fill:var(--gari-p2)}.gari-radar .p3{fill:var(--gari-p3)}.gari-radar .p4{fill:var(--gari-p4)}.gari-radar .p5{fill:var(--gari-p5)}.gari-radar .p6{fill:var(--gari-p6)}
+.gari-radar text { fill: var(--muted); font-size: 9px; letter-spacing: .08em; }
+.gari-diagnostic-card { padding: 29px; display: flex; flex-direction: column; }
+.gari-diagnostic-card > h3 { max-width: 540px; margin-bottom: 25px; }
+.gari-diagnostic-card > div { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+.gari-diagnostic-card article { padding: 19px; border: 1px solid var(--line); background: var(--gari-panel-strong); }
+.gari-diagnostic-card article.strong { box-shadow: inset 0 2px 0 var(--gari-mint); }
+.gari-diagnostic-card article.constraint { box-shadow: inset 0 2px 0 var(--gari-coral); }
+.gari-diagnostic-card small { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.gari-diagnostic-card article strong { display: block; margin: 15px 0 8px; font-size: 15px; font-weight: 500; }
+.gari-diagnostic-card article b { font-size: 29px; font-weight: 500; }
+.gari-diagnostic-card article p { margin: 12px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.gari-diagnostic-card > footer { margin-top: 17px; padding-top: 16px; border-top: 1px solid var(--line); }
+.gari-diagnostic-card > footer span { font-size: 10px; }.gari-diagnostic-card > footer b { margin-left: 7px; font-size: 16px; }
+.gari-diagnostic-card > footer p { margin: 6px 0 0; color: var(--muted); font-size: 9px; }
+.gari-pulse-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+.gari-pulse { min-width: 0; padding: 22px; border: 1px solid var(--line); background: var(--gari-panel); box-shadow: inset 0 2px 0 var(--gari-p1); }
+.gari-pulse.p2{box-shadow:inset 0 2px 0 var(--gari-p2)}.gari-pulse.p3{box-shadow:inset 0 2px 0 var(--gari-p3)}.gari-pulse.p4{box-shadow:inset 0 2px 0 var(--gari-p4)}.gari-pulse.p5{box-shadow:inset 0 2px 0 var(--gari-p5)}.gari-pulse.p6{box-shadow:inset 0 2px 0 var(--gari-p6)}
+.gari-pulse > header { display:flex;justify-content:space-between;color:var(--muted);font-size:8px;letter-spacing:.1em; }
+.gari-pulse > header button { border:0;background:transparent;color:var(--gari-mint);cursor:pointer; }
+.gari-pulse-score { position:relative;display:flex;align-items:flex-end;justify-content:space-between;margin-top:19px;padding-bottom:10px;border-bottom:1px solid var(--line); }
+.gari-pulse-score strong { font-size:33px;font-weight:500;letter-spacing:-.04em; }
+.gari-pulse-score i { width:45%;height:5px;position:relative;background:var(--line2); }
+.gari-pulse-score i::after { content:"";position:absolute;inset:0 auto 0 0;width:var(--v);background:var(--gari-mint); }
+.gari-pulse h3 { margin:17px 0 8px;font-size:16px;font-weight:500; }
+.gari-pulse p { min-height:48px;margin:0;color:var(--muted);font-size:10px;line-height:1.55; }
+.gari-pulse footer { display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-top:17px;padding-top:14px;border-top:1px solid var(--line);font-size:8px;color:var(--muted); }
+.gari-pulse footer b { display:block;margin-top:4px;color:var(--text);font-size:11px; }
+.gari-pulse footer em { align-self:end;font-style:normal;font-size:11px; }.gari-pulse footer em.positive{color:var(--gari-mint)}.gari-pulse footer em.negative{color:var(--gari-coral)}
+
+/* Atlas */
+.gari-atlas-layout { display:grid;grid-template-columns:minmax(0,1.55fr) minmax(330px,.45fr);gap:13px; }
+.gari-map-card > header { display:flex;justify-content:space-between;align-items:center;padding:22px 25px;border-bottom:1px solid var(--line); }
+.gari-map-card > header span,.gari-region-card > header span { display:block;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.11em; }
+.gari-map-card > header strong { display:block;margin-top:6px;font-size:15px;font-weight:500; }
+.gari-map-toggle { display:flex;border:1px solid var(--line2); }.gari-map-toggle button{min-height:34px;padding:0 13px;border:0;border-right:1px solid var(--line2);background:transparent;color:var(--muted);font-size:8px;cursor:pointer}.gari-map-toggle button:last-child{border-right:0}.gari-map-toggle button.active{background:rgba(var(--gari-mint-rgb),.12);color:var(--gari-mint)}
+.gari-map-stage { min-height:500px;display:grid;place-items:center;padding:20px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(var(--gari-blue-rgb),.07),transparent 53%); }
+.gari-world-map { width:100%;height:auto;max-height:500px;overflow:visible; }
+.gari-map-country { stroke:var(--bg);stroke-width:.55;vector-effect:non-scaling-stroke;cursor:pointer;transition:opacity .16s,filter .16s,stroke-width .16s; }
+.gari-map-country:hover,.gari-map-country:focus-visible{opacity:.8;filter:brightness(1.35);stroke-width:1.4}.gari-map-country.selected{stroke:var(--text);stroke-width:2.3;filter:drop-shadow(0 0 5px rgba(var(--gari-mint-rgb),.75))}
+.gari-map-country.no-data{fill:var(--gari-map-empty)}
+.gari-map-country.rank-1,.gari-map-legend .rank-1 i{fill:var(--gari-rank1);background:var(--gari-rank1)}.gari-map-country.rank-2,.gari-map-legend .rank-2 i{fill:var(--gari-rank2);background:var(--gari-rank2)}.gari-map-country.rank-3,.gari-map-legend .rank-3 i{fill:var(--gari-rank3);background:var(--gari-rank3)}.gari-map-country.rank-4,.gari-map-legend .rank-4 i{fill:var(--gari-rank4);background:var(--gari-rank4)}.gari-map-country.rank-5,.gari-map-legend .rank-5 i{fill:var(--gari-rank5);background:var(--gari-rank5)}.gari-map-country.rank-6,.gari-map-legend .rank-6 i{fill:var(--gari-rank6);background:var(--gari-rank6)}
+.gari-map-country.score-1,.gari-map-legend .score-1 i{fill:#605b6d;background:#605b6d}.gari-map-country.score-2,.gari-map-legend .score-2 i{fill:var(--gari-p5);background:var(--gari-p5)}.gari-map-country.score-3,.gari-map-legend .score-3 i{fill:var(--gari-p4);background:var(--gari-p4)}.gari-map-country.score-4,.gari-map-legend .score-4 i{fill:var(--gari-p3);background:var(--gari-p3)}.gari-map-country.score-5,.gari-map-legend .score-5 i{fill:var(--gari-p2);background:var(--gari-p2)}.gari-map-country.score-6,.gari-map-legend .score-6 i{fill:var(--gari-p1);background:var(--gari-p1)}
+.gari-map-legend { display:flex;flex-wrap:wrap;gap:13px;padding:14px 24px;border-top:1px solid var(--line);color:var(--muted);font-size:8px; }.gari-map-legend span{display:flex;align-items:center;gap:6px}.gari-map-legend i{width:10px;height:6px;display:inline-block}
+.gari-region-card { padding:25px; }.gari-region-card > header h3{margin:8px 0 9px;font-size:22px;font-weight:500}.gari-region-card > header p{margin:0;color:var(--muted);font-size:10px;line-height:1.55}
+.gari-region-list { margin-top:22px;border-top:1px solid var(--line); }.gari-region-list article{display:grid;grid-template-columns:26px minmax(0,1fr) auto auto;gap:10px;align-items:center;min-height:59px;border-bottom:1px solid var(--line)}.gari-region-list article>span{color:var(--gari-mint);font-size:8px}.gari-region-list strong{display:block;font-size:10px;font-weight:500}.gari-region-list small{display:block;margin-top:4px;color:var(--muted);font-size:7px}.gari-region-list article>b{font-size:12px;font-weight:500}.gari-region-list button{display:flex;align-items:center;gap:5px;border:0;background:transparent;color:var(--text);cursor:pointer}.gari-region-list em{font-size:8px;font-style:normal}
+
+/* Strategic runway */
+.gari-runway-layout { display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.65fr);gap:13px; }
+.gari-runway-card,.gari-audit-card{padding:28px}.gari-runway-card>header{display:flex;justify-content:space-between;gap:18px}.gari-runway-card>header p{margin:10px 0 0;color:var(--muted);font-size:10px}.gari-runway-card>header p b{color:var(--text);font-weight:500}.gari-runway-card>header mark{padding:0;background:transparent;color:var(--text);font-size:30px;text-align:right}.gari-runway-card>header mark small{display:block;color:var(--muted);font-size:7px;font-weight:400;text-transform:uppercase}
+.gari-runway-scale{margin:55px 0 35px}.gari-runway-scale .track{height:8px;position:relative;background:var(--line2)}.gari-runway-scale .track>i{display:block;height:100%;background:linear-gradient(90deg,var(--gari-p6),var(--gari-mint));box-shadow:0 0 14px rgba(var(--gari-mint-rgb),.22)}.gari-runway-scale mark,.gari-runway-scale .target{position:absolute;top:-17px;transform:translateX(-50%);padding:0;background:transparent;color:var(--text);text-align:center}.gari-runway-scale mark::after,.gari-runway-scale .target::after{content:"";display:block;width:1px;height:32px;margin:auto;background:var(--gari-mint)}.gari-runway-scale .target::after{background:var(--gari-amber)}.gari-runway-scale b{display:block;font-size:12px}.gari-runway-scale small{display:block;color:var(--muted);font-size:7px}.gari-runway-scale .ticks{display:flex;justify-content:space-between;margin-top:13px;color:var(--muted);font-size:7px}
+.gari-priority-list{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.gari-priority-list article{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:14px;border:1px solid var(--line);background:var(--gari-panel-strong)}.gari-priority-list article>span{color:var(--gari-mint);font-size:8px}.gari-priority-list strong{display:block;font-size:10px;font-weight:500}.gari-priority-list small{display:block;margin-top:4px;color:var(--muted);font-size:7px}.gari-priority-list article>b{grid-column:1/-1;display:flex;justify-content:space-between;margin-top:10px;font-size:16px;font-weight:500}.gari-priority-list i{color:var(--muted);font-style:normal}
+.gari-audit-card{background:linear-gradient(180deg,rgba(var(--gari-amber-rgb),.06),transparent 45%),var(--gari-panel)}.gari-audit-card>header h3{font-size:21px}.gari-audit-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;margin-top:26px}.gari-audit-pair article{min-width:0;display:grid;grid-template-columns:auto 1fr;gap:8px;padding:13px;border:1px solid var(--line)}.gari-audit-pair article>b{grid-column:1/-1;margin-top:8px;font-size:17px;font-weight:500}.gari-audit-pair strong{display:block;overflow:hidden;font-size:9px;font-weight:500;text-overflow:ellipsis;white-space:nowrap}.gari-audit-pair small{display:block;margin-top:3px;color:var(--muted);font-size:7px}.gari-audit-pair>i{color:var(--gari-amber);font-style:normal}.gari-audit-card>p{margin:20px 0;color:var(--muted);font-size:10px;line-height:1.6}.gari-audit-card>strong{font-size:8px;color:var(--gari-amber)}
+
+/* Framework */
+.gari-framework-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:12px;border:1px solid var(--line)}.gari-framework-stats span{min-height:79px;display:flex;align-items:center;gap:10px;padding:17px;border-right:1px solid var(--line);color:var(--muted);font-size:8px;text-transform:uppercase}.gari-framework-stats span:last-child{border-right:0}.gari-framework-stats b{color:var(--text);font-size:27px;font-weight:500}
+.gari-framework-toolbar,.gari-directory-toolbar{display:grid;grid-template-columns:minmax(210px,1.4fr) auto;gap:12px;align-items:end;padding:18px;border:1px solid var(--line);background:var(--gari-panel)}.gari-framework-toolbar label,.gari-directory-toolbar label{display:grid;gap:6px;color:var(--muted);font-size:8px}.gari-framework-toolbar input,.gari-directory-toolbar input,.gari-directory-toolbar select{min-height:40px;padding:0 12px;border:1px solid var(--line2);border-radius:0;background:var(--gari-panel);color:var(--text);outline:0}.gari-framework-filters{display:flex;flex-wrap:wrap;border:1px solid var(--line2)}.gari-framework-filters button{min-height:39px;padding:0 12px;border:0;border-right:1px solid var(--line2);background:transparent;color:var(--muted);font-size:8px;cursor:pointer}.gari-framework-filters button:last-child{border-right:0}.gari-framework-filters button.active{background:rgba(var(--gari-mint-rgb),.12);color:var(--gari-mint)}
+.gari-framework-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.gari-framework-card{min-width:0;padding:22px;border:1px solid var(--line);background:var(--gari-panel)}.gari-framework-card>header{display:flex;justify-content:space-between;color:var(--gari-mint);font-size:8px;letter-spacing:.09em}.gari-framework-card>header mark{padding:0;background:transparent;color:var(--muted);font-size:8px}.gari-framework-card h3{margin:16px 0 7px;font-size:18px;font-weight:500}.gari-framework-card>p{margin:0 0 16px;color:var(--gari-amber);font-size:8px;text-transform:uppercase}.gari-framework-card>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.gari-framework-card>div span{min-width:0;display:grid;grid-template-columns:7px 1fr auto;gap:7px;align-items:start;padding:8px;border:1px solid var(--line);background:var(--gari-panel-strong)}.gari-framework-card>div i{width:5px;height:5px;margin-top:3px;border-radius:50%;background:var(--gari-mint)}.gari-framework-card>div b{min-width:0;font-size:8px;font-weight:500;line-height:1.35}.gari-framework-card>div small{color:var(--muted);font-size:6px}.gari-framework-card>footer{display:flex;justify-content:space-between;margin-top:17px;padding-top:13px;border-top:1px solid var(--line);color:var(--muted);font-size:8px}.gari-framework-card>footer button{border:0;background:transparent;color:var(--gari-mint);font-size:8px;cursor:pointer}.gari-framework-note,.gari-policy-note{display:grid;grid-template-columns:auto 1fr;gap:17px;margin-top:12px;padding:18px 20px;border:1px solid rgba(var(--gari-amber-rgb),.28);background:rgba(var(--gari-amber-rgb),.04)}.gari-framework-note strong,.gari-policy-note strong{color:var(--gari-amber);font-size:8px;text-transform:uppercase;white-space:nowrap}.gari-framework-note p,.gari-policy-note p{margin:0;color:var(--muted);font-size:9px;line-height:1.55}
+
+/* Directory and podium */
+.gari-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}.gari-podium button{min-height:154px;position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:25px;border:1px solid var(--line);background:var(--gari-panel);color:var(--text);text-align:left;cursor:pointer}.gari-podium button::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:var(--gari-p1)}.gari-podium button.place-2::before{background:var(--gari-p2)}.gari-podium button.place-3::before{background:var(--gari-p3)}.gari-podium button>span{position:absolute;right:16px;top:13px;color:var(--gari-mint);font-size:12px}.gari-podium strong{font-size:15px;font-weight:500}.gari-podium b{font-size:24px;font-weight:500}.gari-podium small{grid-column:2/-1;color:var(--muted);font-size:8px}
+.gari-directory-shell{border:1px solid var(--line);background:var(--gari-panel)}.gari-directory-toolbar{grid-template-columns:minmax(190px,1.2fr) repeat(3,minmax(130px,.6fr)) auto;border:0;border-bottom:1px solid var(--line)}.gari-directory-toolbar .gari-button{align-self:end}.gari-directory-meta{display:flex;justify-content:space-between;gap:20px;padding:13px 18px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px}.gari-directory-meta p{display:flex;align-items:center;gap:7px;margin:0}.gari-directory-meta i{width:6px;height:6px;border-radius:50%;background:var(--gari-mint)}
+.gari-directory-table-wrap{overflow-x:auto}.gari-directory-table{width:100%;border-collapse:collapse;font-size:9px}.gari-directory-table th{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:7px;font-weight:500;text-align:left;text-transform:uppercase;letter-spacing:.06em}.gari-directory-table td{min-width:90px;padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}.gari-directory-table tr.selected{background:rgba(var(--gari-mint-rgb),.07);box-shadow:inset 2px 0 0 var(--gari-mint)}.gari-directory-table td>strong{display:block;font-size:13px;font-weight:500}.gari-directory-table td>small,.gari-directory-table td>span+small{display:block;margin-top:3px;color:var(--muted);font-size:7px}.gari-country-cell{min-width:190px;display:flex;align-items:center;gap:9px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer}.gari-country-cell strong{display:block;font-size:10px;font-weight:500}.gari-country-cell small{display:block;margin-top:3px;color:var(--muted);font-size:7px}.gari-row-evidence{border:0;background:transparent;color:var(--gari-mint);cursor:pointer}
+.gari-mini-pillars{height:34px;display:flex;align-items:end;gap:3px}.gari-mini-pillars span{width:12px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.gari-mini-pillars i{width:5px;max-height:23px;display:block;background:var(--gari-p1)}.gari-mini-pillars span:nth-child(2) i{background:var(--gari-p2)}.gari-mini-pillars span:nth-child(3) i{background:var(--gari-p3)}.gari-mini-pillars span:nth-child(4) i{background:var(--gari-p4)}.gari-mini-pillars span:nth-child(5) i{background:var(--gari-p5)}.gari-mini-pillars span:nth-child(6) i{background:var(--gari-p6)}.gari-mini-pillars small{margin-top:2px;color:var(--muted);font-size:5px}
+.gari-pagination{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;color:var(--muted);font-size:8px}.gari-pagination div{display:flex;align-items:center;gap:10px}.gari-pagination button{min-height:32px;padding:0 10px;border:1px solid var(--line2);background:transparent;color:var(--text);font-size:8px;cursor:pointer}.gari-pagination button:disabled{opacity:.35;cursor:default}.gari-pagination b{font-weight:500}.gari-empty{padding:35px!important;color:var(--muted);text-align:center!important}
+
+/* Trust */
+.gari-method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.gari-method-card{min-height:195px;padding:22px;border:1px solid var(--line);background:var(--gari-panel)}.gari-method-card .gari-icon{width:20px;height:20px}.gari-method-card span{display:block;margin-top:24px;color:var(--muted);font-size:8px;text-transform:uppercase}.gari-method-card strong{display:block;margin-top:8px;font-size:27px;font-weight:500}.gari-method-card p{margin:12px 0 0;color:var(--muted);font-size:9px;line-height:1.55}.gari-trust-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.55fr);gap:12px;margin-top:12px}.gari-formula-card,.gari-chain-card{padding:28px}.gari-formula-card header span,.gari-chain-card header span{color:var(--gari-mint);font-size:8px;letter-spacing:.11em}.gari-formula-card h3,.gari-chain-card h3{margin:8px 0 0;font-size:22px;font-weight:500}.gari-formula-big{display:flex;align-items:stretch;gap:6px;margin:29px 0 23px;padding:12px;border:1px solid var(--line);overflow-x:auto}.gari-formula-big span,.gari-formula-big strong{min-width:70px;display:grid;place-items:center;padding:10px;border:1px solid rgba(var(--gari-mint-rgb),.2);background:rgba(var(--gari-mint-rgb),.05);font-size:10px}.gari-formula-big small{display:block;margin-top:4px;color:var(--muted);font-size:7px}.gari-formula-big i,.gari-formula-big em{display:grid;place-items:center;color:var(--muted);font-size:8px;font-style:normal}.gari-formula-big strong{border-color:var(--gari-mint);color:var(--gari-mint)}.gari-formula-card>p{margin:0;font-size:12px;line-height:1.6}.gari-formula-card>small{display:block;margin-top:13px;color:var(--muted);font-size:9px;line-height:1.55}.gari-chain-card ol{margin:25px 0;padding:0;list-style:none;border-top:1px solid var(--line)}.gari-chain-card li{display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:center;min-height:54px;border-bottom:1px solid var(--line);font-size:9px}.gari-chain-card li b{color:var(--gari-mint);font-size:8px;font-weight:500}.gari-policy-note{grid-template-columns:auto 1fr auto;align-items:center}.gari-policy-note a{color:var(--gari-mint);font-size:8px;text-decoration:none;white-space:nowrap}
+
+@media (max-width: 1320px) {
+  .gari-hero { grid-template-columns:minmax(0,1.2fr) minmax(350px,.8fr); }
+  .gari-hero-copy { padding:45px 42px; }
+  .gari-hero h1 { font-size:clamp(48px,5.1vw,76px); }
+  .gari-atlas-layout,.gari-architecture-top,.gari-runway-layout,.gari-trust-layout{grid-template-columns:1fr}.gari-region-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 16px}.gari-pulse-grid{grid-template-columns:repeat(2,1fr)}
+  .gari-directory-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.gari-directory-toolbar .search{grid-column:1/-1}
+}
+@media (max-width: 1023px) {
+  .gari-workspace-host{padding-top:14px}.gari-hero{grid-template-columns:1fr}.gari-hero-copy{border-right:0;border-bottom:1px solid var(--line)}.gari-command-card{min-height:600px}.gari-jump{top:66px;overflow-x:auto}.gari-jump>span{display:none}.gari-jump button{min-width:110px}.gari-section{margin-top:70px}.gari-method-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width: 720px) {
+  .gari-workspace{--gari-gap:58px}.gari-hero-copy{padding:34px 22px}.gari-hero h1{margin-top:29px;font-size:clamp(43px,12vw,62px)}.gari-hero-lead{font-size:13px}.gari-overline b,.gari-overline em{display:none}.gari-formula-strip{overflow-x:auto}.gari-formula-strip span{min-width:67px}.gari-formula-strip i{display:none}.gari-formula-strip em{margin-left:4px}.gari-correction-banner{grid-template-columns:1fr}.gari-command-card{padding:22px;min-height:auto}.gari-score-dial{min-height:280px}.gari-section-heading{grid-template-columns:36px 1fr;gap:13px}.gari-section-heading h2{font-size:31px}.gari-architecture-top,.gari-atlas-layout,.gari-runway-layout,.gari-trust-layout{grid-template-columns:1fr}.gari-diagnostic-card>div{grid-template-columns:1fr}.gari-pulse-grid{grid-template-columns:1fr}.gari-map-stage{min-height:330px;padding:8px}.gari-region-list{grid-template-columns:1fr}.gari-priority-list{grid-template-columns:1fr}.gari-framework-stats{grid-template-columns:repeat(2,1fr)}.gari-framework-stats span:nth-child(2){border-right:0}.gari-framework-stats span:nth-child(-n+2){border-bottom:1px solid var(--line)}.gari-framework-toolbar{grid-template-columns:1fr}.gari-framework-filters{overflow-x:auto;flex-wrap:nowrap}.gari-framework-grid{grid-template-columns:1fr}.gari-framework-card>div{grid-template-columns:1fr}.gari-podium{grid-template-columns:1fr}.gari-directory-toolbar{grid-template-columns:1fr}.gari-directory-toolbar .search{grid-column:auto}.gari-directory-meta{display:grid}.gari-method-grid{grid-template-columns:1fr}.gari-policy-note,.gari-framework-note{grid-template-columns:1fr}.gari-policy-note a{white-space:normal}.gari-formula-big{gap:4px}.gari-formula-big span,.gari-formula-big strong{min-width:62px}.gari-audit-pair{grid-template-columns:1fr}.gari-audit-pair>i{text-align:center}.gari-command-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 560px) {
+  .gari-workspace-host{padding-left:0;padding-right:0}.gari-hero{border-left:0;border-right:0}.gari-hero-copy{padding:28px 18px}.gari-hero h1{font-size:clamp(39px,12.8vw,54px);line-height:.94}.gari-edition-line{display:grid;grid-template-columns:1fr 1fr}.gari-hero-actions{display:grid}.gari-button{width:100%}.gari-command-card{padding:18px}.gari-command-card>header{display:grid}.gari-command-card>header mark{justify-self:start}.gari-command-grid{grid-template-columns:1fr 1fr}.gari-jump{margin-left:-18px;margin-right:-18px}.gari-jump button{min-width:96px}.gari-section{padding:0 0}.gari-section-heading{padding:0 2px}.gari-radar-card,.gari-diagnostic-card,.gari-region-card,.gari-runway-card,.gari-audit-card,.gari-formula-card,.gari-chain-card{padding:19px}.gari-radar{margin-left:-7px;width:calc(100% + 14px)}.gari-framework-card{padding:18px}.gari-directory-table{min-width:930px}.gari-directory-table-wrap{-webkit-overflow-scrolling:touch}.gari-podium button{min-height:120px}.gari-formula-big{margin-left:-8px;margin-right:-8px}.gari-map-card>header{padding:17px;align-items:flex-start;gap:12px}.gari-map-toggle{flex-direction:column}.gari-map-toggle button{border-right:0;border-bottom:1px solid var(--line2)}.gari-map-toggle button:last-child{border-bottom:0}
+}
+@media (prefers-reduced-motion: reduce) {
+  .gari-workspace *, .gari-workspace *::before, .gari-workspace *::after { scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important; }
+}

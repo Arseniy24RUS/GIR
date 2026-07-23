@@ -1,0 +1,19 @@
+html[data-gir-pages-runtime="true"] [data-auth-action="manage"],
+html[data-gir-pages-runtime="true"] [data-auth-action="password"],
+html[data-gir-pages-runtime="true"] [data-auth-form="change-password"],
+html[data-gir-pages-runtime="true"] #gir-auth-admin-layer,
+html[data-gir-pages-runtime="true"] [data-action="check-selected"],
+html[data-gir-pages-runtime="true"] [data-action="preview"],
+html[data-gir-pages-runtime="true"] [data-action="create-plan"],
+html[data-gir-pages-runtime="true"] [data-stage-plan],
+html[data-gir-pages-runtime="true"] [data-publish-job],
+html[data-gir-pages-runtime="true"] [data-rollback],
+html[data-gir-pages-runtime="true"] [data-package-form],
+html[data-gir-pages-runtime="true"] .du2-workspace > .du2-notice[role="status"]:not(.is-success),
+html[data-gir-pages-runtime="true"][data-auth-role="user"] .du2-header__actions > span.button {
+  display: none !important;
+}
+
+html[data-gir-pages-runtime="true"] .gir-auth-action-row [data-auth-action="logout"] {
+  grid-column: 1 / -1;
+}

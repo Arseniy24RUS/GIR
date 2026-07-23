@@ -1,0 +1,15 @@
+{
+  "api_audience": "disabled",
+  "counts": {
+    "country_count": 0,
+    "pillar_count": 5,
+    "score_rows": 0,
+    "successful_imports": 0,
+    "year_count": 0
+  },
+  "data_access_status": "awaiting_authorized_local_import",
+  "index_code": "DHL_GCI",
+  "official_csv_bundled": false,
+  "official_numeric_dataset_bundled": false,
+  "status": "ok"
+}

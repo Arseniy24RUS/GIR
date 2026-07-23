@@ -1,0 +1,1544 @@
+/*
+ * GIR Society integration layer — Stage 06R.
+ *
+ * Purpose: make SPI, SDG, WHR and GGGI analytical workspaces native children of the
+ * existing GIR shell. The source-specific markup remains accessible and data
+ * rich, while geometry, palette, spacing, controls and hierarchy inherit the
+ * production GIR design system.
+ */
+
+.spi-workspace,
+.sdg-workspace,
+.whr-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  line-height: 1.5;
+  isolation: auto !important;
+  overflow: visible !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.spi-workspace {
+  --spi-line-strong: var(--line2);
+  --spi-soft-blue: color-mix(in srgb, var(--blue) 12%, transparent);
+  --spi-soft-green: color-mix(in srgb, var(--green) 12%, transparent);
+  --spi-soft-orange: color-mix(in srgb, var(--orange) 10%, transparent);
+  --spi-soft-red: color-mix(in srgb, var(--red) 10%, transparent);
+  --spi-score: var(--green);
+  --spi-space: 16px;
+  --spi-pad: 28px;
+  --spi-width: none;
+}
+
+.sdg-workspace {
+  --sdg-accent: var(--green);
+  --sdg-accent-2: var(--blue2);
+  --sdg-ink: var(--text);
+  --sdg-muted: var(--muted);
+  --sdg-line: var(--line);
+  --sdg-line-strong: var(--line2);
+  --sdg-shadow: none;
+  --sdg-soft: var(--surface);
+  --sdg-soft-blue: color-mix(in srgb, var(--blue) 12%, transparent);
+  --sdg-soft-green: color-mix(in srgb, var(--green) 12%, transparent);
+  --sdg-soft-orange: color-mix(in srgb, var(--orange) 10%, transparent);
+  --sdg-soft-red: color-mix(in srgb, var(--red) 10%, transparent);
+  --sdg-space: 16px;
+  --sdg-pad: 28px;
+}
+
+.whr-workspace {
+  --whr-bg: var(--bg);
+  --whr-surface: var(--panel);
+  --whr-surface-strong: var(--panel);
+  --whr-surface-soft: var(--surface);
+  --whr-border: var(--line);
+  --whr-border-strong: var(--line2);
+  --whr-text: var(--text);
+  --whr-muted: var(--muted);
+  --whr-subtle: var(--muted);
+  --whr-accent: var(--green);
+  --whr-accent-2: var(--blue);
+  --whr-accent-ink: var(--text);
+  --whr-positive: var(--positive-text);
+  --whr-danger: var(--negative-text);
+  --whr-focus: var(--green);
+  --whr-shadow: none;
+}
+
+:where(.spi-workspace, .sdg-workspace, .whr-workspace) :where(button, input, select, textarea) {
+  font: inherit;
+}
+
+:where(.spi-workspace, .sdg-workspace, .whr-workspace) :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--green) 82%, transparent);
+  outline-offset: 3px;
+}
+
+/* Remove autonomous visual systems. */
+:where(
+  .spi-hero, .spi-hero-main, .spi-hero-score, .spi-control-deck, .spi-tabs-wrap,
+  .spi-view-panel, .spi-map-panel, .spi-profile-panel, .spi-ranking-panel,
+  .spi-dimension-card, .spi-method-card, .spi-audit-card, .spi-state-card,
+  .sdg-hero, .sdg-hero-copy, .sdg-hero-country, .sdg-control-bar, .sdg-tabs,
+  .sdg-card, .sdg-map-card, .sdg-profile-card, .sdg-ranking-card,
+  .sdg-chart-card, .sdg-dashboard-card, .sdg-legend-card, .sdg-method-principle,
+  .sdg-audit-card, .sdg-state-card, .sdg-goal-focus, .sdg-indicator-chart,
+  .whr-hero, .whr-hero-score, .whr-controls, .whr-tabs, .whr-card,
+  .whr-metric, .whr-factor-card, .whr-method-card, .whr-state-card,
+  .whr-dialog, .whr-dialog-head, .whr-provenance dl > div
+) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+:where(
+  .spi-hero-main, .spi-hero-score, .spi-control-deck, .spi-tabs button,
+  .spi-view-panel, .spi-map-panel, .spi-profile-panel, .spi-ranking-panel,
+  .spi-dimension-card, .spi-method-card, .spi-audit-card, .spi-state-card,
+  .sdg-hero-copy, .sdg-hero-country, .sdg-control-bar, .sdg-tabs button,
+  .sdg-card, .sdg-goal-focus, .sdg-state-card,
+  .whr-hero, .whr-hero-score, .whr-controls, .whr-tabs, .whr-card,
+  .whr-metric, .whr-factor-card, .whr-method-card, .whr-state-card
+) {
+  background-color: var(--panel) !important;
+  border-color: var(--line) !important;
+}
+
+/* Shared page rhythm follows index-workspace.css rather than a landing page. */
+.spi-workspace,
+.sdg-workspace,
+.whr-workspace {
+  display: grid;
+  gap: clamp(40px, 5vw, 68px);
+}
+
+.spi-view-stage,
+.sdg-view-stage,
+.whr-view-stage {
+  min-height: 0;
+}
+
+/* Every module section is a true child of GIR's main column. Source-specific
+   min-content widths must never widen the host layout on tablets or phones. */
+.spi-workspace > *,
+.sdg-workspace > *,
+.whr-workspace > *,
+.spi-hero,
+.sdg-hero,
+.whr-hero,
+.spi-control-deck,
+.sdg-control-bar,
+.whr-controls,
+.spi-tabs-wrap,
+.spi-tabs,
+.sdg-tabs,
+.whr-tabs,
+.spi-view-stage,
+.sdg-view-stage,
+.whr-view-stage,
+.spi-view-panel,
+.sdg-panel,
+.whr-panel,
+.spi-section-heading,
+.sdg-section-heading,
+.whr-section-heading {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.spi-table-scroll,
+.sdg-table-scroll,
+.whr-table-scroll,
+.spi-ranking-table-wrap,
+.sdg-ranking-table-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overscroll-behavior-inline: contain;
+}
+
+/* GIR-native heroes: restrained, rectangular, evidence-first. */
+.spi-hero,
+.sdg-hero,
+.whr-hero {
+  min-height: 286px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr) !important;
+  align-items: stretch !important;
+  gap: 1px !important;
+  padding: 0 !important;
+  border: 1px solid var(--line) !important;
+  background: var(--line) !important;
+  overflow: hidden !important;
+}
+
+.spi-hero-main,
+.sdg-hero-copy,
+.whr-hero-copy {
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 28px !important;
+  background: var(--panel) !important;
+}
+
+.spi-hero-score,
+.sdg-hero-country,
+.whr-hero-score {
+  min-width: 0;
+  display: grid !important;
+  align-content: center !important;
+  gap: 16px !important;
+  padding: 28px !important;
+  border: 0 !important;
+  background: var(--panel) !important;
+}
+
+.spi-hero-main h1,
+.sdg-hero-copy h1,
+.whr-hero h1 {
+  max-width: 880px !important;
+  margin: 16px 0 14px !important;
+  color: var(--text) !important;
+  font-size: clamp(32px, 4vw, 52px) !important;
+  line-height: 1.04 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.025em !important;
+}
+
+.spi-hero-main > p,
+.sdg-hero-copy .sdg-lead,
+.whr-hero-copy > p:not(.whr-kicker) {
+  max-width: 780px !important;
+  margin: 0 !important;
+  color: var(--muted) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.spi-kicker,
+.sdg-kicker,
+.whr-kicker,
+.spi-section-heading p,
+.sdg-section-heading p,
+.whr-section-heading p,
+.whr-card-title p {
+  color: var(--accent-text) !important;
+  font-size: 11px !important;
+  line-height: 15px !important;
+  font-weight: 500 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+}
+
+.spi-index-code,
+.sdg-index-code {
+  color: var(--muted) !important;
+  font-size: 11px !important;
+  letter-spacing: .14em !important;
+}
+
+/* Official/source chips are labels, not pill-based decoration. */
+:where(
+  .spi-official-chip, .spi-edition-chip, .sdg-official-chip, .sdg-edition-chip,
+  .whr-hero-badges span, .spi-method-chip, .sdg-status-chip, .whr-factor-card small
+) {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px !important;
+  border: 1px solid var(--line2) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  box-shadow: none !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+}
+
+/* Scores use the same rectangular information architecture as GIR KPIs. */
+.spi-score-orbit,
+.sdg-score-ring,
+.whr-score-orbit {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 108px !important;
+  aspect-ratio: auto !important;
+  display: grid !important;
+  place-items: start !important;
+  align-content: center !important;
+  margin: 0 !important;
+  padding: 18px !important;
+  border: 1px solid var(--line2) !important;
+  border-left: 3px solid var(--green) !important;
+  border-radius: 0 !important;
+  background: var(--surface) !important;
+  box-shadow: none !important;
+}
+
+.spi-score-orbit svg,
+.sdg-score-ring svg,
+.whr-score-orbit svg {
+  display: none !important;
+}
+
+.spi-score-orbit > div,
+.sdg-score-ring > div,
+.whr-score-orbit > div {
+  position: static !important;
+  display: grid !important;
+  gap: 5px !important;
+  text-align: left !important;
+}
+
+.spi-score-orbit strong,
+.sdg-score-ring strong,
+.whr-score-orbit strong {
+  color: var(--text) !important;
+  font-size: clamp(38px, 4vw, 58px) !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+}
+
+.spi-score-orbit span,
+.sdg-score-ring span,
+.whr-score-orbit span {
+  color: var(--muted) !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+}
+
+.spi-hero-rank,
+.sdg-hero-rank,
+.whr-hero-score-meta {
+  border-color: var(--line) !important;
+}
+
+.whr-hero-score-meta {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1px !important;
+  padding: 1px !important;
+  background: var(--line) !important;
+}
+
+.whr-hero-score-meta > div {
+  min-height: 72px !important;
+  padding: 12px !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+}
+
+/* Shared context bar owns country/year. Module toolbars keep edition/actions only. */
+.spi-control-deck,
+.sdg-control-bar,
+.whr-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 58px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.spi-control-primary > .spi-field,
+.sdg-control-bar > .sdg-control,
+.whr-controls > label {
+  display: none !important;
+}
+
+.spi-control-primary,
+.sdg-control-summary,
+.whr-control-actions {
+  min-width: 0;
+}
+
+.spi-context-readout,
+.sdg-control-summary {
+  min-height: 38px !important;
+  display: grid !important;
+  align-content: center !important;
+  gap: 2px !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.spi-context-readout span,
+.sdg-control-summary span {
+  color: var(--muted) !important;
+  font-size: 10px !important;
+  text-transform: uppercase !important;
+}
+
+.spi-context-readout strong,
+.sdg-control-summary strong {
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.spi-control-actions,
+.sdg-control-actions,
+.whr-control-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+/* Buttons and form controls reuse GIR control geometry. */
+.spi-button,
+.sdg-button,
+.whr-button,
+.spi-ranking-filters :where(input, select),
+.sdg-ranking-filters :where(input, select),
+.whr-ranking-filters :where(input, select),
+.spi-pagination button,
+.sdg-pagination button,
+.whr-pagination button,
+.whr-inline-select,
+.sdg-inline-select {
+  min-height: 42px !important;
+  padding: 9px 14px !important;
+  border: 1px solid var(--line2) !important;
+  border-radius: 0 !important;
+  background: var(--control-bg) !important;
+  color: var(--control-text) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+
+.spi-button:hover,
+.sdg-button:hover,
+.whr-button:hover,
+.spi-pagination button:hover,
+.sdg-pagination button:hover,
+.whr-pagination button:hover {
+  border-color: var(--green) !important;
+  background: var(--surface) !important;
+  transform: none !important;
+}
+
+.spi-button:not(.spi-button-secondary),
+.sdg-button:not(.sdg-button-secondary),
+.whr-button-primary {
+  border-color: var(--blue) !important;
+  background: var(--blue) !important;
+  color: #fff !important;
+}
+
+/* Tabs match the existing index workspace jump navigation. */
+.spi-tabs-wrap,
+.spi-tabs,
+.sdg-tabs,
+.whr-tabs {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: var(--line) !important;
+  gap: 1px !important;
+  box-shadow: none !important;
+}
+
+.spi-tabs,
+.sdg-tabs,
+.whr-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  overflow-x: auto !important;
+}
+
+.sdg-tabs { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+
+.spi-tabs button,
+.sdg-tabs button,
+.whr-tabs button {
+  position: relative !important;
+  min-width: 130px !important;
+  min-height: 54px !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  color: var(--muted) !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+
+.spi-tabs button[aria-selected="true"],
+.sdg-tabs button[aria-selected="true"],
+.whr-tabs button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--blue) 20%, var(--panel)) !important;
+  color: var(--text) !important;
+  box-shadow: inset 0 -3px 0 var(--green) !important;
+}
+
+.sdg-tabs button::after { display: none !important; }
+
+/* Sections and cards. */
+.spi-section-heading,
+.sdg-section-heading,
+.whr-section-heading {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  margin: 0 0 18px !important;
+}
+
+.spi-section-heading h2,
+.sdg-section-heading h2,
+.whr-section-heading h2 {
+  margin: 0 !important;
+  color: var(--text) !important;
+  font-size: clamp(24px, 3vw, 36px) !important;
+  line-height: 1.12 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
+
+.spi-section-heading span,
+.sdg-section-heading span,
+.whr-section-heading span {
+  color: var(--muted) !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+
+:where(
+  .spi-view-panel, .spi-map-panel, .spi-profile-panel, .spi-ranking-panel,
+  .spi-dimension-card, .spi-method-card, .spi-audit-card,
+  .sdg-card, .sdg-goal-focus, .sdg-method-principle, .sdg-audit-card,
+  .whr-card, .whr-metric, .whr-factor-card, .whr-method-card
+) {
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  color: var(--text) !important;
+}
+
+:where(
+  .spi-view-panel, .spi-map-panel, .spi-profile-panel, .spi-ranking-panel,
+  .sdg-card, .sdg-goal-focus,
+  .whr-ladder-card, .whr-map-card, .whr-profile-card, .whr-chart-card,
+  .whr-ranking-card, .whr-decomposition-card, .whr-factor-guide,
+  .whr-factor-table-card, .whr-coverage-card, .whr-audit-card
+) {
+  padding: 24px !important;
+}
+
+.spi-metrics-grid,
+.sdg-overview-metrics,
+.sdg-trend-metrics,
+.whr-metric-grid,
+.whr-trend-stats {
+  gap: 1px !important;
+  padding: 1px !important;
+  background: var(--line) !important;
+}
+
+.spi-metric,
+.sdg-metric-card,
+.whr-metric {
+  min-height: 112px !important;
+  padding: 16px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+
+.spi-metric strong,
+.sdg-metric-card strong,
+.whr-metric strong {
+  color: var(--text) !important;
+  font-size: clamp(24px, 3vw, 36px) !important;
+  font-weight: 500 !important;
+}
+
+.spi-metric span,
+.spi-metric small,
+.sdg-metric-card span,
+.sdg-metric-card small,
+.whr-metric span,
+.whr-metric small {
+  color: var(--muted) !important;
+}
+
+/* Preserve the official 17 SDG colours only as narrow data accents. */
+.sdg-goal-card {
+  border-radius: 0 !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  box-shadow: inset 3px 0 0 var(--goal-color) !important;
+}
+
+.sdg-goal-ribbon,
+.sdg-goal-number {
+  border-radius: 0 !important;
+}
+
+.sdg-goal-card:hover,
+.whr-factor-card:hover {
+  transform: none !important;
+  border-color: var(--green) !important;
+}
+
+.whr-factor-card {
+  border-left: 3px solid var(--factor-color, var(--blue)) !important;
+}
+
+.whr-factor-index,
+.whr-method-card > span,
+.whr-audit-icon {
+  border-radius: 0 !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line2) !important;
+}
+
+/* Maps and charts inherit platform tokens. */
+.spi-map-canvas,
+.sdg-map-canvas,
+.whr-map-canvas,
+.spi-chart-frame,
+.sdg-chart-area,
+.whr-chart {
+  border-radius: 0 !important;
+  background: var(--surface) !important;
+}
+
+.spi-map-canvas path,
+.sdg-map-canvas path,
+.whr-map-canvas path {
+  stroke: var(--map-stroke) !important;
+}
+
+.spi-chart-grid line,
+.sdg-chart-grid-line,
+.whr-chart-grid line {
+  stroke: var(--chart-grid) !important;
+}
+
+.spi-chart-line,
+.sdg-chart-line,
+.whr-chart-line {
+  stroke: var(--chart-accent) !important;
+  filter: none !important;
+}
+
+/* Tables mirror the platform comparison tables. */
+.spi-table,
+.sdg-table,
+.whr-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  font-size: 12px !important;
+}
+
+.spi-table th,
+.sdg-table th,
+.whr-table th {
+  padding: 11px 10px !important;
+  border-bottom: 1px solid var(--line2) !important;
+  background: var(--panel) !important;
+  color: var(--muted) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+}
+
+.spi-table td,
+.sdg-table td,
+.whr-table td {
+  padding: 11px 10px !important;
+  border-bottom: 1px solid var(--line) !important;
+  color: var(--muted) !important;
+}
+
+.spi-table tbody tr:hover td,
+.sdg-table tbody tr:hover td,
+.whr-table tbody tr:hover td,
+.spi-table tbody tr.is-selected td,
+.sdg-table tbody tr.is-selected td,
+.whr-table tbody tr.is-selected td {
+  background: var(--surface) !important;
+}
+
+.spi-country-cell,
+.sdg-country-cell,
+.whr-country-cell {
+  color: var(--text) !important;
+}
+
+/* Flags follow the platform's rectangular geometry. */
+:where(
+  .spi-hero-flag, .spi-control-flag, .spi-table-flag,
+  .sdg-hero-flag, .sdg-control-flag, .sdg-table-flag,
+  .whr-hero-flag, .whr-control-flag, .whr-profile-flag, .whr-table-flag
+) {
+  border-radius: 0 !important;
+  border-color: var(--line2) !important;
+  background: var(--surface) !important;
+}
+
+/* Empty/loading/error states remain inside the normal content area. */
+.spi-state-shell,
+.sdg-state-shell,
+.whr-state-shell {
+  min-height: min(560px, calc(100vh - var(--header-h) - 160px)) !important;
+  padding: 0 !important;
+}
+
+.spi-state-card,
+.sdg-state-card,
+.whr-state-card {
+  width: min(760px, 100%) !important;
+  padding: 40px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  text-align: left !important;
+}
+
+.spi-state-card h1,
+.sdg-state-card h1,
+.whr-state-card h1 {
+  margin: 8px 0 14px !important;
+  color: var(--text) !important;
+  font-size: clamp(30px, 4vw, 52px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
+
+.whr-loading-orbit,
+.sdg-loading-wheel {
+  width: 78px !important;
+  height: 42px !important;
+  border: 1px solid var(--green) !important;
+  border-radius: 0 !important;
+  animation: none !important;
+}
+
+.whr-loading-orbit::before,
+.whr-loading-orbit::after,
+.whr-loading-orbit i,
+.sdg-loading-wheel::before,
+.sdg-loading-wheel::after {
+  display: none !important;
+}
+
+/* Footer is subordinate to the real GIR footer. */
+.spi-workspace-footer,
+.sdg-workspace-footer,
+.whr-workspace-footer {
+  margin: 0 !important;
+  padding: 14px 0 0 !important;
+  border-top: 1px solid var(--line) !important;
+  color: var(--muted) !important;
+  font-size: 10px !important;
+}
+
+/* Native drawer/dialog fallback. */
+.spi-dialog,
+.sdg-dialog,
+.whr-dialog {
+  width: min(760px, calc(100% - 24px)) !important;
+  max-height: min(82vh, 850px) !important;
+  padding: 0 !important;
+  border: 1px solid var(--line2) !important;
+  background: var(--panel) !important;
+  color: var(--text) !important;
+}
+
+.spi-dialog::backdrop,
+.sdg-dialog::backdrop,
+.whr-dialog::backdrop {
+  background: rgba(10, 19, 45, .72) !important;
+  backdrop-filter: none !important;
+}
+
+@media (max-width: 1120px) {
+  .spi-hero,
+  .sdg-hero,
+  .whr-hero {
+    grid-template-columns: 1fr !important;
+  }
+
+  .spi-hero-score,
+  .sdg-hero-country,
+  .whr-hero-score {
+    border-top: 1px solid var(--line) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .spi-workspace,
+  .sdg-workspace,
+  .whr-workspace {
+    gap: 32px !important;
+  }
+
+  .spi-hero-main,
+  .sdg-hero-copy,
+  .whr-hero-copy,
+  .spi-hero-score,
+  .sdg-hero-country,
+  .whr-hero-score {
+    padding: 20px !important;
+  }
+
+  .spi-hero-main h1,
+  .sdg-hero-copy h1,
+  .whr-hero h1 {
+    font-size: clamp(28px, 9vw, 40px) !important;
+  }
+
+  .spi-control-deck,
+  .sdg-control-bar,
+  .whr-controls {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .spi-control-actions,
+  .sdg-control-actions,
+  .whr-control-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .spi-tabs,
+  .sdg-tabs,
+  .whr-tabs {
+    display: flex !important;
+    scroll-snap-type: x proximity;
+  }
+
+  .spi-tabs button,
+  .sdg-tabs button,
+  .whr-tabs button {
+    flex: 0 0 150px !important;
+    scroll-snap-align: start;
+  }
+
+  .spi-section-heading,
+  .sdg-section-heading,
+  .whr-section-heading {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  :where(
+    .spi-view-panel, .spi-map-panel, .spi-profile-panel, .spi-ranking-panel,
+    .sdg-card, .sdg-goal-focus,
+    .whr-ladder-card, .whr-map-card, .whr-profile-card, .whr-chart-card,
+    .whr-ranking-card, .whr-decomposition-card, .whr-factor-guide,
+    .whr-factor-table-card, .whr-coverage-card, .whr-audit-card
+  ) {
+    padding: 18px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .spi-overview-grid,
+  .spi-map-grid,
+  .spi-trend-grid,
+  .spi-structure-grid,
+  .sdg-overview-grid,
+  .sdg-map-grid,
+  .sdg-trend-grid,
+  .sdg-goal-grid,
+  .sdg-indicator-grid,
+  .whr-overview-grid,
+  .whr-map-grid,
+  .whr-trend-grid,
+  .whr-factor-grid,
+  .whr-factor-bottom,
+  .whr-method-grid,
+  .whr-method-bottom {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .spi-control-actions,
+  .sdg-control-actions,
+  .whr-control-actions,
+  .whr-factor-card,
+  .whr-card-title,
+  .whr-decomposition-note,
+  .sdg-card,
+  .spi-view-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .spi-tabs-wrap,
+  .spi-tabs,
+  .sdg-tabs,
+  .whr-tabs {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-inline: contain;
+  }
+
+  .whr-decomposition-track {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: auto !important;
+  }
+
+  .whr-factor-card {
+    grid-template-columns: 30px minmax(0, 1fr) auto !important;
+  }
+
+  .whr-factor-card > *,
+  .whr-card-title > *,
+  .whr-section-heading > *,
+  .spi-section-heading > *,
+  .sdg-section-heading > * {
+    min-width: 0 !important;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spi-workspace, .sdg-workspace, .whr-workspace) *,
+  :where(.spi-workspace, .sdg-workspace, .whr-workspace) *::before,
+  :where(.spi-workspace, .sdg-workspace, .whr-workspace) *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .spi-control-deck,
+  .sdg-control-bar,
+  .whr-controls,
+  .spi-tabs-wrap,
+  .sdg-tabs,
+  .whr-tabs {
+    display: none !important;
+  }
+
+  :where(.spi-workspace, .sdg-workspace, .whr-workspace) {
+    color: #111 !important;
+  }
+
+  :where(
+    .spi-hero, .spi-view-panel, .spi-map-panel, .spi-profile-panel,
+    .sdg-hero, .sdg-card,
+    .whr-hero, .whr-card, .whr-metric, .whr-factor-card
+  ) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+/* Stage 08: GGGI — Global Gender Gap is authored directly against GIR tokens
+   and uses the same host geometry and shared country/year context. */
+.gggi-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  overflow: visible !important;
+}
+
+.gggi-workspace > *,
+.gggi-view-stage,
+.gggi-panel {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.gggi-workspace :where(.gggi-hero, .gggi-controls, .gggi-tabs, .gggi-card, .gggi-dimension-card, .gggi-method-card, .gggi-state-card) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+/* GIR's sticky context bar is the only country/year control surface. */
+.gggi-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 58px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.gggi-control-primary > label {
+  display: none !important;
+}
+
+.gggi-control-primary {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.gggi-context-readout {
+  min-width: 0 !important;
+  display: grid !important;
+  align-content: center !important;
+  gap: 2px !important;
+  padding: 0 !important;
+}
+
+.gggi-context-readout span {
+  color: var(--muted) !important;
+  font-size: 10px !important;
+  text-transform: uppercase !important;
+}
+
+.gggi-context-readout strong {
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.gggi-control-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.gggi-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline-color: var(--green) !important;
+}
+
+@media (max-width: 720px) {
+  .gggi-controls {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .gggi-control-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gggi-workspace *,
+  .gggi-workspace *::before,
+  .gggi-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .gggi-controls,
+  .gggi-tabs {
+    display: none !important;
+  }
+
+  :where(.gggi-hero, .gggi-card, .gggi-metric, .gggi-dimension-card, .gggi-method-card) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+/* Stage 08 integration correction: the host context bar is the single source of
+   truth for country/year. Keep the module controls in the DOM for the bridge,
+   but do not render a second context panel inside the workspace. */
+.gggi-workspace .gggi-control-primary {
+  display: none !important;
+}
+
+.gggi-workspace .gggi-controls {
+  min-height: 0 !important;
+  padding: 10px 12px !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.gggi-workspace .gggi-control-actions {
+  width: auto !important;
+  margin-left: auto !important;
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 720px) {
+  .gggi-workspace .gggi-control-actions {
+    width: 100% !important;
+  }
+}
+
+/* Stage 10: UHC SCI is authored against GIR tokens and uses the host's single
+   country/year context bar. The hidden selects remain available to the bridge. */
+.uhc-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  overflow: visible !important;
+}
+
+.uhc-workspace > *,
+.uhc-view-stage,
+.uhc-panel {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.uhc-workspace :where(.uhc-hero, .uhc-controls, .uhc-tabs, .uhc-card, .uhc-domain-card, .uhc-method-card, .uhc-state-card) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+.uhc-workspace .uhc-control-primary {
+  display: none !important;
+}
+
+.uhc-workspace .uhc-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.uhc-workspace .uhc-control-actions {
+  width: auto !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.uhc-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline-color: var(--green) !important;
+}
+
+@media (max-width: 720px) {
+  .uhc-workspace .uhc-control-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uhc-workspace *,
+  .uhc-workspace *::before,
+  .uhc-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .uhc-controls,
+  .uhc-tabs {
+    display: none !important;
+  }
+
+  :where(.uhc-hero, .uhc-card, .uhc-metric, .uhc-domain-card, .uhc-method-card) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+/* The base institutional header keeps all controls visible on desktop. On a
+   narrow viewport the cooperation action becomes the same compact icon control
+   as the existing language, theme and navigation actions. This prevents the
+   host shell—not the UHC workspace—from widening the mobile document. */
+.cooperation-header-cta {
+  min-width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cooperation-header-cta:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.cooperation-header-cta:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--green) 82%, transparent);
+  outline-offset: 3px;
+}
+
+.cooperation-header-cta img {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+@media (max-width: 640px) {
+  .cooperation-header-cta {
+    width: 42px;
+    padding: 0;
+    gap: 0;
+  }
+
+  .cooperation-header-cta [data-cooperation-label],
+  .cooperation-header-cta .cooperation-header-arrow {
+    display: none;
+  }
+}
+
+/* GIR shell guard for compact screens. The institutional cooperation CTA is
+   already available elsewhere in the application; suppressing its duplicate
+   header placement below 640px keeps the original shell within the viewport
+   without altering any index workspace geometry. */
+@media (max-width: 640px) {
+  .institutional-header .cooperation-header-cta {
+    display: none !important;
+  }
+
+  .institutional-header .top-actions {
+    min-width: 0 !important;
+    width: auto !important;
+    margin-left: auto !important;
+    gap: 6px !important;
+  }
+}
+
+
+/* Stage 12: CPI workspace is a GIR-native child with a single host context bar. */
+.cpi-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  overflow: visible !important;
+}
+
+.cpi-workspace > *,
+.cpi-view-stage,
+.cpi-panel {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.cpi-workspace :where(.cpi-hero, .cpi-controls, .cpi-tabs, .cpi-card, .cpi-source-card, .cpi-change-card, .cpi-method-card, .cpi-state-card) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+.cpi-workspace .cpi-control-primary {
+  display: none !important;
+}
+
+.cpi-workspace .cpi-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.cpi-workspace .cpi-control-actions {
+  width: auto !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.cpi-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline-color: var(--green) !important;
+}
+
+@media (max-width: 720px) {
+  .cpi-workspace .cpi-control-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cpi-workspace *,
+  .cpi-workspace *::before,
+  .cpi-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .cpi-controls,
+  .cpi-tabs {
+    display: none !important;
+  }
+
+  :where(.cpi-hero, .cpi-card, .cpi-metric, .cpi-source-card, .cpi-change-card, .cpi-method-card) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+/* Stage 14: WPFI workspace is a GIR-native child with a single host context bar. */
+.wpfi-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  overflow: visible !important;
+}
+
+.wpfi-workspace > *,
+.wpfi-view-stage,
+.wpfi-panel {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.wpfi-workspace :where(.wpfi-hero, .wpfi-controls, .wpfi-tabs, .wpfi-card, .wpfi-indicator-card, .wpfi-zone-card, .wpfi-method-card, .wpfi-state-card) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+.wpfi-workspace .wpfi-control-primary {
+  display: none !important;
+}
+
+.wpfi-workspace .wpfi-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.wpfi-workspace .wpfi-control-actions {
+  width: auto !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.wpfi-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline-color: var(--green) !important;
+}
+
+@media (max-width: 720px) {
+  .wpfi-workspace .wpfi-control-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wpfi-workspace *,
+  .wpfi-workspace *::before,
+  .wpfi-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .wpfi-controls,
+  .wpfi-tabs {
+    display: none !important;
+  }
+
+  :where(.wpfi-hero, .wpfi-card, .wpfi-metric, .wpfi-indicator-card, .wpfi-zone-card, .wpfi-method-card) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+
+/* Stage 16: ROLI workspace is a native child of the shared GIR shell. */
+.roli-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+  background: transparent !important;
+  font-family: var(--font) !important;
+  overflow: visible !important;
+}
+
+.roli-workspace > *,
+.roli-view-stage,
+.roli-panel {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.roli-workspace :where(.roli-hero, .roli-controls, .roli-tabs, .roli-card, .roli-dimension-card, .roli-subfactor-row, .roli-method-card, .roli-state-card) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+/* Country and period live in GIR's single shared context bar. */
+.roli-workspace .roli-control-primary {
+  display: none !important;
+}
+
+.roli-workspace .roli-controls {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+
+.roli-workspace .roli-control-actions {
+  width: auto !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+.roli-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline-color: var(--green) !important;
+}
+
+@media (max-width: 720px) {
+  .roli-workspace .roli-control-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roli-workspace *,
+  .roli-workspace *::before,
+  .roli-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .roli-controls,
+  .roli-tabs {
+    display: none !important;
+  }
+
+  :where(.roli-hero, .roli-card, .roli-metric, .roli-dimension-card, .roli-method-card) {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}

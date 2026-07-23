@@ -402,7 +402,7 @@ html[data-theme="dark"] .method-button-primary:hover { color: #061a2e; }
 
 .method-scale-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid var(--method-rule);
   background: var(--panel);
 }
@@ -416,6 +416,8 @@ html[data-theme="dark"] .method-button-primary:hover { color: #061a2e; }
   padding: 22px 17px;
   border-right: 1px solid var(--method-rule);
 }
+.method-scale-grid > div:nth-child(4n) { border-right: 0; }
+.method-scale-grid > div:nth-child(-n + 4) { border-bottom: 1px solid var(--method-rule); }
 .method-scale-grid > div:last-child { border-right: 0; }
 .method-scale-grid strong { font-size: clamp(24px, 2.3vw, 36px); line-height: 1; font-weight: 500; letter-spacing: -.025em; }
 .method-scale-grid span { max-width: 150px; color: var(--muted); font-size: 10px; line-height: 1.45; }
@@ -1048,6 +1050,7 @@ html[data-theme="dark"] .method-button-primary:hover { color: #061a2e; }
   .method-workspace { gap: 18px; }
   .method-context-rail { font-size: 9px; }
   .method-scale-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .method-scale-grid > div:nth-child(4n) { border-right: 1px solid var(--method-rule); }
   .method-scale-grid > div:nth-child(3n) { border-right: 0; }
   .method-scale-grid > div:nth-child(-n + 3) { border-bottom: 1px solid var(--method-rule); }
 }

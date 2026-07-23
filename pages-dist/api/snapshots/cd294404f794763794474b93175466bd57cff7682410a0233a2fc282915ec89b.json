@@ -1,0 +1,1040 @@
+{
+  "count": 28,
+  "index_code": "WORLD_BANK_LPI",
+  "indicators": [
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 180,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_MC",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of maritime partner economies",
+      "name_ru": "Число стран-партнёров морского сообщения",
+      "observation_count": 359,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 1,
+      "units": [
+        {
+          "code": "PRTN",
+          "name": "Partners"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 176,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_DT_M",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_75_25",
+          "name": "Interquartile range (P75-P25)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Container import dwell time",
+      "name_ru": "Время хранения импортных контейнеров в порту",
+      "observation_count": 1053,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 2,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 149,
+      "family": "lpi2_operational",
+      "indicator_code": "AV_PRTN",
+      "logistics_mode": "aviation",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of aviation partner economies",
+      "name_ru": "Число стран-партнёров авиационного сообщения",
+      "observation_count": 283,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 3,
+      "units": [
+        {
+          "code": "PRTN",
+          "name": "Partners"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 149,
+      "family": "lpi2_operational",
+      "indicator_code": "AV_DT",
+      "logistics_mode": "aviation",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_80_20",
+          "name": "Interquartile range (P80-P20)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Aviation import dwell time",
+      "name_ru": "Время обработки импортного авиагруза",
+      "observation_count": 849,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 4,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 206,
+      "family": "lpi2_operational",
+      "indicator_code": "PC_B2B",
+      "logistics_mode": "postal",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of business-to-business postal partner economies",
+      "name_ru": "Число стран-партнёров почтовых B2B-отправлений",
+      "observation_count": 412,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 5,
+      "units": [
+        {
+          "code": "PRTN",
+          "name": "Partners"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "core",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 205,
+      "family": "lpi2_operational",
+      "indicator_code": "PO_B2B",
+      "logistics_mode": "postal",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_80_20",
+          "name": "Interquartile range (P80-P20)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Business-to-business postal delivery time",
+      "name_ru": "Срок почтовой B2B-доставки",
+      "observation_count": 1206,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 6,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 180,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_SERV",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of services",
+      "name_ru": "Число прямых линейных сервисов",
+      "observation_count": 359,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 7,
+      "units": [
+        {
+          "code": "SERV",
+          "name": "Services"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 180,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_ALLI",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of alliances",
+      "name_ru": "Число судоходных альянсов",
+      "observation_count": 359,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 8,
+      "units": [
+        {
+          "code": "ALLIANC",
+          "name": "Alliances"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 176,
+      "family": "lpi2_operational",
+      "indicator_code": "TRS_NUM",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of transshipments",
+      "name_ru": "Число перегрузок контейнера",
+      "observation_count": 351,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 9,
+      "units": [
+        {
+          "code": "TRANS",
+          "name": "Transshipments"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 169,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_DT_X",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_75_25",
+          "name": "Interquartile range (P75-P25)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Container export dwell time",
+      "name_ru": "Время хранения экспортных контейнеров в порту",
+      "observation_count": 1008,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 10,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD_TEU",
+      "entity_count_union": 181,
+      "family": "lpi2_operational",
+      "indicator_code": "CT_TAT_PT",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_75_25",
+          "name": "Interquartile range (P75-P25)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        },
+        {
+          "code": "WB_LPI_MD_TEU",
+          "name": "TEU weighted median"
+        },
+        {
+          "code": "WB_LPI_M_TEU",
+          "name": "TEU weighted mean"
+        }
+      ],
+      "name_en": "Turnaround time at ports",
+      "name_ru": "Оборотное время судов в портах",
+      "observation_count": 1795,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 11,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 176,
+      "family": "lpi2_operational",
+      "indicator_code": "TRS_T",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Time spent in transshipment",
+      "name_ru": "Время, проведённое в перегрузочном порту",
+      "observation_count": 351,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 12,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 176,
+      "family": "lpi2_operational",
+      "indicator_code": "LT_M",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Lead time to import from port of origin to destination economy",
+      "name_ru": "Срок импорта от порта происхождения до страны назначения",
+      "observation_count": 702,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 13,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 168,
+      "family": "lpi2_operational",
+      "indicator_code": "SC_START",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Export supply chain initiation",
+      "name_ru": "Инициация экспортной цепочки поставок",
+      "observation_count": 668,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 14,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 177,
+      "family": "lpi2_operational",
+      "indicator_code": "SC_END",
+      "logistics_mode": "maritime",
+      "metrics": [
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Import supply chain termination",
+      "name_ru": "Завершение импортной цепочки поставок",
+      "observation_count": 704,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 15,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 32,
+      "family": "lpi2_operational",
+      "indicator_code": "DT_POA_LLDC",
+      "logistics_mode": "maritime_lldc",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Dwell time at port of arrival for container destined for LLDC",
+      "name_ru": "Время в порту прибытия контейнера для страны без выхода к морю",
+      "observation_count": 62,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 16,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 32,
+      "family": "lpi2_operational",
+      "indicator_code": "LT_CORR",
+      "logistics_mode": "maritime_lldc",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Corridor lead time from port exit to destination (LLDC)",
+      "name_ru": "Срок доставки по коридору от выхода из порта до страны без выхода к морю",
+      "observation_count": 62,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 17,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 32,
+      "family": "lpi2_operational",
+      "indicator_code": "DT_DST_LLDC",
+      "logistics_mode": "maritime_lldc",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Dwell time at destination (LLDC)",
+      "name_ru": "Время обработки в стране назначения без выхода к морю",
+      "observation_count": 62,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 18,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "_Z",
+      "entity_count_union": 32,
+      "family": "lpi2_operational",
+      "indicator_code": "DT_REF_POA",
+      "logistics_mode": "maritime_lldc",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Reference dwell time at port of arrival (LLDC)",
+      "name_ru": "Справочное время обработки в порту прибытия для страны без выхода к морю",
+      "observation_count": 62,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 19,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "connectivity",
+      "default_metric_code": "_Z",
+      "entity_count_union": 207,
+      "family": "lpi2_operational",
+      "indicator_code": "PC_B2C",
+      "logistics_mode": "postal",
+      "metrics": [
+        {
+          "code": "_Z",
+          "name": "Value"
+        }
+      ],
+      "name_en": "Number of business-to-consumer postal partner economies",
+      "name_ru": "Число стран-партнёров почтовых B2C-отправлений",
+      "observation_count": 414,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "sort_order": 20,
+      "units": [
+        {
+          "code": "PRTN",
+          "name": "Partners"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2023,
+        2024
+      ],
+      "category": "supplementary",
+      "concept": "time",
+      "default_metric_code": "WB_LPI_MD",
+      "entity_count_union": 204,
+      "family": "lpi2_operational",
+      "indicator_code": "PO_B2C",
+      "logistics_mode": "postal",
+      "metrics": [
+        {
+          "code": "WB_LPI_IQR_80_20",
+          "name": "Interquartile range (P80-P20)"
+        },
+        {
+          "code": "WB_LPI_M",
+          "name": "Mean"
+        },
+        {
+          "code": "WB_LPI_MD",
+          "name": "Median"
+        }
+      ],
+      "name_en": "Business-to-consumer postal delivery time",
+      "name_ru": "Срок почтовой B2C-доставки",
+      "observation_count": 1206,
+      "rank_is_official": false,
+      "rank_status": "gir_derived_standard_competition_per_indicator_metric_year",
+      "score_direction": "lower_is_better",
+      "score_is_official": true,
+      "sort_order": 21,
+      "units": [
+        {
+          "code": "D",
+          "name": "Days"
+        }
+      ]
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "overall",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Logistics Performance Index overall",
+      "name_ru": "Общий индекс эффективности логистики",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 1,
+      "source_indicator_code": "LPI_OVR"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "customs",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Customs and border management",
+      "name_ru": "Таможня и пограничный контроль",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 2,
+      "source_indicator_code": "LPI_CTMS"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "infrastructure",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Trade and transport infrastructure",
+      "name_ru": "Торговая и транспортная инфраструктура",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 3,
+      "source_indicator_code": "LPI_INF"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "international_shipments",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Ease of arranging international shipments",
+      "name_ru": "Организация международных перевозок",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 4,
+      "source_indicator_code": "LPI_IS"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "logistics_quality",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Quality and competence of logistics services",
+      "name_ru": "Качество и компетентность логистических услуг",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 5,
+      "source_indicator_code": "LPI_LOG"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "tracking_tracing",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Tracking and tracing",
+      "name_ru": "Отслеживание грузов",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 6,
+      "source_indicator_code": "LPI_TRC"
+    },
+    {
+      "available_years": [
+        2007,
+        2010,
+        2012,
+        2014,
+        2016,
+        2018,
+        2023
+      ],
+      "category": "survey_component",
+      "concept": "perception_based_logistics_performance",
+      "default_metric_code": "score",
+      "family": "legacy_survey",
+      "indicator_code": "timeliness",
+      "logistics_mode": "cross_cutting",
+      "metrics": [
+        {
+          "code": "score",
+          "name": "Score"
+        },
+        {
+          "code": "rank",
+          "name": "Official rank"
+        }
+      ],
+      "name_en": "Timeliness",
+      "name_ru": "Своевременность доставки",
+      "rank_is_official": true,
+      "rank_status": "official_world_bank_survey_rank",
+      "score_direction": "higher_is_better",
+      "score_is_official": true,
+      "score_scale": {
+        "max": 5,
+        "min": 1
+      },
+      "sort_order": 7,
+      "source_indicator_code": "LPI_TML"
+    }
+  ]
+}

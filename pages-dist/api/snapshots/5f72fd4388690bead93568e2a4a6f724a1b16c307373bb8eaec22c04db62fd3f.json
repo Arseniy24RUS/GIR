@@ -1,0 +1,170 @@
+{
+  "coverage": {
+    "constant_usd_base_year": 2024,
+    "earliest_year": 1949,
+    "latest_year": 2025
+  },
+  "gir_derivations": {
+    "formula_version": "sipri-published-values-derived-standard-competition-ranks-v1",
+    "percentile": true,
+    "published_values_preserved": true,
+    "rank_is_official": false,
+    "real_change_from_constant_usd": [
+      "1y",
+      "10y"
+    ],
+    "standard_competition_rank": true,
+    "synthetic_composite": false,
+    "transform_id": "gir-sipri-milex-xlsx-v1"
+  },
+  "index_code": "SIPRI_MILEX",
+  "interpretation": {
+    "blue_font": "SIPRI estimate",
+    "constant_usd_for_time_trends": true,
+    "cross_country_close_values_require_notes_review": true,
+    "gdp_share_is_approximate_burden": true,
+    "red_font": "heightened uncertainty",
+    "resource_input_not_capability": true
+  },
+  "official_series": [
+    {
+      "name_en": "Military expenditure in constant (2024) US$",
+      "name_ru": "Военные расходы в постоянных долларах США 2024 года",
+      "percent_storage": false,
+      "period_basis": "calendar_year",
+      "required_for_current_release": true,
+      "scope": "country",
+      "score_direction": "higher_is_more_expenditure",
+      "series_code": "constant_usd_millions",
+      "sheet_aliases": [
+        "Constant (2024) US$",
+        "Constant (2024) US dollars",
+        "Constant US$"
+      ],
+      "sort_order": 10,
+      "unit": "million_constant_2024_usd"
+    },
+    {
+      "name_en": "Military expenditure in current US$",
+      "name_ru": "Военные расходы в текущих долларах США",
+      "percent_storage": false,
+      "period_basis": "calendar_year",
+      "required_for_current_release": true,
+      "scope": "country",
+      "score_direction": "higher_is_more_expenditure",
+      "series_code": "current_usd_millions",
+      "sheet_aliases": [
+        "Current US$",
+        "Current US dollars"
+      ],
+      "sort_order": 20,
+      "unit": "million_current_usd"
+    },
+    {
+      "name_en": "Military expenditure as a share of GDP",
+      "name_ru": "Военные расходы в процентах ВВП",
+      "percent_storage": true,
+      "period_basis": "calendar_year",
+      "required_for_current_release": true,
+      "scope": "country",
+      "score_direction": "higher_is_greater_military_burden",
+      "series_code": "share_gdp_percent",
+      "sheet_aliases": [
+        "Share of GDP",
+        "Military expenditure as a share of GDP"
+      ],
+      "sort_order": 30,
+      "unit": "percent_of_gdp"
+    },
+    {
+      "name_en": "Military expenditure per capita",
+      "name_ru": "Военные расходы на душу населения",
+      "percent_storage": false,
+      "period_basis": "calendar_year",
+      "required_for_current_release": true,
+      "scope": "country",
+      "score_direction": "higher_is_more_expenditure_per_capita",
+      "series_code": "per_capita_usd",
+      "sheet_aliases": [
+        "Per capita",
+        "Per capita US$",
+        "Per capita spending"
+      ],
+      "sort_order": 40,
+      "unit": "current_usd_per_capita"
+    },
+    {
+      "name_en": "Military expenditure as a share of government spending",
+      "name_ru": "Военные расходы в процентах государственных расходов",
+      "percent_storage": true,
+      "period_basis": "financial_year",
+      "required_for_current_release": true,
+      "scope": "country",
+      "score_direction": "higher_is_greater_budget_burden",
+      "series_code": "share_government_spending_percent",
+      "sheet_aliases": [
+        "Share of Govt. spending",
+        "Share of government spending",
+        "Share of Govt spending"
+      ],
+      "sort_order": 50,
+      "unit": "percent_of_government_spending"
+    },
+    {
+      "name_en": "Military expenditure in local currency (calendar year)",
+      "name_ru": "Военные расходы в национальной валюте (календарный год)",
+      "percent_storage": false,
+      "period_basis": "calendar_year",
+      "required_for_current_release": false,
+      "scope": "country",
+      "score_direction": "not_cross_country_rankable",
+      "series_code": "local_currency_calendar",
+      "sheet_aliases": [
+        "Local currency",
+        "Local currency calendar years",
+        "Local currency, calendar year"
+      ],
+      "sort_order": 60,
+      "unit": "local_currency_millions"
+    },
+    {
+      "name_en": "Military expenditure in local currency (financial year)",
+      "name_ru": "Военные расходы в национальной валюте (финансовый год)",
+      "percent_storage": false,
+      "period_basis": "financial_year",
+      "required_for_current_release": false,
+      "scope": "country",
+      "score_direction": "not_cross_country_rankable",
+      "series_code": "local_currency_financial_year",
+      "sheet_aliases": [
+        "Local currency financial years",
+        "Local currency, financial year",
+        "Financial year"
+      ],
+      "sort_order": 70,
+      "unit": "local_currency_millions"
+    },
+    {
+      "name_en": "Regional totals in constant (2024) US$",
+      "name_ru": "Региональные итоги в постоянных долларах США 2024 года",
+      "percent_storage": false,
+      "period_basis": "calendar_year",
+      "required_for_current_release": false,
+      "scope": "aggregate",
+      "score_direction": "not_country_rankable",
+      "series_code": "regional_totals_constant_usd_millions",
+      "sheet_aliases": [
+        "Regional totals",
+        "Regional totals, constant (2024) US$"
+      ],
+      "sort_order": 80,
+      "unit": "million_constant_2024_usd"
+    }
+  ],
+  "publisher": "Stockholm International Peace Research Institute (SIPRI)",
+  "source_urls": {
+    "database": "https://www.sipri.org/databases/milex",
+    "doi": "10.55163/CQGC9685",
+    "sources_and_methods": "https://www.sipri.org/databases/milex/sources-and-methods"
+  }
+}

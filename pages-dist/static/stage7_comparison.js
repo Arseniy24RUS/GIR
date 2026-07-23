@@ -1,524 +1,502 @@
-/* GIR Stage 7 — inter-country comparison and visual analytics workspace. */
+/* GIR T21 — portfolio-wide country comparison workspace. */
 (() => {
   "use strict";
 
-  const INDEX_ORDER = ["HDI", "HCI_PLUS", "GTCI", "GII", "IDI", "QS_ET", "HTEI"];
   const MAX_SELECTED = 8;
+  const MIN_SELECTED = 2;
   const DEFAULT_SELECTED = ["RUS", "CHN", "USA", "DEU", "KOR", "IND"];
-  const PALETTE = ["--s7-c1", "--s7-c2", "--s7-c3", "--s7-c4", "--s7-c5", "--s7-c6", "--s7-c7", "--s7-c8"];
-  const SYMBOLS = ["●", "■", "▲", "◆", "✚", "⬟", "✦", "◉"];
+  const COUNTRY_COLORS = ["#34a39a", "#597ee8", "#d59a47", "#d26070", "#8f6bd2", "#5ca562", "#c95caa", "#7d91aa"];
   let context = null;
   let payload = null;
   let requestSerial = 0;
   let initialized = false;
-  let debounceTimer = null;
+  let searchTimer = null;
 
   const ui = {
+    tab: "overview",
     group: "G20",
     region: "all",
     income: "all",
-    query: "",
-    hteiMode: "proxy_extended",
     selected: [...DEFAULT_SELECTED],
+    anchor: "",
+    theme: "all",
+    hteiMode: "proxy_extended",
+    matrixTheme: "all",
+    matrixStatus: "all",
+    matrixMode: "percentile",
+    matrixQuery: "",
+    fieldIndex: "HTEI",
     scatterX: "HTEI",
     scatterY: "GII",
-    trendIndex: "HTEI",
+    correlationTheme: "core",
+    trendIndex: "HDI",
     trendMetric: "percentile",
-    matrixMetric: "percentile",
-    sortCode: "HTEI",
-    sortDir: "desc",
-    topN: "",
-    page: 1,
-    pageSize: 25,
+    expandedGroups: new Set(["core", "education", "governance", "digital"]),
   };
 
   const lang = () => context?.lang === "en" ? "en" : "ru";
   const tr = (ru, en) => lang() === "ru" ? ru : en;
-  const esc = value => context?.escapeHtml ? context.escapeHtml(value ?? "") : String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
-  const fmt = (value, digits = 1) => value == null || value === "" || !Number.isFinite(Number(value)) ? "—" : context?.fmt ? context.fmt(Number(value), digits) : Number(value).toFixed(digits);
-  const intFmt = value => value == null || value === "" ? "—" : context?.intFmt ? context.intFmt(value) : new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "en-US").format(Number(value));
-  const indexMeta = code => payload?.indices?.find(item => item.code === code) || {code, short_name_ru: code, short_name_en: code, name_ru: code, name_en: code};
-  const indexShort = code => lang() === "ru" ? (indexMeta(code).short_name_ru || code) : (indexMeta(code).short_name_en || code);
-  const indexAxis = code => code === "HCI_PLUS" ? "HCI+" : code === "QS_ET" ? "QS ET" : code;
-  const isCompact = () => window.matchMedia?.("(max-width: 767px)")?.matches ?? window.innerWidth <= 767;
-  const indexName = code => lang() === "ru" ? (indexMeta(code).name_ru || code) : (indexMeta(code).name_en || code);
-  const countryName = country => lang() === "ru" ? country.name_ru : country.name_en;
-  const groupLabel = group => lang() === "ru" ? group.label_ru : group.label_en;
-  const groupDescription = group => lang() === "ru" ? group.description_ru : group.description_en;
-  const cssColor = index => `var(${PALETTE[index % PALETTE.length]})`;
-  const selectedIndex = iso3 => Math.max(0, ui.selected.indexOf(iso3));
-  const colorFor = iso3 => cssColor(selectedIndex(iso3));
-  const symbolFor = iso3 => SYMBOLS[selectedIndex(iso3) % SYMBOLS.length];
+  const esc = (value) => context?.escapeHtml
+    ? context.escapeHtml(value ?? "")
+    : String(value ?? "").replace(/[&<>"']/g, (ch) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
+  const fmt = (value, digits = 1) => value == null || value === "" || !Number.isFinite(Number(value))
+    ? "—"
+    : context?.fmt ? context.fmt(Number(value), digits) : Number(value).toFixed(digits);
+  const intFmt = (value) => value == null || value === "" ? "—" : context?.intFmt ? context.intFmt(value) : new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "en-US").format(Number(value));
+  const pctFmt = (value) => value == null ? "—" : `${fmt(value, 0)}${lang() === "ru" ? "-й" : "th"}`;
+  const countryName = (country) => lang() === "ru" ? (country?.name_ru || country?.name_en || country?.iso3) : (country?.name_en || country?.name_ru || country?.iso3);
+  const moduleName = (module) => lang() === "ru" ? module?.name_ru : module?.name_en;
+  const groupName = (group) => lang() === "ru" ? group?.label_ru : group?.label_en;
+  const moduleByCode = (code) => payload?.modules?.find((item) => item.code === code) || {code, short_name: code, name_ru: code, name_en: code, group: "core", unit_ru: "", unit_en: ""};
+  const groupByKey = (key) => payload?.portfolio_groups?.find((item) => item.key === key) || {key, label_ru: key, label_en: key, codes: []};
+  const selectedProfile = (iso3) => payload?.selected_countries?.find((item) => item.iso3 === iso3);
+  const colorFor = (iso3) => COUNTRY_COLORS[Math.max(0, ui.selected.indexOf(iso3)) % COUNTRY_COLORS.length];
+  const scoreUnit = (module) => lang() === "ru" ? module?.unit_ru : module?.unit_en;
+
+  function readUrlState() {
+    try {
+      const params = new URL(location.href).searchParams;
+      ui.tab = params.get("compare_tab") || ui.tab;
+      ui.group = (params.get("compare_group") || context?.state?.matrixGroup || ui.group).toUpperCase();
+      ui.region = params.get("compare_region") || context?.state?.matrixRegion || ui.region;
+      ui.income = params.get("compare_income") || context?.state?.matrixIncome || ui.income;
+      ui.theme = params.get("compare_theme") || ui.theme;
+      ui.matrixTheme = params.get("compare_matrix_theme") || ui.matrixTheme;
+      ui.fieldIndex = params.get("compare_field") || ui.fieldIndex;
+      ui.scatterX = params.get("compare_x") || ui.scatterX;
+      ui.scatterY = params.get("compare_y") || ui.scatterY;
+      ui.correlationTheme = params.get("compare_corr_theme") || ui.correlationTheme;
+      ui.trendIndex = params.get("compare_trend") || ui.trendIndex;
+      ui.hteiMode = params.get("htei_mode") || context?.state?.hteiMode || ui.hteiMode;
+      ui.anchor = (params.get("compare_anchor") || context?.state?.country || "").toUpperCase();
+      const selected = (params.get("compare_selected") || "").split(",").map((item) => item.trim().toUpperCase()).filter(Boolean);
+      if (selected.length >= MIN_SELECTED) ui.selected = [...new Set(selected)].slice(0, MAX_SELECTED);
+      if (ui.anchor && !ui.selected.includes(ui.anchor)) ui.selected = [ui.anchor, ...ui.selected].slice(0, MAX_SELECTED);
+    } catch (_) {}
+  }
+
+  function syncUrlState() {
+    try {
+      const url = new URL(location.href);
+      const values = {
+        compare_tab: ui.tab,
+        compare_group: ui.group,
+        compare_region: ui.region,
+        compare_income: ui.income,
+        compare_theme: ui.theme,
+        compare_matrix_theme: ui.matrixTheme,
+        compare_field: ui.fieldIndex,
+        compare_x: ui.scatterX,
+        compare_y: ui.scatterY,
+        compare_corr_theme: ui.correlationTheme,
+        compare_trend: ui.trendIndex,
+        compare_selected: ui.selected.join(","),
+        compare_anchor: ui.anchor,
+        htei_mode: ui.hteiMode,
+      };
+      Object.entries(values).forEach(([key, value]) => value ? url.searchParams.set(key, value) : url.searchParams.delete(key));
+      history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    } catch (_) {}
+  }
 
   function initialize(ctx) {
     context = ctx;
     if (initialized) return;
     initialized = true;
-    const candidate = String(ctx.state?.matrixGroup || "").toUpperCase();
-    ui.group = candidate && candidate !== "ALL" ? candidate : "G20";
-    ui.region = ctx.state?.matrixRegion || "all";
-    ui.income = ctx.state?.matrixIncome || "all";
-    ui.query = ctx.state?.matrixQuery || "";
-    ui.matrixMetric = ["percentile", "rank", "score", "freshness", "data_quality"].includes(ctx.state?.matrixMetric) ? ctx.state.matrixMetric : "percentile";
-    ui.sortCode = ctx.state?.matrixSortCode || "HTEI";
-    ui.sortDir = ctx.state?.matrixSortDir || "desc";
+    readUrlState();
   }
 
-  function syncLegacyState() {
-    if (!context?.state) return;
-    context.state.matrixGroup = ui.group;
-    context.state.matrixRegion = ui.region;
-    context.state.matrixIncome = ui.income;
-    context.state.matrixQuery = ui.query;
-    context.state.matrixMetric = ui.matrixMetric;
-    context.state.matrixSortCode = ui.sortCode;
-    context.state.matrixSortDir = ui.sortDir;
-    context.state.matrixTopN = ui.topN;
-  }
-
-  function queryString() {
-    const query = new URLSearchParams({
-      year: String(context.year),
+  function queryParams() {
+    return new URLSearchParams({
+      year: String(context?.year || 2026),
       group: ui.group,
+      region: ui.region || "all",
+      income_group: ui.income || "all",
       selected: ui.selected.join(","),
       scatter_x: ui.scatterX,
       scatter_y: ui.scatterY,
       trend_index: ui.trendIndex,
+      theme: ui.correlationTheme,
+      field_index: ui.fieldIndex,
       htei_mode: ui.hteiMode,
     });
-    if (ui.region !== "all") query.set("region", ui.region);
-    if (ui.income !== "all") query.set("income_group", ui.income);
-    if (ui.query.trim()) query.set("q", ui.query.trim());
-    return query;
-  }
-
-  async function load() {
-    const serial = ++requestSerial;
-    syncLegacyState();
-    renderLoading();
-    try {
-      const response = await fetch(`/api/comparison/workspace?${queryString()}`, {cache: "no-store"});
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const next = await response.json();
-      if (serial !== requestSerial) return;
-      payload = next;
-      ui.group = payload.group.code;
-      ui.selected = payload.selected_countries.map(country => country.iso3).slice(0, MAX_SELECTED);
-      ui.page = 1;
-      renderPage();
-    } catch (error) {
-      if (serial !== requestSerial) return;
-      renderError(error);
-    }
   }
 
   function renderLoading() {
-    if (!context?.root) return;
-    context.root.innerHTML = `<section class="s7-loading" aria-live="polite"><div class="s7-loading-mark">G</div><h1>${tr("Формируется межстрановое сравнение","Building country comparison")}</h1><p>${tr("Согласуем выборки, процентильные позиции и методические редакции индексов…","Aligning samples, percentile positions and methodological editions…")}</p></section>`;
+    context.root.innerHTML = `<section class="s21-state"><div class="s21-loader" aria-hidden="true"></div><h1>${tr("Собираем межстрановое сравнение", "Building the country comparison")}</h1><p>${tr("Гармонизируем 44 модуля, исходные шкалы и фактические годы.", "Aligning 44 modules, original scales and actual data years.")}</p></section>`;
   }
 
   function renderError(error) {
-    context.root.innerHTML = `<section class="s7-error"><h1>${tr("Не удалось открыть пространство сравнения","Could not open the comparison workspace")}</h1><p>${esc(error?.message || error)}</p><button type="button" class="s7-button s7-primary" data-s7-retry>${tr("Повторить","Retry")}</button></section>`;
-    context.root.querySelector("[data-s7-retry]")?.addEventListener("click", load);
+    context.root.innerHTML = `<section class="s21-state s21-error"><span class="s21-state-code">!</span><h1>${tr("Сравнение временно недоступно", "Comparison is temporarily unavailable")}</h1><p>${esc(error?.message || error || tr("Не удалось получить данные.", "Could not load data."))}</p><button class="btn primary" type="button" data-s21-action="retry">${tr("Повторить", "Retry")}</button></section>`;
+    context.root.querySelector('[data-s21-action="retry"]')?.addEventListener("click", () => load(true));
   }
 
-  function renderPage() {
-    if (!payload) return;
-    context.root.innerHTML = `${hero()}${jumpNav()}${profileSection()}${relationshipSection()}${trendSection()}${matrixSection()}${methodSection()}`;
-    bindControls();
-    bindCharts();
-    context.syncAllSelectDisplays?.();
+  async function load(force = false) {
+    const serial = ++requestSerial;
+    if (!payload || force) renderLoading();
+    syncUrlState();
+    try {
+      const response = await fetch(`/api/comparison/workspace?${queryParams().toString()}`, {headers: {Accept: "application/json"}});
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body?.detail || `HTTP ${response.status}`);
+      if (serial !== requestSerial) return;
+      payload = body;
+      ui.selected = (payload.selected_codes || ui.selected).slice(0, MAX_SELECTED);
+      if (!ui.selected.includes(ui.anchor)) ui.anchor = ui.selected[0] || "";
+      renderPage();
+    } catch (error) {
+      if (serial === requestSerial) renderError(error);
+    }
+  }
+
+  function statusLabel(status) {
+    return ({
+      available: tr("Есть результат", "Available"),
+      source_gated: tr("Ожидает источник", "Source gated"),
+      no_country_data: tr("Нет наблюдения", "No country observation"),
+    })[status] || status;
+  }
+
+  function freshnessLabel(status) {
+    return ({current: tr("Актуально", "Current"), recent: tr("Умеренный лаг", "Moderate lag"), stale: tr("Требует обновления", "Needs update"), unknown: tr("Год не определён", "Year unknown")})[status] || status;
+  }
+
+  function percentileClass(value) {
+    if (value == null) return "s21-p-na";
+    const band = Math.max(0, Math.min(10, Math.floor(Number(value) / 10)));
+    return `s21-p${band}`;
+  }
+
+  function moduleOptions({numericOnly = false, comparableOnly = false} = {}) {
+    return (payload?.modules || []).filter((module) => (!numericOnly || module.numeric_release) && (!comparableOnly || module.direction !== "contextual"));
+  }
+
+  function selectOptions(items, current, valueKey, labelFn) {
+    return items.map((item) => {
+      const value = typeof item === "string" ? item : item[valueKey];
+      return `<option value="${esc(value)}" ${String(value) === String(current) ? "selected" : ""}>${esc(labelFn(item))}</option>`;
+    }).join("");
+  }
+
+  function selectedChips() {
+    return ui.selected.map((iso3) => {
+      const country = selectedProfile(iso3) || payload?.countries?.find((item) => item.iso3 === iso3) || {iso3};
+      return `<span class="s21-country-chip" style="--country-color:${colorFor(iso3)}"><span class="s21-country-dot" aria-hidden="true"></span><button type="button" data-s21-country="${esc(iso3)}" title="${tr("Открыть профиль", "Open profile")}">${esc(country.flag || "")} ${esc(countryName(country))}</button>${ui.selected.length > MIN_SELECTED ? `<button class="s21-chip-remove" type="button" data-s21-remove="${esc(iso3)}" aria-label="${tr("Убрать страну", "Remove country")}: ${esc(countryName(country))}">×</button>` : ""}</span>`;
+    }).join("");
   }
 
   function hero() {
     const summary = payload.summary;
-    const coverage = Math.round((summary.coverage_rate || 0) * 100);
-    return `<section class="s7-hero" aria-labelledby="s7Title"><div class="s7-hero-main"><div><span class="s7-overline">GIR · COMPARATIVE INTELLIGENCE</span><h1 id="s7Title">${tr("Сравнение стран: где расходятся результаты и модели развития","Country comparison: where outcomes and development models diverge")}</h1><p>${tr("Единое пространство для структурных профилей, взаимосвязей индексов, динамики позиций и точной матрицы значений. Основной сравнительный масштаб — процентиль 0–100; исходные баллы, места, годы и источники сохраняются без преобразования.","A unified workspace for structural profiles, index relationships, rank dynamics and an exact value matrix. The main comparison scale is the 0–100 percentile; original scores, ranks, years and sources remain intact.")}</p></div><div class="s7-hero-actions"><button type="button" class="s7-button s7-primary" data-s7-scroll="s7Profiles">${tr("Сравнить профили","Compare profiles")}</button><button type="button" class="s7-button" data-s7-scroll="s7Matrix">${tr("Открыть точную матрицу","Open exact matrix")}</button><a class="s7-button s7-quiet" href="/api/comparison/workspace.csv?${queryString()}&lang=${lang()}" download="gir-country-comparison-${payload.requested_year}.csv">CSV</a></div><div class="s7-method-note"><b>${tr("Почему процентили?","Why percentiles?")}</b><span>${tr("HCI+ использует шкалу 0–325, большинство других модулей — 0–100. Процентиль делает положение страны сопоставимым, не подменяя исходный score.","HCI+ uses a 0–325 scale while most other modules use 0–100. Percentiles make country positions comparable without replacing the original score.")}</span></div></div><aside class="s7-hero-proof" aria-label="${tr("Параметры текущего сравнения","Current comparison parameters")}">${proofRow(tr("Группа","Group"), groupLabel(payload.group), groupDescription(payload.group))}${proofRow(tr("Страны","Countries"), intFmt(summary.country_count), tr(`${summary.complete_profiles} полных профилей`,`${summary.complete_profiles} complete profiles`))}${proofRow(tr("Индексные модули","Index modules"), intFmt(summary.index_count), `${intFmt(summary.available_cells)} / ${intFmt(summary.total_cells)}`)}${proofRow(tr("Покрытие","Coverage"), `${coverage}%`, tr(`${summary.stale_cells} устаревающих ячеек`,`${summary.stale_cells} ageing cells`))}${proofRow("HTEI", lang() === "ru" ? payload.htei.label_ru : payload.htei.label_en, payload.htei.release_year ? `${payload.htei.release_year}` : "—")}</aside></section>${globalControls()}`;
+    const group = payload.group;
+    const groupText = lang() === "ru" ? group.label_ru : group.label_en;
+    const unselected = payload.countries.filter((country) => !ui.selected.includes(country.iso3));
+    const availablePct = summary.total_cells ? summary.available_cells / summary.total_cells * 100 : 0;
+    return `<section class="s21-hero">
+      <div class="s21-hero-main">
+        <div>
+          <p class="s21-kicker">${tr("Межстрановая аналитика", "Cross-country analytics")}</p>
+          <h1>${tr("Сравнение стран по всему портфелю GIR", "Compare countries across the full GIR portfolio")}</h1>
+          <p class="s21-lead">${tr("44 индекса и рейтинга объединены в одну исследовательскую среду без смешения исходных шкал. Процентили служат навигацией, а точные значения, годы и методические статусы сохраняются в каждой ячейке.", "Forty-four indices and rankings are brought into one research workspace without mixing original scales. Percentiles guide comparison while exact values, years and methodological status remain available in every cell.")}</p>
+        </div>
+        <div class="s21-selected" aria-label="${tr("Выбранные страны", "Selected countries")}">${selectedChips()}</div>
+        <div class="s21-command-row">
+          <label><span>${tr("Добавить страну", "Add country")}</span><select id="s21-add-country" ${ui.selected.length >= MAX_SELECTED ? "disabled" : ""}><option value="">${tr("Выберите…", "Choose…")}</option>${selectOptions(unselected, "", "iso3", (item) => `${item.flag || ""} ${countryName(item)} · ${item.iso3}`)}</select></label>
+          <label><span>${tr("Международная вселенная", "Comparison universe")}</span><select id="s21-group">${selectOptions(payload.groups, ui.group, "code", (item) => `${groupName(item)} · ${item.country_count}`)}</select></label>
+          <label><span>${tr("Режим HTEI", "HTEI mode")}</span><select id="s21-htei-mode"><option value="proxy_extended" ${ui.hteiMode === "proxy_extended" ? "selected" : ""}>${tr("Расширенный рейтинг", "Extended ranking")}</option><option value="common_support" ${ui.hteiMode === "common_support" ? "selected" : ""}>${tr("Основной рейтинг", "Common support")}</option><option value="direct_core" ${ui.hteiMode === "direct_core" ? "selected" : ""}>${tr("Прямые данные", "Direct core")}</option></select></label>
+        </div>
+      </div>
+      <aside class="s21-hero-side">
+        <div class="s21-hero-context"><span>${tr("Текущая вселенная", "Current universe")}</span><strong>${esc(groupText)}</strong><small>${intFmt(summary.universe_country_count)} ${tr("стран и территорий", "countries and territories")}</small></div>
+        <div class="s21-kpi-grid">
+          <article><strong>${summary.selected_country_count}</strong><span>${tr("стран в сравнении", "countries selected")}</span></article>
+          <article><strong>${summary.module_count}</strong><span>${tr("модуля", "modules")}</span></article>
+          <article><strong>${fmt(availablePct, 0)}%</strong><span>${tr("заполненных ячеек", "available cells")}</span></article>
+          <article><strong>${summary.comparable_cells}</strong><span>${tr("сопоставимых позиций", "comparable positions")}</span></article>
+        </div>
+        <div class="s21-method-callout"><strong>${tr("Сопоставление без псевдоиндекса", "Comparison without a pseudo-index")}</strong><p>${tr("Тематические медианы и процентили помогают ориентироваться, но не образуют новый интегральный рейтинг стран.", "Thematic medians and percentiles aid navigation but do not create a new composite country ranking.")}</p></div>
+        <div class="s21-hero-actions"><a class="btn" href="/api/comparison/workspace.csv?${queryParams().toString()}&lang=${lang()}" download>${tr("Скачать выборку CSV", "Download CSV")}</a><button class="btn" type="button" data-s21-action="copy-link">${tr("Скопировать ссылку", "Copy link")}</button></div>
+      </aside>
+    </section>`;
   }
 
-  function proofRow(label, value, note) {
-    return `<div class="s7-proof-row"><span>${esc(label)}<small>${esc(note || "")}</small></span><strong>${esc(value)}</strong></div>`;
+  function tabNav() {
+    const tabs = [
+      ["overview", tr("Обзор", "Overview")],
+      ["matrix", tr("Матрица 44 × страны", "44 × countries matrix")],
+      ["relationships", tr("Связи", "Relationships")],
+      ["trends", tr("Динамика", "Trends")],
+      ["quality", tr("Качество данных", "Data quality")],
+    ];
+    return `<nav class="s21-tabs" role="tablist" aria-label="${tr("Разделы сравнения", "Comparison sections")}">${tabs.map(([key, label]) => `<button type="button" role="tab" data-s21-tab="${key}" aria-selected="${ui.tab === key}" tabindex="${ui.tab === key ? 0 : -1}" class="${ui.tab === key ? "active" : ""}">${esc(label)}</button>`).join("")}</nav>`;
   }
 
-  function globalControls() {
-    const groups = payload.groups.map(group => `<option value="${esc(group.code)}" ${group.code === ui.group ? "selected" : ""}>${esc(groupLabel(group))} · ${group.country_count}</option>`).join("");
-    const regions = payload.regions.map(value => `<option value="${esc(value)}" ${value === ui.region ? "selected" : ""}>${esc(value)}</option>`).join("");
-    const income = payload.income_groups.map(value => `<option value="${esc(value)}" ${value === ui.income ? "selected" : ""}>${esc(value)}</option>`).join("");
-    return `<section class="s7-controls" aria-label="${tr("Фильтры сравнения","Comparison filters")}"><label><span>${tr("Сравнимая группа","Comparison group")}</span><select id="matrixGroup" class="select"><option value="ALL" ${ui.group === "ALL" ? "selected" : ""}>${tr("Все страны","All countries")}</option>${groups}</select></label><label><span>${tr("Режим HTEI","HTEI mode")}</span><select id="s7HteiMode" class="select"><option value="proxy_extended" ${ui.hteiMode === "proxy_extended" ? "selected" : ""}>${tr("Расширенный рейтинг","Extended ranking")}</option><option value="common_support" ${ui.hteiMode === "common_support" ? "selected" : ""}>${tr("Основной рейтинг","Primary ranking")}</option><option value="direct_core" ${ui.hteiMode === "direct_core" ? "selected" : ""}>${tr("Строгий прямой слой","Strict direct layer")}</option></select></label><details class="s7-filter-details"><summary>${tr("Дополнительные фильтры","Additional filters")}<span aria-hidden="true">+</span></summary><div class="s7-filter-grid"><label><span>${tr("Регион","Region")}</span><select id="regionSelect" class="select"><option value="all">${tr("Все регионы","All regions")}</option>${regions}</select></label><label><span>${tr("Группа дохода","Income group")}</span><select id="incomeSelect" class="select"><option value="all">${tr("Все группы","All groups")}</option>${income}</select></label><label class="s7-search-label"><span>${tr("Поиск страны","Country search")}</span><input id="matrixSearch" class="input" type="search" value="${esc(ui.query)}" placeholder="${tr("Россия, Germany, KOR…","Russia, Germany, KOR…")}"></label></div></details><button type="button" class="s7-reset" data-s7-reset>${tr("Сбросить","Reset")}</button></section>`;
+  function heatCell(value, extra = "") {
+    return `<span class="s21-heat ${percentileClass(value)}"><strong>${value == null ? "—" : pctFmt(value)}</strong>${extra}</span>`;
   }
 
-  function jumpNav() {
-    const items = [["s7Profiles", tr("Профили","Profiles")],["s7Relationships",tr("Взаимосвязи","Relationships")],["s7Trends",tr("Динамика","Trends")],["s7Matrix",tr("Точная матрица","Exact matrix")]];
-    return `<nav class="s7-jump" aria-label="${tr("Разделы межстранового сравнения","Country comparison sections")}">${items.map(([id,label],index) => `<button type="button" data-s7-scroll="${id}"><span>0${index + 1}</span>${label}</button>`).join("")}</nav>`;
+  function overviewGroupTable() {
+    const groups = payload.portfolio_groups;
+    return `<div class="s21-table-shell" role="region" aria-label="${tr("Тематический профиль выбранных стран", "Thematic profile of selected countries")}" tabindex="0"><table class="s21-theme-table"><caption>${tr("Медианный благоприятный процентиль по тематическому направлению", "Median favourable percentile by theme")}</caption><thead><tr><th>${tr("Направление", "Theme")}</th>${payload.selected_countries.map((country) => `<th><span class="s21-th-country" style="--country-color:${colorFor(country.iso3)}"><i></i>${esc(country.flag || "")} ${esc(country.iso3)}</span></th>`).join("")}</tr></thead><tbody>${groups.map((group) => `<tr><th><strong>${esc(groupName(group))}</strong><small>${group.codes.length} ${tr("мод.", "mod.")}</small></th>${payload.selected_countries.map((country) => { const item = country.group_profiles.find((profile) => profile.key === group.key); return `<td>${heatCell(item?.median_percentile, `<small>${item?.available_count || 0}/${item?.module_count || group.codes.length}</small>`)}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
   }
 
-  function sectionHeading(number, title, description, controls = "") {
-    return `<header class="s7-section-head"><div><span>${number}</span><h2>${esc(title)}</h2></div><p>${esc(description)}</p>${controls ? `<div class="s7-section-controls">${controls}</div>` : ""}</header>`;
-  }
-
-  function mobileScrollHint(ru, en) {
-    return `<p class="s7-mobile-scroll-hint">↔ ${esc(tr(ru,en))}</p>`;
-  }
-
-  function selectedCountriesControl() {
-    const selected = payload.selected_countries;
-    const available = payload.all_countries.filter(country => !ui.selected.includes(country.iso3));
-    return `<div class="s7-country-selection"><div class="s7-selected-list" aria-label="${tr("Выбранные страны","Selected countries")}">${selected.map((country, index) => `<span class="s7-country-token" style="--country-color:${cssColor(index)}"><b>${SYMBOLS[index]}</b>${context.flagImage?.(country,"flag-img inline") || ""}<span>${esc(countryName(country))}</span><button type="button" data-s7-remove-country="${country.iso3}" aria-label="${tr("Удалить страну","Remove country")}: ${esc(countryName(country))}">×</button></span>`).join("")}</div><label class="s7-add-country"><span class="sr-only">${tr("Добавить страну","Add country")}</span><select id="s7AddCountry" class="select"><option value="">+ ${tr("Добавить страну","Add country")}</option>${available.map(country => `<option value="${country.iso3}">${esc(countryName(country))} · ${country.iso3}</option>`).join("")}</select></label></div>`;
-  }
-
-  function profileSection() {
-    return `<section id="s7Profiles" class="s7-section">${sectionHeading("01",tr("Структурные профили стран","Country structural profiles"),tr("Каждая строка — отдельный индекс; положение по горизонтали — процентиль страны. Медиана выбранной группы показана квадратом M.","Each row is an index; horizontal position is the country's percentile. The selected-group median is marked by an M square."))}${selectedCountriesControl()}<div class="s7-profile-layout"><figure class="s7-figure s7-profile-figure" aria-labelledby="s7ProfileTitle"><div class="s7-figure-title"><div><h3 id="s7ProfileTitle">${tr("Профиль по семи измерениям","Seven-dimension profile")}</h3><p>${tr("Выше и правее — более высокая позиция в соответствующей рейтинговой вселенной.","Higher and further right indicates a stronger position in the corresponding ranking universe.")}</p></div><span class="s7-scale-tag">PERCENTILE · 0–100</span></div>${profileChart()}${countryLegend()}<figcaption>${tr("Число внутри маркера соответствует номеру страны в легенде. Цвет дублируется символом и подписью.","The number inside each marker matches the country number in the legend. Colour is duplicated by symbol and label.")}</figcaption></figure><aside class="s7-insight-panel"><h3>${tr("Что отличает выбранные страны","What differentiates the selected countries")}</h3>${countryInsights()}</aside></div>${profileDataTable()}</section>`;
-  }
-
-  function profileChart() {
-    if (isCompact()) return mobileProfileChart();
-    const width = 960, height = 445, margin = {left: 188, right: 42, top: 48, bottom: 48};
-    const plotWidth = width - margin.left - margin.right;
-    const rowHeight = (height - margin.top - margin.bottom) / Math.max(1, payload.indices.length);
-    const x = value => margin.left + Math.max(0, Math.min(100, Number(value))) / 100 * plotWidth;
-    let svg = "";
-    [0,25,50,75,100].forEach(tick => {
-      const xx = x(tick);
-      svg += `<line class="s7-grid-line" x1="${xx}" x2="${xx}" y1="${margin.top - 18}" y2="${height - margin.bottom + 6}"/><text class="s7-axis-label" x="${xx}" y="${height - 15}" text-anchor="middle">${tick}</text>`;
-    });
-    payload.indices.forEach((index, rowIndex) => {
-      const y = margin.top + rowHeight * rowIndex + rowHeight / 2;
-      const summary = payload.index_summaries.find(item => item.code === index.code);
-      svg += `<line class="s7-row-line" x1="${margin.left}" x2="${width - margin.right}" y1="${y}" y2="${y}"/><text class="s7-row-code" x="0" y="${y - 3}">${esc(indexShort(index.code))}</text><text class="s7-row-name" x="0" y="${y + 14}">${esc(indexName(index.code).slice(0, 29))}</text>`;
-      if (summary?.median_percentile != null) {
-        const mx = x(summary.median_percentile);
-        svg += `<rect class="s7-median-marker" x="${mx - 8}" y="${y - 8}" width="16" height="16" rx="2"/><text class="s7-median-text" x="${mx}" y="${y + 4}" text-anchor="middle">M</text>`;
-      }
-      payload.selected_countries.forEach((country, countryIndex) => {
-        const cell = country.indices[index.code];
-        if (!cell || cell.percentile == null) return;
-        const xx = x(cell.percentile);
-        const tip = profileTip(country, index.code, cell);
-        svg += `<g class="s7-profile-point" tabindex="0" role="button" data-s7-tip="${esc(tip)}" data-value-id="${esc(cell.value_id || "")}" aria-label="${esc(tip.replaceAll("\n", ". "))}"><circle cx="${xx}" cy="${y}" r="12" fill="${cssColor(countryIndex)}"/><text x="${xx}" y="${y + 4}" text-anchor="middle">${countryIndex + 1}</text></g>`;
-      });
-    });
-    return `<svg class="s7-profile-chart" viewBox="0 0 ${width} ${height}" role="group" aria-labelledby="s7ProfileSvgTitle s7ProfileSvgDesc"><title id="s7ProfileSvgTitle">${tr("Процентильные профили выбранных стран","Percentile profiles of selected countries")}</title><desc id="s7ProfileSvgDesc">${tr("Семь строк соответствуют индексам. Для каждой выбранной страны показана процентильная позиция от нуля до ста и медиана группы.","Seven rows correspond to indices. Each selected country is shown by its zero-to-one-hundred percentile and the group median.")}</desc>${svg}</svg>`;
-  }
-
-  function profileTip(country, code, cell) {
-    return `${countryName(country)} · ${indexShort(code)}
-${tr("Процентиль","Percentile")}: ${fmt(cell.percentile,1)}
-${tr("Место","Rank")}: ${cell.rank ?? "—"} / ${cell.universe_count ?? "—"}
-${tr("Оценка","Score")}: ${fmt(cell.score,2)}
-${tr("Год","Year")}: ${cell.value_year ?? "—"}`;
-  }
-
-  function mobileProfileChart() {
-    return `<div class="s7-mobile-profile" role="group" aria-label="${tr("Процентильные профили выбранных стран по семи индексам","Percentile profiles of selected countries across seven indices")}">${payload.indices.map(index => {
-      const summary = payload.index_summaries.find(item => item.code === index.code);
-      const median = summary?.median_percentile;
-      const points = payload.selected_countries.map((country, countryIndex) => {
-        const cell = country.indices[index.code];
-        return cell && cell.percentile != null ? { country, countryIndex, cell, x: Math.max(0, Math.min(100, cell.percentile)) } : null;
-      }).filter(Boolean).sort((a, b) => a.x - b.x);
-      const laneEnds = [];
-      points.forEach(point => {
-        let lane = laneEnds.findIndex(lastX => point.x - lastX >= 10);
-        if (lane < 0) { lane = laneEnds.length; laneEnds.push(-Infinity); }
-        laneEnds[lane] = point.x;
-        point.lane = lane;
-      });
-      const laneCount = Math.max(1, laneEnds.length);
-      return `<section class="s7-mobile-profile-row"><header><div><b>${esc(indexShort(index.code))}</b><span>${esc(indexName(index.code))}</span></div><small>${tr("Медиана","Median")} · P${fmt(median,0)}</small></header><div class="s7-mobile-profile-track" style="--lane-count:${laneCount}">${median == null ? "" : `<i class="s7-mobile-median" style="--x:${Math.max(0,Math.min(100,median))}%" aria-hidden="true">M</i>`}${points.map(point => {
-        const tip = profileTip(point.country,index.code,point.cell);
-        return `<button type="button" class="s7-profile-point s7-mobile-profile-point" style="--x:${point.x}%;--lane:${point.lane};--country-color:${cssColor(point.countryIndex)}" data-s7-tip="${esc(tip)}" data-value-id="${esc(point.cell.value_id || "")}" aria-label="${esc(tip.replaceAll("\n", ". "))}">${point.countryIndex + 1}</button>`;
-      }).join("")}</div><div class="s7-mobile-scale" aria-hidden="true"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></section>`;
+  function countryCards() {
+    return `<div class="s21-country-cards">${payload.selected_countries.map((country) => {
+      const strong = country.strongest ? moduleByCode(country.strongest.index_code) : null;
+      const weak = country.weakest ? moduleByCode(country.weakest.index_code) : null;
+      return `<article class="s21-country-card" style="--country-color:${colorFor(country.iso3)}">
+        <header><div><span class="s21-country-card-flag">${esc(country.flag || "")}</span><div><h3>${esc(countryName(country))}</h3><p>${esc(country.region || "")} · ${esc(country.income_group || "")}</p></div></div><button type="button" data-s21-country="${country.iso3}">${tr("Профиль", "Profile")}</button></header>
+        <div class="s21-country-score"><strong>${pctFmt(country.median_percentile)}</strong><span>${tr("медианный процентиль", "median percentile")}</span></div>
+        <div class="s21-mini-meter"><i style="width:${Math.max(0, Math.min(100, country.median_percentile || 0))}%"></i></div>
+        <dl><div><dt>${tr("Доступно", "Available")}</dt><dd>${country.available_count}/44</dd></div><div><dt>${tr("Сильнейшая позиция", "Strongest")}</dt><dd>${strong ? `${esc(strong.short_name)} · ${pctFmt(country.strongest.percentile)}` : "—"}</dd></div><div><dt>${tr("Зона внимания", "Attention")}</dt><dd>${weak ? `${esc(weak.short_name)} · ${pctFmt(country.weakest.percentile)}` : "—"}</dd></div></dl>
+      </article>`;
     }).join("")}</div>`;
   }
 
-  function countryLegend() {
-    return `<div class="s7-legend">${payload.selected_countries.map((country, index) => `<span><i style="--legend-color:${cssColor(index)}">${index + 1}</i><b>${SYMBOLS[index]}</b>${esc(countryName(country))}<small>${country.iso3}</small></span>`).join("")}<span class="s7-median-legend"><i>M</i>${tr("медиана группы","group median")}</span></div>`;
+  function peerMedian(groupKey, anchorIso3) {
+    const values = payload.selected_countries.filter((country) => country.iso3 !== anchorIso3).map((country) => country.group_profiles.find((item) => item.key === groupKey)?.median_percentile).filter((value) => value != null).sort((a, b) => a - b);
+    if (!values.length) return null;
+    const middle = Math.floor(values.length / 2);
+    return values.length % 2 ? values[middle] : (values[middle - 1] + values[middle]) / 2;
   }
 
-  function countryInsights() {
-    const byIso = new Map(payload.selected_countries.map(country => [country.iso3, country]));
-    return payload.country_insights.map((insight, index) => {
-      const country = byIso.get(insight.iso3);
-      if (!country) return "";
-      const strongest = insight.strongest;
-      const weakest = insight.weakest;
-      return `<article class="s7-insight"><header><span style="--country-color:${cssColor(index)}">${index + 1}</span><div><b>${esc(countryName(country))}</b><small>${country.iso3} · ${insight.coverage_count}/7</small></div><strong>${fmt(insight.mean_percentile,0)}</strong></header><div><span>${tr("Сильнее всего","Strongest")}</span><b>${strongest ? `${esc(indexShort(strongest.index_code))} · P${fmt(strongest.percentile,0)}` : "—"}</b></div><div><span>${tr("Главный разрыв","Largest gap")}</span><b>${weakest ? `${esc(indexShort(weakest.index_code))} · P${fmt(weakest.percentile,0)}` : "—"}</b></div></article>`;
+  function anchorGaps() {
+    const anchor = selectedProfile(ui.anchor) || payload.selected_countries[0];
+    if (!anchor) return "";
+    const rows = payload.portfolio_groups.map((group) => {
+      const current = anchor.group_profiles.find((item) => item.key === group.key)?.median_percentile;
+      const peer = peerMedian(group.key, anchor.iso3);
+      const gap = current != null && peer != null ? current - peer : null;
+      return {group, current, peer, gap};
+    }).sort((a, b) => (a.gap ?? -999) - (b.gap ?? -999));
+    return `<div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Разрывы", "Gaps")}</p><h2>${tr("Положение относительно выбранных стран", "Position relative to selected peers")}</h2></div><label>${tr("Опорная страна", "Anchor country")}<select id="s21-anchor">${selectOptions(payload.selected_countries, anchor.iso3, "iso3", (item) => `${item.flag || ""} ${countryName(item)}`)}</select></label></div><div class="s21-gap-list">${rows.map(({group, current, peer, gap}) => `<article><div><strong>${esc(groupName(group))}</strong><small>${current == null ? tr("Нет сопоставимой позиции", "No comparable position") : `${pctFmt(current)} · ${tr("медиана peers", "peer median")} ${pctFmt(peer)}`}</small></div><span class="s21-gap-value ${gap == null ? "neutral" : gap >= 0 ? "positive" : "negative"}">${gap == null ? "—" : `${gap > 0 ? "+" : ""}${fmt(gap, 0)} п.п.`}</span><div class="s21-gap-track"><i class="${gap != null && gap < 0 ? "negative" : ""}" style="--gap:${Math.min(100, Math.abs(gap || 0))}%"></i></div></article>`).join("")}</div>`;
+  }
+
+  function qsPortfolioComparisonPanel() {
+    const q = payload.qs_portfolio;
+    if (!q || !Number(q.registered_projects || 0)) return "";
+    return `<section class="s21-section s21-qs-portfolio"><div><p class="s21-eyebrow">${tr("Аналитика QS", "QS Intelligence")}</p><h2>${tr("Университетская система как портфель проектов", "University systems as a portfolio of projects")}</h2><p>${tr("Строка QS в матрице относится к выбранному проекту и редакции. Мировой рейтинг университетов (WUR), 55 дисциплин, рейтинг устойчивого развития, региональные и профессиональные рейтинги не усредняются в одну оценку.", "The QS row in the matrix refers to a selected project and edition. WUR, 55 subjects, Sustainability, regional and professional rankings are never averaged into one score.")}</p></div><div class="s21-qs-metrics"><div><strong>${intFmt(q.registered_projects)}</strong><span>${tr("проектов", "projects")}</span></div><div><strong>${intFmt(q.loaded_projects)}</strong><span>${tr("с данными", "with data")}</span></div><div><strong>${intFmt(q.subjects)}</strong><span>${tr("дисциплин", "subjects")}</span></div><div><strong>${intFmt(q.entities)}</strong><span>${tr("университетов", "universities")}</span></div></div><a class="btn" href="#index-QS_ET">${tr("Открыть аналитику QS", "Open QS Intelligence")}</a></section>`;
+  }
+
+  function renderOverview() {
+    return `<section class="s21-section"><div class="s21-section-head"><div><p class="s21-eyebrow">${tr("Восемь измерений", "Eight dimensions")}</p><h2>${tr("Структурный профиль выбранных стран", "Structural profile of selected countries")}</h2><p>${tr("Цвет и число показывают медианный благоприятный процентиль внутри тематического направления. Рядом указано число доступных модулей.", "Colour and value show the median favourable percentile within each theme. The available module count is shown alongside.")}</p></div></div>${overviewGroupTable()}</section>
+      ${qsPortfolioComparisonPanel()}
+      <section class="s21-section"><div class="s21-section-head"><div><p class="s21-eyebrow">${tr("Страновые сводки", "Country summaries")}</p><h2>${tr("Сильные стороны, разрывы и полнота профиля", "Strengths, gaps and profile coverage")}</h2></div></div>${countryCards()}</section>
+      <section class="s21-section s21-gap-panel">${anchorGaps()}</section>
+      <section class="s21-note-grid"><article><strong>${tr("Что сравнивается", "What is compared")}</strong><p>${tr("Исходные оценки сохраняются в собственных шкалах. Для тематического обзора используется только положение страны в международном распределении соответствующего модуля.", "Original scores retain their own scales. The thematic overview uses only the country's position within each module's international distribution.")}</p></article><article><strong>${tr("Чего здесь нет", "What is not here")}</strong><p>${tr("Медианы не образуют нового индекса GIR, не задают нормативный вес тем и не заменяют специализированные страницы рейтингов.", "Medians do not form a new GIR index, assign normative weights to themes or replace specialised ranking workspaces.")}</p></article></section>`;
+  }
+
+  function cellContent(cell, module) {
+    if (cell.status !== "available") return `<span class="s21-cell-state ${cell.status}">${statusLabel(cell.status)}</span>`;
+    const score = `${fmt(cell.score, Math.abs(Number(cell.score)) >= 1000 ? 0 : 1)}${scoreUnit(module) ? ` <small>${esc(scoreUnit(module))}</small>` : ""}`;
+    const rank = cell.rank != null ? `${intFmt(cell.rank)} / ${intFmt(cell.universe_count)}` : "—";
+    if (ui.matrixMode === "score") return `<strong>${score}</strong><small>${tr("место", "rank")} ${rank} · ${pctFmt(cell.percentile)}</small>`;
+    if (ui.matrixMode === "rank") return `<strong>${rank}</strong><small>${score} · ${pctFmt(cell.percentile)}</small>`;
+    return `<strong>${pctFmt(cell.percentile)}</strong><small>${score} · ${tr("место", "rank")} ${rank}</small>`;
+  }
+
+  function matrixRowsForGroup(group) {
+    const needle = ui.matrixQuery.trim().toLowerCase();
+    return payload.matrix.rows.filter((row) => row.module.group === group.key).filter((row) => ui.matrixStatus === "all" || payload.selected_codes.some((iso3) => row.cells[iso3]?.status === ui.matrixStatus)).filter((row) => !needle || `${row.module.code} ${row.module.name_ru} ${row.module.name_en} ${row.module.authority}`.toLowerCase().includes(needle));
+  }
+
+  function renderMatrix() {
+    const groups = payload.portfolio_groups.filter((group) => ui.matrixTheme === "all" || group.key === ui.matrixTheme);
+    const totalVisible = groups.reduce((sum, group) => sum + matrixRowsForGroup(group).length, 0);
+    return `<section class="s21-section"><div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Полный портфель", "Full portfolio")}</p><h2>${tr("Матрица индексов и стран", "Indices × countries matrix")}</h2><p>${tr("Каждая ячейка сохраняет исходную оценку, международное место, процентиль и фактический год. Цвет кодирует только благоприятный процентиль.", "Each cell retains its original score, international rank, percentile and actual year. Colour encodes only the favourable percentile.")}</p></div><span class="s21-result-count">${totalVisible} / 44</span></div>
+      <div class="s21-filterbar">
+        <label>${tr("Тема", "Theme")}<select id="s21-matrix-theme"><option value="all">${tr("Все восемь направлений", "All eight themes")}</option>${selectOptions(payload.portfolio_groups, ui.matrixTheme, "key", groupName)}</select></label>
+        <label>${tr("Состояние", "Status")}<select id="s21-matrix-status"><option value="all">${tr("Все состояния", "All statuses")}</option><option value="available" ${ui.matrixStatus === "available" ? "selected" : ""}>${statusLabel("available")}</option><option value="source_gated" ${ui.matrixStatus === "source_gated" ? "selected" : ""}>${statusLabel("source_gated")}</option><option value="no_country_data" ${ui.matrixStatus === "no_country_data" ? "selected" : ""}>${statusLabel("no_country_data")}</option></select></label>
+        <label>${tr("Основное значение", "Primary value")}<select id="s21-matrix-mode"><option value="percentile" ${ui.matrixMode === "percentile" ? "selected" : ""}>${tr("Процентиль", "Percentile")}</option><option value="score" ${ui.matrixMode === "score" ? "selected" : ""}>${tr("Оценка", "Score")}</option><option value="rank" ${ui.matrixMode === "rank" ? "selected" : ""}>${tr("Место", "Rank")}</option></select></label>
+        <label class="s21-grow">${tr("Поиск модуля", "Search modules")}<input id="s21-matrix-search" value="${esc(ui.matrixQuery)}" placeholder="${tr("Например, V-Dem или World Bank", "For example, V-Dem or World Bank")}"></label>
+      </div>
+      <div class="s21-matrix-groups">${groups.map((group) => {
+        const rows = matrixRowsForGroup(group);
+        if (!rows.length) return "";
+        const open = ui.expandedGroups.has(group.key) || ui.matrixTheme !== "all";
+        return `<section class="s21-matrix-group ${open ? "open" : ""}"><button class="s21-matrix-group-head" type="button" data-s21-toggle-group="${group.key}" aria-expanded="${open}"><span><strong>${esc(groupName(group))}</strong><small>${rows.length} ${tr("модулей", "modules")}</small></span><i aria-hidden="true"></i></button><div class="s21-matrix-scroll" ${open ? "" : "hidden"} role="region" aria-label="${esc(groupName(group))}" tabindex="0"><table><thead><tr><th>${tr("Индекс / рейтинг", "Index / ranking")}</th>${payload.selected_countries.map((country) => `<th><button type="button" data-s21-country="${country.iso3}" style="--country-color:${colorFor(country.iso3)}"><i></i>${esc(country.flag || "")} ${esc(country.iso3)}</button></th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr><th><button type="button" data-s21-module="${row.module.code}"><strong>${esc(row.module.short_name)}</strong><span>${esc(moduleName(row.module))}</span><small>${esc(row.module.authority)} · ${row.universe_summary?.available_count || 0} ${tr("стран", "countries")}</small></button></th>${payload.selected_codes.map((iso3) => { const cell = row.cells[iso3]; const body = cellContent(cell, row.module); const title = cell.status === "available" ? `${moduleName(row.module)} · ${countryName(selectedProfile(iso3))}: ${fmt(cell.score, 2)}, ${tr("место", "rank")} ${cell.rank ?? "—"}, ${tr("год", "year")} ${cell.source_data_year ?? cell.value_year ?? "—"}` : `${moduleName(row.module)} · ${countryName(selectedProfile(iso3))}: ${statusLabel(cell.status)}`; return `<td><${cell.value_id ? "button" : "div"} class="s21-matrix-cell ${cell.status} ${percentileClass(cell.percentile)}" ${cell.value_id ? `type="button" data-s21-provenance="${esc(cell.value_id)}"` : ""} title="${esc(title)}">${body}<em>${cell.status === "available" ? (cell.source_data_year || cell.value_year || "—") : ""}</em></${cell.value_id ? "button" : "div"}></td>`; }).join("")}</tr>`).join("")}</tbody></table></div></section>`;
+      }).join("") || `<div class="s21-empty"><strong>${tr("Ничего не найдено", "No modules found")}</strong><p>${tr("Измените поисковый запрос или фильтры.", "Change the search query or filters.")}</p></div>`}</div>
+      <div class="s21-legend"><span>${tr("Благоприятный процентиль", "Favourable percentile")}</span><i class="s21-p1"></i><small>0</small><i class="s21-p3"></i><small>25</small><i class="s21-p5"></i><small>50</small><i class="s21-p7"></i><small>75</small><i class="s21-p10"></i><small>100</small><b>${tr("Контекстные показатели не получают нормативный цвет.", "Contextual measures receive no normative colour.")}</b></div></section>`;
+  }
+
+  function svgText(x, y, text, attrs = "") { return `<text x="${x}" y="${y}" ${attrs}>${esc(text)}</text>`; }
+  function hashY(code, height) { let hash = 0; for (const ch of code) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0; return 34 + (hash % Math.max(1, height - 68)); }
+
+  function fieldPlot() {
+    const data = payload.field;
+    const width = 920, height = 260, left = 54, right = 28, plotW = width - left - right;
+    const x = (value) => left + (Number(value) / 100) * plotW;
+    const medianX = data.median_percentile == null ? null : x(data.median_percentile);
+    const circles = data.points.map((point) => {
+      const px = x(point.cell.percentile || 0), py = hashY(point.iso3, height);
+      const selected = point.selected;
+      return `<g tabindex="0" role="img" aria-label="${esc(`${countryName(point)}: ${pctFmt(point.cell.percentile)}, ${fmt(point.cell.score, 2)}`)}"><circle cx="${px}" cy="${py}" r="${selected ? 7 : 3.5}" class="${selected ? "selected" : "context"}" style="--point-color:${selected ? colorFor(point.iso3) : "var(--muted)"}"><title>${esc(`${countryName(point)} · ${pctFmt(point.cell.percentile)} · ${fmt(point.cell.score, 2)}`)}</title></circle>${selected ? svgText(px + 9, py + 4, point.iso3, 'class="s21-svg-label"') : ""}</g>`;
     }).join("");
+    return `<svg class="s21-field-svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="s21-field-title s21-field-desc"><title id="s21-field-title">${esc(`${moduleName(moduleByCode(data.index_code))}: ${tr("международное распределение", "international distribution")}`)}</title><desc id="s21-field-desc">${tr("Горизонтальная ось показывает благоприятный международный процентиль. Вертикальное смещение точек используется только для устранения наложений.", "The horizontal axis shows the favourable international percentile. Vertical jitter is used only to reduce overlap.")}</desc><line x1="${left}" x2="${width-right}" y1="${height-24}" y2="${height-24}" class="s21-axis"/>${[0,25,50,75,100].map((tick) => `<line x1="${x(tick)}" x2="${x(tick)}" y1="20" y2="${height-24}" class="s21-gridline"/>${svgText(x(tick), height-7, tick, 'text-anchor="middle" class="s21-svg-axis-label"')}`).join("")}${medianX == null ? "" : `<line x1="${medianX}" x2="${medianX}" y1="18" y2="${height-24}" class="s21-median-line"/>${svgText(medianX+5, 19, tr("медиана", "median"), 'class="s21-svg-note"')}`}${circles}</svg>`;
   }
 
-  function profileDataTable() {
-    return `<details class="s7-accessible-data"><summary>${tr("Табличное описание профильного графика","Tabular description of profile chart")}</summary><div class="s7-table-wrap"><table class="s7-table"><caption>${tr("Процентильные позиции выбранных стран","Percentile positions of selected countries")}</caption><thead><tr><th>${tr("Индекс","Index")}</th><th>${tr("Медиана группы","Group median")}</th>${payload.selected_countries.map(country => `<th>${esc(country.iso3)}</th>`).join("")}</tr></thead><tbody>${payload.indices.map(index => { const summary = payload.index_summaries.find(item => item.code === index.code); return `<tr><th>${esc(indexShort(index.code))}</th><td>${fmt(summary?.median_percentile,1)}</td>${payload.selected_countries.map(country => `<td>${fmt(country.indices[index.code]?.percentile,1)}</td>`).join("")}</tr>`; }).join("")}</tbody></table></div></details>`;
-  }
-
-  function relationshipSection() {
-    const indexOptions = payload.indices.map(index => `<option value="${index.code}">${esc(indexShort(index.code))}</option>`).join("");
-    const controls = `<label><span>X</span><select id="s7ScatterX" class="select">${payload.indices.map(index => `<option value="${index.code}" ${index.code === ui.scatterX ? "selected" : ""}>${esc(indexShort(index.code))}</option>`).join("")}</select></label><span class="s7-versus">×</span><label><span>Y</span><select id="s7ScatterY" class="select">${payload.indices.map(index => `<option value="${index.code}" ${index.code === ui.scatterY ? "selected" : ""}>${esc(indexShort(index.code))}</option>`).join("")}</select></label>`;
-    return `<section id="s7Relationships" class="s7-section">${sectionHeading("02",tr("Взаимосвязи между индексами","Relationships between indices"),tr("Scatterplot показывает положение стран по двум процентильным шкалам. Корреляционная матрица рассчитывает Spearman по пересечению стран с обоими исходными scores.","The scatterplot positions countries on two percentile scales. The correlation matrix uses Spearman on the overlap of countries with both original scores."),controls)}<div class="s7-relation-layout"><figure class="s7-figure s7-scatter-figure"><div class="s7-figure-title"><div><h3>${esc(indexShort(payload.scatter.x_index))} × ${esc(indexShort(payload.scatter.y_index))}</h3><p>${tr(`Пересечение выборок: ${payload.scatter.n} стран`, `Overlapping sample: ${payload.scatter.n} countries`)}</p></div><div class="s7-stat"><span>Spearman ρ</span><strong>${fmt(payload.scatter.correlation,3)}</strong><small>n = ${payload.scatter.n}</small></div></div>${scatterChart()}${scatterSummary()}<figcaption>${tr("Оси показывают процентиль, поэтому 100 означает верхнюю позицию в рейтинговой вселенной каждого индекса. Корреляция вычисляется по исходным scores и не означает причинность.","Axes show percentile, so 100 indicates the top of each index's ranking universe. Correlation is calculated from original scores and does not imply causation.")}</figcaption></figure><div class="s7-correlation-panel"><div class="s7-figure-title"><div><h3>${tr("Корреляционная матрица","Correlation matrix")}</h3><p>${tr("Коэффициент и объём парной выборки указаны внутри каждой ячейки.","Coefficient and pairwise sample size are printed inside each cell.")}</p></div><span class="s7-scale-tag">SPEARMAN · n≥${payload.correlations.cells[0]?.minimum_n || 15}</span></div>${mobileScrollHint("Проведите по матрице, чтобы увидеть все семь индексов.","Swipe the matrix to inspect all seven indices.")}${correlationMatrix()}${correlationNarrative()}</div></div>${scatterDataTable()}</section>`;
-  }
-
-  function scatterChart() {
-    const scatter = payload.scatter;
-    const compact = isCompact();
-    const width = compact ? 360 : 760, height = compact ? 390 : 520;
-    const margin = compact ? {left: 44, right: 18, top: 25, bottom: 58} : {left: 70, right: 35, top: 32, bottom: 72};
-    const x = value => margin.left + Number(value) / 100 * (width - margin.left - margin.right);
-    const y = value => height - margin.bottom - Number(value) / 100 * (height - margin.top - margin.bottom);
-    let svg = "";
-    [0,25,50,75,100].forEach(tick => {
-      svg += `<line class="s7-grid-line" x1="${x(tick)}" x2="${x(tick)}" y1="${margin.top}" y2="${height - margin.bottom}"/><line class="s7-grid-line" x1="${margin.left}" x2="${width - margin.right}" y1="${y(tick)}" y2="${y(tick)}"/><text class="s7-axis-label" x="${x(tick)}" y="${height - 34}" text-anchor="middle">${tick}</text><text class="s7-axis-label" x="${margin.left - 10}" y="${y(tick) + 4}" text-anchor="end">${tick}</text>`;
-    });
-    if (scatter.median_x != null) svg += `<line class="s7-median-line" x1="${x(scatter.median_x)}" x2="${x(scatter.median_x)}" y1="${margin.top}" y2="${height - margin.bottom}"/>`;
-    if (scatter.median_y != null) svg += `<line class="s7-median-line" x1="${margin.left}" x2="${width - margin.right}" y1="${y(scatter.median_y)}" y2="${y(scatter.median_y)}"/>`;
-    scatter.points.forEach(point => {
-      const selected = ui.selected.includes(point.iso3);
-      const index = selectedIndex(point.iso3);
-      const color = selected ? cssColor(index) : "var(--s7-neutral-point)";
-      const radius = selected ? (compact ? 6 : 8) : (compact ? 3.7 : 5);
-      const tip = `${lang() === "ru" ? point.name_ru : point.name_en} (${point.iso3})
-${indexShort(scatter.x_index)}: P${fmt(point.x,1)} · #${point.x_rank ?? "—"} · ${fmt(point.x_score,2)}
-${indexShort(scatter.y_index)}: P${fmt(point.y,1)} · #${point.y_rank ?? "—"} · ${fmt(point.y_score,2)}`;
-      const labelRight = Number(point.x) < 82;
-      const labelX = x(point.x) + (labelRight ? 8 : -8);
-      const anchor = labelRight ? "start" : "end";
-      const pointLabel = selected ? `<text x="${labelX}" y="${y(point.y) - 7}" text-anchor="${anchor}">${esc(point.iso3)}</text>` : (!compact && scatter.points.length <= 24 ? `<text x="${x(point.x) + 7}" y="${y(point.y) - 7}">${esc(point.iso3)}</text>` : "");
-      svg += `<g tabindex="0" role="img" class="s7-scatter-point ${selected ? "is-selected" : ""}" data-s7-tip="${esc(tip)}" aria-label="${esc(tip.replaceAll("\n", ". "))}"><circle cx="${x(point.x)}" cy="${y(point.y)}" r="${radius}" fill="${color}"/>${selected ? `<circle cx="${x(point.x)}" cy="${y(point.y)}" r="${compact ? 9 : 12}" fill="none" stroke="${color}"/>` : ""}${pointLabel}</g>`;
-    });
-    svg += `<text class="s7-axis-title" x="${(margin.left + width - margin.right) / 2}" y="${height - 8}" text-anchor="middle">${esc(indexAxis(scatter.x_index))} · ${tr("процентиль","percentile")}</text><text class="s7-axis-title" transform="translate(13 ${(margin.top + height - margin.bottom) / 2}) rotate(-90)" text-anchor="middle">${esc(indexAxis(scatter.y_index))} · ${tr("процентиль","percentile")}</text>`;
-    return `<svg class="s7-scatter-chart" viewBox="0 0 ${width} ${height}" role="group" aria-labelledby="s7ScatterTitle s7ScatterDesc"><title id="s7ScatterTitle">${esc(indexShort(scatter.x_index))} × ${esc(indexShort(scatter.y_index))}</title><desc id="s7ScatterDesc">${tr("Диаграмма рассеяния стран по двум процентильным позициям. Выбранные страны выделены кольцом и подписью ISO.","Scatterplot of countries by two percentile positions. Selected countries are marked with a ring and ISO label.")}</desc>${svg}</svg>`;
-  }
-
-  function scatterSummary() {
-    const q = payload.scatter.quadrants;
-    return `<div class="s7-quadrants"><div><span>${tr("Высоко по обоим","High on both")}</span><strong>${q.high_high}</strong></div><div><span>${esc(indexShort(payload.scatter.x_index))} ↑ · ${esc(indexShort(payload.scatter.y_index))} ↓</span><strong>${q.high_low}</strong></div><div><span>${esc(indexShort(payload.scatter.x_index))} ↓ · ${esc(indexShort(payload.scatter.y_index))} ↑</span><strong>${q.low_high}</strong></div><div><span>${tr("Ниже медианы по обоим","Below median on both")}</span><strong>${q.low_low}</strong></div></div>`;
+  function scatterPlot() {
+    const data = payload.scatter;
+    const width = 920, height = 430, left = 58, top = 30, right = 28, bottom = 54, plotW = width-left-right, plotH = height-top-bottom;
+    const x = (value) => left + Number(value)/100*plotW;
+    const y = (value) => top + (100-Number(value))/100*plotH;
+    const points = data.points.map((point) => `<g tabindex="0" role="img" aria-label="${esc(`${countryName(point)}: ${point.x_cell.index_code} ${fmt(point.x,0)}, ${point.y_cell.index_code} ${fmt(point.y,0)}`)}"><circle cx="${x(point.x)}" cy="${y(point.y)}" r="${point.selected ? 7 : 4}" class="${point.selected ? "selected" : "context"}" style="--point-color:${point.selected ? colorFor(point.iso3) : "var(--muted)"}"><title>${esc(`${countryName(point)} · ${fmt(point.x,1)} · ${fmt(point.y,1)}`)}</title></circle>${point.selected ? svgText(x(point.x)+9, y(point.y)+4, point.iso3, 'class="s21-svg-label"') : ""}</g>`).join("");
+    const xMedian = data.median_x == null ? 50 : data.median_x;
+    const yMedian = data.median_y == null ? 50 : data.median_y;
+    return `<svg class="s21-scatter-svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="s21-scatter-title s21-scatter-desc"><title id="s21-scatter-title">${esc(`${moduleByCode(data.x_index).short_name} × ${moduleByCode(data.y_index).short_name}`)}</title><desc id="s21-scatter-desc">${tr("Обе оси показывают благоприятные международные процентили. Выбранные страны подписаны.", "Both axes show favourable international percentiles. Selected countries are labelled.")}</desc>${[0,25,50,75,100].map((tick) => `<line x1="${x(tick)}" x2="${x(tick)}" y1="${top}" y2="${height-bottom}" class="s21-gridline"/><line x1="${left}" x2="${width-right}" y1="${y(tick)}" y2="${y(tick)}" class="s21-gridline"/>${svgText(x(tick), height-28, tick, 'text-anchor="middle" class="s21-svg-axis-label"')}${svgText(left-10, y(tick)+4, tick, 'text-anchor="end" class="s21-svg-axis-label"')}`).join("")}<line x1="${x(xMedian)}" x2="${x(xMedian)}" y1="${top}" y2="${height-bottom}" class="s21-median-line"/><line x1="${left}" x2="${width-right}" y1="${y(yMedian)}" y2="${y(yMedian)}" class="s21-median-line"/>${points}${svgText(left+plotW/2, height-5, moduleByCode(data.x_index).short_name, 'text-anchor="middle" class="s21-svg-axis-title"')}<text transform="translate(15 ${top+plotH/2}) rotate(-90)" text-anchor="middle" class="s21-svg-axis-title">${esc(moduleByCode(data.y_index).short_name)}</text></svg>`;
   }
 
   function correlationMatrix() {
-    const cellMap = new Map(payload.correlations.cells.map(cell => [`${cell.y}|${cell.x}`, cell]));
-    return `<div class="s7-corr-wrap"><table class="s7-corr-table"><caption>${tr("Попарные Spearman-корреляции исходных scores","Pairwise Spearman correlations of original scores")}</caption><thead><tr><th></th>${payload.indices.map(index => `<th>${esc(indexShort(index.code))}</th>`).join("")}</tr></thead><tbody>${payload.indices.map(rowIndex => `<tr><th>${esc(indexShort(rowIndex.code))}</th>${payload.indices.map(columnIndex => { const cell = cellMap.get(`${rowIndex.code}|${columnIndex.code}`); const value = cell?.coefficient; const intensity = value == null ? 0 : Math.min(1, Math.abs(value)); const tone = value == null ? "none" : value >= 0 ? "positive" : "negative"; return `<td><button type="button" class="s7-corr-cell ${tone}" style="--corr-intensity:${intensity}" data-s7-corr-x="${columnIndex.code}" data-s7-corr-y="${rowIndex.code}" aria-label="${esc(`${indexShort(columnIndex.code)} × ${indexShort(rowIndex.code)}: ${value == null ? tr("не публикуется","withheld") : fmt(value,2)}, n=${cell?.n ?? 0}`)}"><strong>${value == null ? "—" : fmt(value,2)}</strong><small>n=${cell?.n ?? 0}</small></button></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
+    const data = payload.correlations;
+    const codes = data.codes || [];
+    const map = new Map((data.cells || []).map((cell) => [`${cell.row_code}|${cell.column_code}`, cell]));
+    if (!codes.length) return `<div class="s21-empty"><strong>${tr("Нет сопоставимых модулей", "No comparable modules")}</strong></div>`;
+    return `<div class="s21-corr-shell" role="region" aria-label="${tr("Матрица корреляций", "Correlation matrix")}" tabindex="0"><table><thead><tr><th></th>${codes.map((code) => `<th>${esc(moduleByCode(code).short_name)}</th>`).join("")}</tr></thead><tbody>${codes.map((rowCode) => `<tr><th>${esc(moduleByCode(rowCode).short_name)}</th>${codes.map((colCode) => { const cell = map.get(`${rowCode}|${colCode}`); const rho = cell?.rho; const strength = rho == null ? 0 : Math.abs(rho); return `<td><span class="s21-corr-cell ${rho == null ? "withheld" : rho >= 0 ? "positive" : "negative"}" style="--strength:${strength}"><strong>${rho == null ? "—" : fmt(rho, 2)}</strong><small>n=${cell?.n || 0}</small><title>${esc(`${moduleByCode(rowCode).short_name} × ${moduleByCode(colCode).short_name}: ${rho == null ? tr("не публикуется", "withheld") : fmt(rho,3)}, n=${cell?.n || 0}`)}</title></span></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
   }
 
-  function correlationNarrative() {
-    const strong = payload.correlations.strongest_pair;
-    const weak = payload.correlations.weakest_pair;
-    return `<div class="s7-corr-notes"><article><span>${tr("Наиболее согласованная пара","Strongest association")}</span><b>${strong ? `${esc(indexShort(strong.x))} × ${esc(indexShort(strong.y))}` : "—"}</b><strong>${strong ? fmt(strong.coefficient,3) : "—"}</strong><small>${strong ? `n=${strong.n}` : ""}</small></article><article><span>${tr("Наименее согласованная пара","Weakest association")}</span><b>${weak ? `${esc(indexShort(weak.x))} × ${esc(indexShort(weak.y))}` : "—"}</b><strong>${weak ? fmt(weak.coefficient,3) : "—"}</strong><small>${weak ? `n=${weak.n}` : ""}</small></article><p>${tr("Коэффициенты при n<15 скрыты. Низкая корреляция не является недостатком индекса: она может означать, что модули измеряют разные аспекты развития.","Coefficients with n<15 are withheld. A low correlation is not an index defect; it may mean that modules measure different aspects of development.")}</p></div>`;
+  function fieldLeaders() {
+    const selectedIso = new Set(ui.selected);
+    const rows = [...payload.field.points].sort((a,b) => (b.cell.percentile ?? -1) - (a.cell.percentile ?? -1));
+    const display = [...rows.slice(0, 8), ...rows.filter((item) => selectedIso.has(item.iso3) && !rows.slice(0,8).some((top) => top.iso3 === item.iso3))];
+    return `<div class="s21-rank-list">${display.map((item, index) => `<article class="${item.selected ? "selected" : ""}" style="--country-color:${item.selected ? colorFor(item.iso3) : "var(--muted)"}"><span>${index < 8 ? index+1 : "•"}</span><div><strong>${esc(item.iso3)} · ${esc(countryName(item))}</strong><small>${fmt(item.cell.score, 2)} ${esc(scoreUnit(moduleByCode(payload.field.index_code)) || "")} · ${tr("место", "rank")} ${item.cell.rank ?? "—"}/${item.cell.universe_count ?? "—"}</small></div><b>${pctFmt(item.cell.percentile)}</b></article>`).join("")}</div>`;
   }
 
-  function scatterDataTable() {
-    const points = payload.scatter.points;
-    return `<details class="s7-accessible-data"><summary>${tr("Табличное описание scatterplot","Tabular description of scatterplot")}</summary><div class="s7-table-wrap"><table class="s7-table"><caption>${esc(indexShort(payload.scatter.x_index))} × ${esc(indexShort(payload.scatter.y_index))}</caption><thead><tr><th>${tr("Страна","Country")}</th><th>${esc(indexShort(payload.scatter.x_index))} · P</th><th>${tr("Место","Rank")}</th><th>${esc(indexShort(payload.scatter.y_index))} · P</th><th>${tr("Место","Rank")}</th></tr></thead><tbody>${points.map(point => `<tr><th>${esc(lang() === "ru" ? point.name_ru : point.name_en)}<small>${point.iso3}</small></th><td>${fmt(point.x,1)}</td><td>${point.x_rank ?? "—"}</td><td>${fmt(point.y,1)}</td><td>${point.y_rank ?? "—"}</td></tr>`).join("")}</tbody></table></div></details>`;
+  function renderRelationships() {
+    const numeric = moduleOptions({numericOnly: true});
+    const comparable = moduleOptions({numericOnly: true, comparableOnly: true});
+    return `<section class="s21-section"><div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Международное поле", "International field")}</p><h2>${tr("Распределение одного показателя", "Distribution of a single measure")}</h2><p>${tr("Вертикальное положение точек не имеет содержательного значения и служит только для устранения наложений.", "Vertical point position carries no substantive meaning and is used only to reduce overlap.")}</p></div><label>${tr("Модуль", "Module")}<select id="s21-field-index">${selectOptions(numeric, ui.fieldIndex, "code", (item) => `${item.short_name} · ${moduleName(item)}`)}</select></label></div><div class="s21-two-col"><article class="s21-chart-card">${fieldPlot()}</article><article class="s21-list-card"><header><strong>${esc(moduleName(moduleByCode(payload.field.index_code)))}</strong><span>${payload.field.n} ${tr("стран", "countries")}</span></header>${fieldLeaders()}</article></div></section>
+      <section class="s21-section"><div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Взаимосвязи", "Relationships")}</p><h2>${tr("Попарное сопоставление международных позиций", "Pairwise comparison of international positions")}</h2></div><div class="s21-inline-controls"><label>X<select id="s21-scatter-x">${selectOptions(comparable, ui.scatterX, "code", (item) => item.short_name)}</select></label><label>Y<select id="s21-scatter-y">${selectOptions(comparable.filter((item) => item.code !== ui.scatterX), ui.scatterY, "code", (item) => item.short_name)}</select></label></div></div><div class="s21-two-col s21-scatter-layout"><article class="s21-chart-card">${scatterPlot()}</article><article class="s21-stat-card"><span>Spearman ρ</span><strong>${payload.scatter.correlation == null ? "—" : fmt(payload.scatter.correlation, 2)}</strong><p>${payload.scatter.n} ${tr("совпадающих стран", "countries in common")}</p><dl><div><dt>${tr("Высоко по обеим осям", "High on both")}</dt><dd>${payload.scatter.quadrants?.high_high || 0}</dd></div><div><dt>${moduleByCode(payload.scatter.x_index).short_name} ↑ / ${moduleByCode(payload.scatter.y_index).short_name} ↓</dt><dd>${payload.scatter.quadrants?.high_low || 0}</dd></div><div><dt>${moduleByCode(payload.scatter.x_index).short_name} ↓ / ${moduleByCode(payload.scatter.y_index).short_name} ↑</dt><dd>${payload.scatter.quadrants?.low_high || 0}</dd></div></dl><small>${tr("Корреляция описывает совместное положение, но не причинную связь.", "Correlation describes co-positioning, not causality.")}</small></article></div></section>
+      <section class="s21-section"><div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Структура портфеля", "Portfolio structure")}</p><h2>${tr("Корреляции внутри тематического направления", "Correlations within a theme")}</h2><p>${tr("Публикуются только коэффициенты с не менее чем 15 совместными наблюдениями.", "Coefficients are published only when at least 15 paired observations are available.")}</p></div><label>${tr("Направление", "Theme")}<select id="s21-correlation-theme">${selectOptions(payload.portfolio_groups, ui.correlationTheme, "key", groupName)}</select></label></div>${correlationMatrix()}</section>`;
   }
 
-  function trendSection() {
-    const controls = `<label><span>${tr("Индекс","Index")}</span><select id="s7TrendIndex" class="select">${payload.indices.map(index => `<option value="${index.code}" ${index.code === ui.trendIndex ? "selected" : ""}>${esc(indexShort(index.code))}</option>`).join("")}</select></label><div class="s7-segmented" role="group" aria-label="${tr("Метрика динамики","Trend metric")}"><button type="button" data-s7-trend-metric="percentile" aria-pressed="${ui.trendMetric === "percentile"}">${tr("Процентиль","Percentile")}</button><button type="button" data-s7-trend-metric="rank" aria-pressed="${ui.trendMetric === "rank"}">${tr("Место","Rank")}</button></div>`;
-    return `<section id="s7Trends" class="s7-section">${sectionHeading("03",tr("Как менялось международное положение","How international position changed"),tr("Процентиль учитывает изменение размера рейтинговой вселенной. Режим «место» сохраняет исходный ранг и показывает размер вселенной в tooltip.","Percentile accounts for changes in ranking-universe size. Rank mode preserves the original rank and exposes the universe size in the tooltip."),controls)}<figure class="s7-figure s7-trend-figure"><div class="s7-figure-title"><div><h3>${esc(indexName(payload.trend.index_code))}</h3><p>${tr("Выбранные страны · методические разрывы отмечены пунктиром и ромбом","Selected countries · methodology breaks use a dashed connector and diamond marker")}</p></div><span class="s7-scale-tag">${ui.trendMetric === "rank" ? tr("МЕСТО · ВЫШЕ ЛУЧШЕ","RANK · HIGHER IS BETTER") : "PERCENTILE · 0–100"}</span></div>${trendWarnings()}${trendChart()}${countryLegend()}<figcaption>${tr("Сплошная линия соединяет сопоставимые точки одной редакции. Пунктир к HTEI 2026 обозначает переход к методологии v6, а не непрерывный однородный ряд.","A solid line joins comparable points from one edition. The dashed connector to HTEI 2026 marks the transition to v6 methodology rather than a continuous homogeneous series.")}</figcaption></figure>${trendDataTable()}</section>`;
+  function lineChart() {
+    const data = payload.trend;
+    const series = (data.series || []).filter((item) => item.points?.length);
+    if (!series.length) return `<div class="s21-empty"><strong>${tr("Сопоставимого временного ряда нет", "No comparable time series")}</strong><p>${tr("Выберите другой модуль или откройте его методологическую страницу.", "Choose another module or open its methodology workspace.")}</p></div>`;
+    const values = series.flatMap((item) => item.points.map((point) => ui.trendMetric === "score" ? point.score : point.percentile).filter((value) => value != null));
+    const years = series.flatMap((item) => item.points.map((point) => point.year));
+    const minYear = Math.min(...years), maxYear = Math.max(...years), minValue = ui.trendMetric === "percentile" ? 0 : Math.min(...values), maxValue = ui.trendMetric === "percentile" ? 100 : Math.max(...values);
+    const width = 980, height = 450, left = 62, top = 28, right = 34, bottom = 52, plotW = width-left-right, plotH = height-top-bottom;
+    const x = (year) => left + (maxYear === minYear ? 0.5 : (year-minYear)/(maxYear-minYear))*plotW;
+    const y = (value) => top + (maxValue === minValue ? 0.5 : (maxValue-value)/(maxValue-minValue))*plotH;
+    const lines = series.map((item) => {
+      const usable = item.points.filter((point) => (ui.trendMetric === "score" ? point.score : point.percentile) != null);
+      const d = usable.map((point, index) => `${index ? "L" : "M"}${x(point.year).toFixed(1)},${y(ui.trendMetric === "score" ? point.score : point.percentile).toFixed(1)}`).join(" ");
+      const colour = colorFor(item.iso3);
+      return `<path d="${d}" fill="none" stroke="${colour}" stroke-width="2.6" vector-effect="non-scaling-stroke"/><g>${usable.map((point) => `<circle cx="${x(point.year)}" cy="${y(ui.trendMetric === "score" ? point.score : point.percentile)}" r="3.7" fill="${colour}"><title>${esc(`${countryName(item)} · ${point.year}: ${fmt(ui.trendMetric === "score" ? point.score : point.percentile,2)}`)}</title></circle>`).join("")}</g>`;
+    }).join("");
+    const yTicks = [0,.25,.5,.75,1].map((ratio) => minValue+(maxValue-minValue)*ratio);
+    const xTicks = [...new Set([minYear, Math.round(minYear+(maxYear-minYear)*.25), Math.round(minYear+(maxYear-minYear)*.5), Math.round(minYear+(maxYear-minYear)*.75), maxYear])];
+    return `<svg class="s21-trend-svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="s21-trend-title s21-trend-desc"><title id="s21-trend-title">${esc(moduleName(moduleByCode(data.index_code)))}</title><desc id="s21-trend-desc">${tr("Временная динамика выбранных стран.", "Time trend for selected countries.")}</desc>${yTicks.map((tick) => `<line x1="${left}" x2="${width-right}" y1="${y(tick)}" y2="${y(tick)}" class="s21-gridline"/>${svgText(left-10,y(tick)+4,fmt(tick,ui.trendMetric === "score" ? 1 : 0),'text-anchor="end" class="s21-svg-axis-label"')}`).join("")}${xTicks.map((tick) => `<line x1="${x(tick)}" x2="${x(tick)}" y1="${top}" y2="${height-bottom}" class="s21-gridline"/>${svgText(x(tick),height-23,tick,'text-anchor="middle" class="s21-svg-axis-label"')}`).join("")}${lines}</svg>`;
   }
 
-  function trendWarnings() {
-    const warnings = lang() === "ru" ? payload.trend.warnings_ru : payload.trend.warnings_en;
-    return warnings?.length ? `<div class="s7-warning">${warnings.map(text => `<p>${esc(text)}</p>`).join("")}</div>` : "";
+  function trendSummary() {
+    const series = (payload.trend.series || []).filter((item) => item.points?.length);
+    return `<div class="s21-trend-summary">${series.map((item) => {
+      const points = item.points.filter((point) => (ui.trendMetric === "score" ? point.score : point.percentile) != null);
+      const first = points[0], last = points[points.length-1];
+      const start = first ? (ui.trendMetric === "score" ? first.score : first.percentile) : null;
+      const end = last ? (ui.trendMetric === "score" ? last.score : last.percentile) : null;
+      const delta = start != null && end != null ? end-start : null;
+      return `<article style="--country-color:${colorFor(item.iso3)}"><i></i><div><strong>${esc(item.iso3)} · ${esc(countryName(item))}</strong><small>${first?.year || "—"} → ${last?.year || "—"}</small></div><b class="${delta == null ? "" : delta >= 0 ? "positive" : "negative"}">${delta == null ? "—" : `${delta > 0 ? "+" : ""}${fmt(delta,1)}`}</b></article>`;
+    }).join("")}</div>`;
   }
 
-  function trendChart() {
-    const trend = payload.trend;
-    const compact = isCompact();
-    const allYears = trend.years;
-    if (!allYears.length) return `<div class="s7-empty-chart">${tr("Для выбранного индекса нет временного ряда.","No time series is available for the selected index.")}</div>`;
-    const years = compact && allYears.length > 12 ? allYears.slice(-12) : allYears;
-    const visibleYears = new Set(years);
-    const width = compact ? 360 : 1120, height = compact ? 380 : 500;
-    const margin = compact ? {left: 42, right: 38, top: 28, bottom: 56} : {left: 72, right: 132, top: 35, bottom: 68};
-    const x = year => margin.left + (Number(year) - years[0]) / Math.max(1, years.at(-1) - years[0]) * (width - margin.left - margin.right);
-    const allPoints = trend.series.flatMap(series => series.points).filter(point => visibleYears.has(point.year));
-    let minValue = 0, maxValue = 100;
-    if (ui.trendMetric === "rank") {
-      minValue = 1;
-      maxValue = Math.max(10, ...allPoints.map(point => Number(point.rank || 0)));
-    }
-    const y = value => {
-      if (ui.trendMetric === "rank") return margin.top + (Number(value) - minValue) / Math.max(1, maxValue - minValue) * (height - margin.top - margin.bottom);
-      return height - margin.bottom - Number(value) / 100 * (height - margin.top - margin.bottom);
-    };
-    const ticks = ui.trendMetric === "rank" ? [1, Math.round(maxValue * .25), Math.round(maxValue * .5), Math.round(maxValue * .75), maxValue] : [0,25,50,75,100];
-    const yearStep = compact ? Math.max(1,Math.ceil(years.length / 6)) : 1;
-    const yearTicks = years.filter((_,index) => index % yearStep === 0 || index === years.length - 1);
-    let svg = "";
-    ticks.forEach(tick => {
-      svg += `<line class="s7-grid-line" x1="${margin.left}" x2="${width - margin.right}" y1="${y(tick)}" y2="${y(tick)}"/><text class="s7-axis-label" x="${margin.left - 10}" y="${y(tick) + 4}" text-anchor="end">${tick}</text>`;
+  function renderTrends() {
+    const numeric = moduleOptions({numericOnly: true});
+    return `<section class="s21-section"><div class="s21-panel-head"><div><p class="s21-eyebrow">${tr("Изменение во времени", "Change over time")}</p><h2>${tr("Сопоставимые траектории выбранных стран", "Comparable trajectories for selected countries")}</h2><p>${tr("Линия строится только для методически сопоставимых наблюдений внутри одного модуля. Разрывы редакций не скрываются.", "Lines are drawn only for methodologically comparable observations within one module. Edition breaks are not concealed.")}</p></div><div class="s21-inline-controls"><label>${tr("Модуль", "Module")}<select id="s21-trend-index">${selectOptions(numeric, ui.trendIndex, "code", (item) => `${item.short_name} · ${moduleName(item)}`)}</select></label><label>${tr("Шкала", "Scale")}<select id="s21-trend-metric"><option value="percentile" ${ui.trendMetric === "percentile" ? "selected" : ""}>${tr("Процентиль", "Percentile")}</option><option value="score" ${ui.trendMetric === "score" ? "selected" : ""}>${tr("Оценка", "Score")}</option></select></label></div></div><article class="s21-chart-card s21-trend-card">${lineChart()}</article>${trendSummary()}${(payload.trend.warnings_ru || []).length ? `<div class="s21-warning-list">${(lang() === "ru" ? payload.trend.warnings_ru : payload.trend.warnings_en).map((note) => `<p>${esc(note)}</p>`).join("")}</div>` : ""}</section>`;
+  }
+
+  function qualityMatrix() {
+    return `<div class="s21-table-shell" role="region" aria-label="${tr("Полнота и актуальность по темам", "Coverage and freshness by theme")}" tabindex="0"><table class="s21-quality-table"><thead><tr><th>${tr("Страна", "Country")}</th>${payload.portfolio_groups.map((group) => `<th>${esc(groupName(group))}</th>`).join("")}</tr></thead><tbody>${payload.selected_countries.map((country) => `<tr><th><span style="--country-color:${colorFor(country.iso3)}"><i></i>${esc(country.flag || "")} ${esc(country.iso3)}</span></th>${payload.portfolio_groups.map((group) => { const profile = country.group_profiles.find((item) => item.key === group.key); const rate = profile?.module_count ? profile.available_count/profile.module_count*100 : 0; return `<td><div class="s21-coverage-cell"><strong>${profile?.available_count || 0}/${profile?.module_count || group.codes.length}</strong><span><i style="width:${rate}%"></i></span><small>${fmt(rate,0)}%</small></div></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
+  }
+
+  function renderQuality() {
+    return `<section class="s21-section"><div class="s21-section-head"><div><p class="s21-eyebrow">${tr("Доказательная база", "Evidence base")}</p><h2>${tr("Полнота профиля по направлениям", "Profile coverage by theme")}</h2><p>${tr("Полнота показывает наличие наблюдений, но не является оценкой качества страны. Ожидание источника и отсутствие наблюдения разведены.", "Coverage shows data availability, not country quality. Source-gated and missing country observations are separated.")}</p></div></div>${qualityMatrix()}</section>
+      <section class="s21-quality-cards">${payload.selected_countries.map((country) => `<article style="--country-color:${colorFor(country.iso3)}"><header><i></i><strong>${esc(country.flag || "")} ${esc(countryName(country))}</strong></header><dl><div><dt>${tr("Актуально", "Current")}</dt><dd>${country.freshness.current}</dd></div><div><dt>${tr("Умеренный лаг", "Moderate lag")}</dt><dd>${country.freshness.recent}</dd></div><div><dt>${tr("Требует обновления", "Needs update")}</dt><dd>${country.freshness.stale}</dd></div><div><dt>${tr("Ожидает источник", "Source gated")}</dt><dd>${country.freshness.source_gated}</dd></div><div><dt>${tr("Нет наблюдения", "No observation")}</dt><dd>${country.freshness.no_country_data}</dd></div></dl></article>`).join("")}</section>
+      <section class="s21-section"><div class="s21-section-head"><div><p class="s21-eyebrow">${tr("Методические гарантии", "Method safeguards")}</p><h2>${tr("Как читать межстрановое сравнение", "How to read the comparison")}</h2></div></div><div class="s21-method-grid">${(lang() === "ru" ? payload.methodology.notes_ru : payload.methodology.notes_en).map((note, index) => `<article><span>0${index+1}</span><p>${esc(note)}</p></article>`).join("")}</div><div class="s21-method-footer"><strong>${tr("Корреляции", "Correlations")}</strong><p>${tr("Используется ранговая корреляция Спирмена по благоприятным процентилям, попарное исключение пропусков и минимальный порог n=15.", "Spearman rank correlation is calculated on favourable percentiles using pairwise-complete observations and a minimum threshold of n=15.")}</p></div></section>`;
+  }
+
+  function tabContent() {
+    if (ui.tab === "matrix") return renderMatrix();
+    if (ui.tab === "relationships") return renderRelationships();
+    if (ui.tab === "trends") return renderTrends();
+    if (ui.tab === "quality") return renderQuality();
+    return renderOverview();
+  }
+
+  function hydrateLocalFlags() {
+    if (!context?.flagImage) return;
+    context.root.querySelectorAll(".s21-matrix-group thead [data-s21-country]").forEach((button) => {
+      const country = selectedProfile(button.dataset.s21Country);
+      if (!country) return;
+      const marker = button.querySelector("i")?.outerHTML || "";
+      button.innerHTML = `${marker}${context.flagImage(country, "flag-img inline")}${esc(country.iso3)}`;
     });
-    yearTicks.forEach(year => svg += `<line class="s7-grid-line s7-grid-vertical" x1="${x(year)}" x2="${x(year)}" y1="${margin.top}" y2="${height - margin.bottom}"/><text class="s7-axis-label" x="${x(year)}" y="${height - 30}" text-anchor="middle">${compact ? String(year).slice(-2) : year}</text>`);
-    trend.series.forEach((series, index) => {
-      const points = series.points.filter(point => visibleYears.has(point.year) && point[ui.trendMetric] != null);
-      if (!points.length) return;
-      const color = cssColor(index);
-      points.forEach((point, pointIndex) => {
-        if (pointIndex) {
-          const previous = points[pointIndex - 1];
-          const dashed = !point.comparable_to_previous || point.segment !== previous.segment;
-          svg += `<line class="s7-trend-line ${dashed ? "is-break" : ""}" x1="${x(previous.year)}" y1="${y(previous[ui.trendMetric])}" x2="${x(point.year)}" y2="${y(point[ui.trendMetric])}" stroke="${color}"/>`;
-        }
-        const tip = `${lang() === "ru" ? series.name_ru : series.name_en} (${series.iso3})
-${point.year}
-${tr("Процентиль","Percentile")}: ${fmt(point.percentile,1)}
-${tr("Место","Rank")}: ${point.rank ?? "—"} / ${point.universe_count ?? "—"}
-${tr("Оценка","Score")}: ${fmt(point.score,2)}
-${tr("Год данных","Data year")}: ${point.source_data_year ?? "—"}`;
-        const px = x(point.year), py = y(point[ui.trendMetric]);
-        if (point.segment === "current_v6") svg += `<g tabindex="0" role="img" data-s7-tip="${esc(tip)}" aria-label="${esc(tip.replaceAll("\n", ". "))}"><path class="s7-trend-diamond" fill="${color}" d="M${px},${py-7} L${px+7},${py} L${px},${py+7} L${px-7},${py} Z"/></g>`;
-        else svg += `<circle tabindex="0" role="img" class="s7-trend-point" data-s7-tip="${esc(tip)}" aria-label="${esc(tip.replaceAll("\n", ". "))}" cx="${px}" cy="${py}" r="${compact ? 4.5 : 6}" fill="${color}"/>`;
-      });
-      const last = points.at(-1);
-      const rightEdge = x(last.year) > width - margin.right - 28;
-      svg += `<text class="s7-trend-label" x="${x(last.year) + (rightEdge ? -8 : 9)}" y="${y(last[ui.trendMetric]) + 4}" text-anchor="${rightEdge ? "end" : "start"}" fill="${color}">${esc(series.iso3)}</text>`;
+    context.root.querySelectorAll(".s21-country-card").forEach((card) => {
+      const button = card.querySelector("[data-s21-country]");
+      const target = card.querySelector(".s21-country-card-flag");
+      const country = selectedProfile(button?.dataset.s21Country);
+      if (target && country) target.innerHTML = context.flagImage(country, "flag-img inline");
     });
-    const omitted = compact ? trend.series.filter(series => !series.points.some(point => visibleYears.has(point.year) && point[ui.trendMetric] != null)).map(series => series.iso3) : [];
-    const note = compact && allYears.length > years.length ? `<p class="s7-mobile-chart-note">${tr(`Мобильный график показывает последние ${years.length} доступных периодов; полный ряд сохранён в таблице ниже.${omitted.length ? ` В текущем окне нет точек: ${omitted.join(", ")}.` : ""}`,`The mobile chart shows the latest ${years.length} available periods; the full series remains in the table below.${omitted.length ? ` No points in the current window: ${omitted.join(", ")}.` : ""}`)}</p>` : "";
-    return `${note}<svg class="s7-trend-chart" viewBox="0 0 ${width} ${height}" role="group" aria-labelledby="s7TrendTitle s7TrendDesc"><title id="s7TrendTitle">${esc(indexName(trend.index_code))}</title><desc id="s7TrendDesc">${tr("Динамика выбранных стран; сплошные отрезки сопоставимы, пунктир обозначает методический разрыв.","Trends for selected countries; solid segments are comparable and dashed segments indicate a methodology break.")}</desc>${svg}</svg>`;
   }
 
-  function trendDataTable() {
-    const years = payload.trend.years;
-    return `<details class="s7-accessible-data"><summary>${tr("Табличное описание динамики","Tabular description of trends")}</summary><div class="s7-table-wrap"><table class="s7-table"><caption>${esc(indexName(payload.trend.index_code))}</caption><thead><tr><th>${tr("Страна","Country")}</th>${years.map(year => `<th>${year}</th>`).join("")}</tr></thead><tbody>${payload.trend.series.map(series => `<tr><th>${esc(lang() === "ru" ? series.name_ru : series.name_en)}<small>${series.iso3}</small></th>${years.map(year => { const point = series.points.find(item => item.year === year); return `<td>${point ? `${ui.trendMetric === "rank" ? `#${point.rank}` : `P${fmt(point.percentile,0)}`}<small>${point.segment === "current_v6" ? "v6" : ""}</small>` : "—"}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div></details>`;
+  function renderPage() {
+    context.root.innerHTML = `${hero()}${tabNav()}<main class="s21-workspace" role="tabpanel">${tabContent()}</main>`;
+    hydrateLocalFlags();
+    bind();
   }
 
-  function matrixSection() {
-    const metricOptions = [["percentile",tr("Процентиль","Percentile")],["rank",tr("Место","Rank")],["score",tr("Исходный score","Original score")],["freshness",tr("Актуальность","Freshness")],["data_quality",tr("Качество данных","Data quality")]];
-    const controls = `<label><span>${tr("Ячейка показывает","Cell displays")}</span><select id="matrixMetric" class="select">${metricOptions.map(([value,label]) => `<option value="${value}" ${value === ui.matrixMetric ? "selected" : ""}>${esc(label)}</option>`).join("")}</select></label><label><span>Top-N</span><input id="matrixTopN" class="input s7-topn" type="number" min="1" max="${payload.countries.length}" value="${esc(ui.topN)}" placeholder="${payload.countries.length}"></label>`;
-    return `<section id="s7Matrix" class="s7-section">${sectionHeading("04",tr("Точная матрица стран и индексов","Exact country × index matrix"),tr("Каждая ячейка сохраняет score, место, размер рейтинговой вселенной, год выпуска, фактический год данных, качество и provenance.","Every cell preserves score, rank, ranking-universe size, release year, actual data year, quality and provenance."),controls)}<div class="s7-matrix-summary"><p>${esc(lang() === "ru" ? payload.summary.diagnostic_mean_note_ru : payload.summary.diagnostic_mean_note_en)}</p><div><a class="s7-button" href="/api/comparison/workspace.csv?${queryString()}&lang=${lang()}" download="gir-country-comparison-${payload.requested_year}.csv">${tr("Расширенная CSV","Extended CSV")}</a><a class="s7-button s7-quiet" href="${legacyCsvHref()}" download="cross-matrix-${payload.requested_year}.csv">${tr("Совместимая CSV","Legacy CSV")}</a></div></div>${mobileScrollHint("Проведите по таблице, чтобы открыть остальные индексные столбцы.","Swipe the table to reveal the remaining index columns.")}${matrixTable()}${matrixPagination()}</section>`;
+  function changeAndLoad(key, value) {
+    ui[key] = value;
+    load(true);
   }
 
-  function legacyCsvHref() {
-    const query = new URLSearchParams({year: String(payload.requested_year), group: ui.group === "ALL" ? "all" : ui.group, income_group: ui.income, metric: ui.matrixMetric === "percentile" || ui.matrixMetric === "freshness" ? "rank" : ui.matrixMetric, sort_index: ui.sortCode, sort_metric: ui.matrixMetric === "percentile" || ui.matrixMetric === "freshness" ? "rank" : ui.matrixMetric, sort_dir: ui.sortDir, lang: lang()});
-    if (ui.region !== "all") query.set("region", ui.region);
-    if (ui.query) query.set("q", ui.query);
-    return `/api/cross-matrix.csv?${query}`;
-  }
-
-  function matrixRows() {
-    const rows = [...payload.countries];
-    const code = ui.sortCode;
-    const direction = ui.sortDir === "asc" ? 1 : -1;
-    rows.sort((a,b) => {
-      const av = matrixSortValue(a.indices[code]);
-      const bv = matrixSortValue(b.indices[code]);
-      if (av == null && bv == null) return countryName(a).localeCompare(countryName(b));
-      if (av == null) return 1;
-      if (bv == null) return -1;
-      return (av - bv) * direction || countryName(a).localeCompare(countryName(b));
-    });
-    const limit = Number(ui.topN);
-    return limit > 0 ? rows.slice(0, limit) : rows;
-  }
-
-  function matrixSortValue(cell) {
-    if (!cell) return null;
-    if (ui.matrixMetric === "rank") return cell.rank;
-    if (ui.matrixMetric === "score") return cell.score;
-    if (ui.matrixMetric === "data_quality") return cell.data_quality;
-    if (ui.matrixMetric === "freshness") return cell.year_lag;
-    return cell.percentile;
-  }
-
-  function matrixTable() {
-    const rows = matrixRows();
-    const start = (ui.page - 1) * ui.pageSize;
-    const pageRows = rows.slice(start, start + ui.pageSize);
-    return `<div class="s7-table-wrap s7-matrix-wrap"><table class="s7-table matrix-table"><caption>${tr(`Страны: ${rows.length}; индексные модули: ${payload.indices.length}`,`Countries: ${rows.length}; index modules: ${payload.indices.length}`)}</caption><thead><tr><th class="s7-sticky-country">${tr("Страна","Country")}</th><th><button type="button" class="table-head-btn ${ui.sortCode === "PROFILE" ? "active" : ""}" data-s7-sort="PROFILE">${tr("Профиль P","Profile P")}</button></th>${payload.indices.map(index => `<th><button type="button" class="table-head-btn ${ui.sortCode === index.code ? "active" : ""}" data-s7-sort="${index.code}" title="${esc(indexName(index.code))}">${esc(indexShort(index.code))}${ui.sortCode === index.code ? ` <span aria-hidden="true">${ui.sortDir === "asc" ? "↑" : "↓"}</span>` : ""}</button></th>`).join("")}</tr></thead><tbody>${pageRows.map(country => `<tr><td class="s7-sticky-country"><button type="button" class="country-link" data-s7-country-link="${country.iso3}">${context.flagImage?.(country,"flag-img inline") || ""}<span><b>${esc(countryName(country))}</b><small>${country.iso3} · ${country.coverage_count}/7</small></span></button></td><td><div class="s7-profile-summary"><strong>P${fmt(country.mean_percentile,0)}</strong><span>${tr("медиана","median")} P${fmt(country.median_percentile,0)}</span></div></td>${payload.indices.map(index => `<td>${matrixCell(country.indices[index.code], index.code)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-  }
-
-  function matrixCell(cell, code) {
-    if (!cell) return `<span class="s7-missing" aria-label="${tr("Нет данных","No data")}">—<small>${tr("нет данных","no data")}</small></span>`;
-    let main, note;
-    if (ui.matrixMetric === "rank") { main = cell.rank == null ? "—" : `#${cell.rank}`; note = `${fmt(cell.score,1)} · n=${cell.universe_count ?? "—"}`; }
-    else if (ui.matrixMetric === "score") { main = fmt(cell.score,1); note = `#${cell.rank ?? "—"} / ${cell.universe_count ?? "—"}`; }
-    else if (ui.matrixMetric === "data_quality") { main = `${fmt(Number(cell.data_quality || 0) * 100,0)}%`; note = `${tr("год","year")} ${cell.source_data_year ?? cell.value_year ?? "—"}`; }
-    else if (ui.matrixMetric === "freshness") { main = cell.source_year_min && cell.source_year_max && cell.source_year_min !== cell.source_year_max ? `${cell.source_year_min}–${cell.source_year_max}` : `${cell.source_data_year ?? cell.value_year ?? "—"}`; note = cell.year_lag == null ? tr("лаг неизвестен","lag unknown") : tr(`лаг ${fmt(cell.year_lag,1)} г.`,`lag ${fmt(cell.year_lag,1)} y.`); }
-    else { main = `P${fmt(cell.percentile,0)}`; note = `#${cell.rank ?? "—"} / ${cell.universe_count ?? "—"}`; }
-    const freshness = cell.freshness || "missing";
-    const aria = `${indexShort(code)}. ${tr("Процентиль","Percentile")} ${fmt(cell.percentile,1)}. ${tr("Место","Rank")} ${cell.rank ?? "—"} ${tr("из","of")} ${cell.universe_count ?? "—"}. ${tr("Оценка","Score")} ${fmt(cell.score,2)}. ${tr("Год данных","Data year")} ${cell.source_data_year ?? "—"}.`;
-    const style = cell.percentile == null ? "" : `--cell-percentile:${Math.max(0,Math.min(100,cell.percentile))}%`;
-    return `<button type="button" class="cell-rank s7-matrix-cell freshness-${freshness}" style="${style}" data-s7-provenance="${esc(cell.value_id || "")}" aria-label="${esc(aria)}"><strong>${esc(main)}</strong><small>${esc(note)}</small><i aria-hidden="true"></i></button>`;
-  }
-
-  function matrixPagination() {
-    const rows = matrixRows();
-    const pages = Math.max(1, Math.ceil(rows.length / ui.pageSize));
-    ui.page = Math.min(ui.page, pages);
-    return `<div class="s7-pagination"><span>${tr(`Страница ${ui.page} из ${pages} · ${rows.length} стран`,`Page ${ui.page} of ${pages} · ${rows.length} countries`)}</span><div><button type="button" class="s7-button" data-s7-page="prev" ${ui.page <= 1 ? "disabled" : ""}>← ${tr("Назад","Previous")}</button><button type="button" class="s7-button" data-s7-page="next" ${ui.page >= pages ? "disabled" : ""}>${tr("Далее","Next")} →</button></div></div>`;
-  }
-
-  function methodSection() {
-    const notes = lang() === "ru" ? payload.methodology.notes_ru : payload.methodology.notes_en;
-    return `<section class="s7-method"><div><span>METHOD</span><h2>${tr("Как читать сравнение","How to read the comparison")}</h2></div><ol>${notes.map(note => `<li>${esc(note)}</li>`).join("")}</ol><p>${tr("Точная методика и формулы каждого индекса остаются в разделе «Методология и источники»; эта страница не создаёт новый официальный интегральный рейтинг.","The exact methodology and formulas of every index remain in Methodology & Sources; this page does not create a new official composite ranking.")}</p></section><div id="s7Tooltip" class="s7-tooltip" role="tooltip"></div>`;
-  }
-
-  function bindControls() {
-    context.root.querySelectorAll("[data-s7-scroll]").forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.s7Scroll)?.scrollIntoView({behavior: "smooth", block: "start"})));
-    context.root.querySelector("#matrixGroup")?.addEventListener("change", event => { ui.group = event.target.value; load(); });
-    context.root.querySelector("#s7HteiMode")?.addEventListener("change", event => { ui.hteiMode = event.target.value; load(); });
-    context.root.querySelector("#regionSelect")?.addEventListener("change", event => { ui.region = event.target.value; load(); });
-    context.root.querySelector("#incomeSelect")?.addEventListener("change", event => { ui.income = event.target.value; load(); });
-    context.root.querySelector("#matrixSearch")?.addEventListener("input", event => { ui.query = event.target.value; clearTimeout(debounceTimer); debounceTimer = setTimeout(load, 300); });
-    context.root.querySelector("[data-s7-reset]")?.addEventListener("click", () => { Object.assign(ui,{group:"G20",region:"all",income:"all",query:"",hteiMode:"proxy_extended",selected:[...DEFAULT_SELECTED],scatterX:"HTEI",scatterY:"GII",trendIndex:"HTEI",trendMetric:"percentile",matrixMetric:"percentile",sortCode:"HTEI",sortDir:"desc",topN:"",page:1}); load(); });
-    context.root.querySelector("#s7AddCountry")?.addEventListener("change", event => { const iso = event.target.value; if (!iso) return; if (ui.selected.length >= MAX_SELECTED) { showToast(tr("Можно выбрать не более восьми стран","Up to eight countries can be selected")); return; } ui.selected.push(iso); load(); });
-    context.root.querySelectorAll("[data-s7-remove-country]").forEach(button => button.addEventListener("click", () => { if (ui.selected.length <= 1) { showToast(tr("Оставьте хотя бы одну страну","Keep at least one country")); return; } ui.selected = ui.selected.filter(iso => iso !== button.dataset.s7RemoveCountry); load(); }));
-    context.root.querySelector("#s7ScatterX")?.addEventListener("change", event => { ui.scatterX = event.target.value; if (ui.scatterX === ui.scatterY) ui.scatterY = payload.indices.find(index => index.code !== ui.scatterX)?.code || "GII"; load(); });
-    context.root.querySelector("#s7ScatterY")?.addEventListener("change", event => { ui.scatterY = event.target.value; if (ui.scatterY === ui.scatterX) ui.scatterX = payload.indices.find(index => index.code !== ui.scatterY)?.code || "HTEI"; load(); });
-    context.root.querySelectorAll("[data-s7-corr-x]").forEach(button => button.addEventListener("click", () => { if (button.dataset.s7CorrX === button.dataset.s7CorrY) return; ui.scatterX = button.dataset.s7CorrX; ui.scatterY = button.dataset.s7CorrY; load().then?.(() => document.getElementById("s7Relationships")?.scrollIntoView({block:"start"})); }));
-    context.root.querySelector("#s7TrendIndex")?.addEventListener("change", event => { ui.trendIndex = event.target.value; load(); });
-    context.root.querySelectorAll("[data-s7-trend-metric]").forEach(button => button.addEventListener("click", () => { ui.trendMetric = button.dataset.s7TrendMetric; renderPage(); }));
-    context.root.querySelector("#matrixMetric")?.addEventListener("change", event => { ui.matrixMetric = event.target.value; ui.sortDir = ui.matrixMetric === "rank" || ui.matrixMetric === "freshness" ? "asc" : "desc"; ui.page = 1; syncLegacyState(); renderPage(); });
-    context.root.querySelector("#matrixTopN")?.addEventListener("change", event => { ui.topN = event.target.value; ui.page = 1; syncLegacyState(); renderPage(); });
-    context.root.querySelectorAll("[data-s7-sort]").forEach(button => button.addEventListener("click", () => { const code = button.dataset.s7Sort; if (code === "PROFILE") { ui.sortCode = payload.indices[0].code; ui.matrixMetric = "percentile"; ui.sortDir = "desc"; } else if (ui.sortCode === code) ui.sortDir = ui.sortDir === "asc" ? "desc" : "asc"; else { ui.sortCode = code; ui.sortDir = ui.matrixMetric === "rank" || ui.matrixMetric === "freshness" ? "asc" : "desc"; } ui.page = 1; syncLegacyState(); renderPage(); }));
-    context.root.querySelectorAll("[data-s7-page]").forEach(button => button.addEventListener("click", () => { ui.page += button.dataset.s7Page === "next" ? 1 : -1; renderPage(); document.getElementById("s7Matrix")?.scrollIntoView({block:"start"}); }));
-    context.root.querySelectorAll("[data-s7-country-link]").forEach(button => button.addEventListener("click", () => context.goCountry(button.dataset.s7CountryLink)));
-    context.root.querySelectorAll("[data-s7-provenance]").forEach(button => button.addEventListener("click", () => button.dataset.s7Provenance && context.openProvenance(button.dataset.s7Provenance)));
-    context.root.querySelectorAll("[data-value-id]").forEach(point => {
-      const open = () => point.dataset.valueId && context.openProvenance(point.dataset.valueId, point);
-      point.addEventListener("click", open);
-      point.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); }
+  function bindTabs() {
+    const tabs = [...context.root.querySelectorAll("[data-s21-tab]")];
+    tabs.forEach((button, index) => {
+      button.addEventListener("click", () => { ui.tab = button.dataset.s21Tab; syncUrlState(); renderPage(); });
+      button.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft","ArrowRight","Home","End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length-1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].click(); tabs[next].focus();
       });
     });
   }
 
-  function bindCharts() {
-    const tooltip = context.root.querySelector("#s7Tooltip");
-    if (!tooltip) return;
-    const show = (element, event) => {
-      tooltip.innerHTML = esc(element.dataset.s7Tip || "").replaceAll("\n", "<br>");
-      tooltip.classList.add("visible");
-      const rect = element.getBoundingClientRect();
-      const x = event?.clientX || rect.left + rect.width / 2;
-      const y = event?.clientY || rect.top;
-      const left = Math.min(window.innerWidth - tooltip.offsetWidth - 12, Math.max(12, x + 12));
-      const top = Math.min(window.innerHeight - tooltip.offsetHeight - 12, Math.max(12, y + 12));
-      tooltip.style.left = `${left}px`;
-      tooltip.style.top = `${top}px`;
-    };
-    context.root.querySelectorAll("[data-s7-tip]").forEach(element => {
-      element.addEventListener("mousemove", event => show(element,event));
-      element.addEventListener("mouseenter", event => show(element,event));
-      element.addEventListener("focus", event => show(element,event));
-      element.addEventListener("mouseleave", () => tooltip.classList.remove("visible"));
-      element.addEventListener("blur", () => tooltip.classList.remove("visible"));
+  function bind() {
+    bindTabs();
+    context.root.querySelector("#s21-add-country")?.addEventListener("change", (event) => {
+      const code = event.target.value;
+      if (code && !ui.selected.includes(code) && ui.selected.length < MAX_SELECTED) { ui.selected.push(code); if (!ui.anchor) ui.anchor = code; load(true); }
     });
-  }
-
-  function showToast(message) {
-    const toast = document.getElementById("toast");
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
+    context.root.querySelector("#s21-group")?.addEventListener("change", (event) => changeAndLoad("group", event.target.value));
+    context.root.querySelector("#s21-htei-mode")?.addEventListener("change", (event) => changeAndLoad("hteiMode", event.target.value));
+    context.root.querySelectorAll("[data-s21-remove]").forEach((button) => button.addEventListener("click", () => { if (ui.selected.length > MIN_SELECTED) { ui.selected = ui.selected.filter((code) => code !== button.dataset.s21Remove); load(true); } }));
+    context.root.querySelectorAll("[data-s21-country]").forEach((button) => button.addEventListener("click", () => context.goCountry?.(button.dataset.s21Country)));
+    context.root.querySelectorAll("[data-s21-module]").forEach((button) => button.addEventListener("click", () => context.routeTo?.(`index-${button.dataset.s21Module}`)));
+    context.root.querySelectorAll("[data-s21-provenance]").forEach((button) => button.addEventListener("click", () => context.openProvenance?.(button.dataset.s21Provenance)));
+    context.root.querySelector('[data-s21-action="copy-link"]')?.addEventListener("click", async (event) => { syncUrlState(); try { await navigator.clipboard.writeText(location.href); event.currentTarget.textContent = tr("Ссылка скопирована", "Link copied"); } catch (_) { event.currentTarget.textContent = tr("Скопируйте адрес страницы", "Copy the page address"); } });
+    context.root.querySelector("#s21-anchor")?.addEventListener("change", (event) => { ui.anchor = event.target.value; syncUrlState(); renderPage(); });
+    context.root.querySelector("#s21-matrix-theme")?.addEventListener("change", (event) => { ui.matrixTheme = event.target.value; if (ui.matrixTheme !== "all") ui.expandedGroups.add(ui.matrixTheme); syncUrlState(); renderPage(); });
+    context.root.querySelector("#s21-matrix-status")?.addEventListener("change", (event) => { ui.matrixStatus = event.target.value; renderPage(); });
+    context.root.querySelector("#s21-matrix-mode")?.addEventListener("change", (event) => { ui.matrixMode = event.target.value; renderPage(); });
+    context.root.querySelector("#s21-matrix-search")?.addEventListener("input", (event) => { clearTimeout(searchTimer); const value = event.target.value; searchTimer = setTimeout(() => { ui.matrixQuery = value; renderPage(); context.root.querySelector("#s21-matrix-search")?.focus(); }, 180); });
+    context.root.querySelectorAll("[data-s21-toggle-group]").forEach((button) => button.addEventListener("click", () => { const key = button.dataset.s21ToggleGroup; ui.expandedGroups.has(key) ? ui.expandedGroups.delete(key) : ui.expandedGroups.add(key); renderPage(); }));
+    context.root.querySelector("#s21-field-index")?.addEventListener("change", (event) => changeAndLoad("fieldIndex", event.target.value));
+    context.root.querySelector("#s21-scatter-x")?.addEventListener("change", (event) => changeAndLoad("scatterX", event.target.value));
+    context.root.querySelector("#s21-scatter-y")?.addEventListener("change", (event) => changeAndLoad("scatterY", event.target.value));
+    context.root.querySelector("#s21-correlation-theme")?.addEventListener("change", (event) => changeAndLoad("correlationTheme", event.target.value));
+    context.root.querySelector("#s21-trend-index")?.addEventListener("change", (event) => changeAndLoad("trendIndex", event.target.value));
+    context.root.querySelector("#s21-trend-metric")?.addEventListener("change", (event) => { ui.trendMetric = event.target.value; renderPage(); });
   }
 
   window.GIRComparison = {
-    version: "stage7-comparison-v1",
+    version: "comparison-portfolio-v2",
     render(ctx) {
       initialize(ctx);
       context = ctx;
-      load();
+      load(!payload || Number(payload.requested_year) !== Number(ctx.year));
     },
   };
 })();

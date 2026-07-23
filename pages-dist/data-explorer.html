@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-auth-state="loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+    <script src="./pages-runtime.js"></script>
+<script src="./static/user-context-core.js?v=gir-context-20260723-1"></script>
+  <script src="./static/user-context-bootstrap.js?v=gir-context-20260723-1"></script>
+  <meta name="description" content="GIR Data Explorer — исследовательское пространство для 44 международных индексов, исходных показателей и воспроизводимых выборок.">
+  <title>Data Explorer · Global Index Research</title>
+  <link rel="icon" href="./static/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./static/data-explorer.css?v=gir-t22-20260719-1">
+  <link rel="stylesheet" href="./static/auth.css?v=gir-auth-t25-20260723-user-5">
+  <link rel="stylesheet" href="./pages.css">
+</head>
+<body>
+  <a class="dx-skip" href="#dx-main">Перейти к содержанию</a>
+  <header class="dx-header">
+    <a class="dx-brand" href="/" aria-label="Глобальная платформа индексных исследований — главная">
+      <span class="dx-brand-mark" aria-hidden="true">G</span>
+      <span><strong>GLOBAL INDEX</strong><small>RESEARCH PLATFORM</small></span>
+    </a>
+    <div class="dx-header-title"><span data-i18n="workspace">Исследовательское пространство</span><strong data-i18n="explorerTitle">Обозреватель данных</strong></div>
+    <div class="dx-header-modes" role="tablist" aria-label="Уровень исследования">
+      <button type="button" id="dx-mode-portfolio" class="dx-mode" role="tab" aria-selected="true" data-mode="portfolio"><span>01</span><b data-i18n="portfolioMode">Портфель 44</b></button>
+      <button type="button" id="dx-mode-detail" class="dx-mode" role="tab" aria-selected="false" data-mode="detail"><span>02</span><b data-i18n="detailMode">Детальные данные</b></button>
+    </div>
+    <div class="dx-header-actions">
+      <button class="dx-mobile-toggle" id="dx-mobile-controls" type="button" aria-label="Параметры выборки">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg><span data-i18n="mobileControls">Параметры</span>
+      </button>
+      <a class="dx-header-link" href="/data-lab" data-i18n="dataLab">Лаборатория данных</a>
+      <button class="dx-icon-button" id="dx-theme" type="button" aria-label="Переключить тему" title="Переключить тему">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.4A7 7 0 0 1 12 3Z"/></svg>
+      </button>
+      <button class="dx-lang" id="dx-lang" type="button" aria-label="Переключить язык">EN</button>
+      <div class="dx-auth-mount" data-gir-auth-mount></div>
+      <a class="dx-back" href="/"><span data-i18n="platform">Платформа</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+  </header>
+
+  <div class="dx-shell">
+    <aside class="dx-sidebar" id="dx-sidebar" aria-label="Параметры исследования">
+      <div class="dx-side-head">
+        <span class="dx-eyebrow" data-i18n="heroKicker">GIR · ОБОЗРЕВАТЕЛЬ ДАННЫХ</span>
+        <h2 id="dx-side-title">Параметры выборки</h2>
+        <p id="dx-side-copy">Выберите модули, страны и аналитическое представление.</p>
+      </div>
+      <div id="dx-controls" class="dx-controls"></div>
+      <div class="dx-side-footer">
+        <button type="button" id="dx-copy-link" class="dx-text-action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7.5l-1.1 1.1M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7.5l1.1-1.1"/></svg><span data-i18n="copyLink">Скопировать ссылку</span></button>
+        <a id="dx-export-link" class="dx-text-action" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 20h14"/></svg><span data-i18n="exportCsv">Скачать CSV</span></a>
+        <span class="dx-live"><i></i><span data-i18n="connected">Подключено к рабочей SQLite</span></span>
+      </div>
+    </aside>
+
+    <main id="dx-main" class="dx-main" tabindex="-1">
+      <div id="dx-app" class="dx-loading" aria-live="polite">
+        <div class="dx-loading-mark">G</div>
+        <p>Формируется исследовательская выборка…</p>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="dx-dialog" class="dx-dialog" aria-labelledby="dx-dialog-title">
+    <div class="dx-dialog-head">
+      <div><span id="dx-dialog-kicker"></span><h2 id="dx-dialog-title"></h2><p id="dx-dialog-subtitle"></p></div>
+      <button type="button" id="dx-dialog-close" aria-label="Закрыть">×</button>
+    </div>
+    <div id="dx-dialog-body" class="dx-dialog-body"></div>
+  </dialog>
+  <div id="dx-tooltip" class="dx-tooltip" role="tooltip"></div>
+  <div id="dx-toast" class="dx-toast" role="status" aria-live="polite"></div>
+
+  <script src="./static/auth.js?v=gir-auth-t25-20260723-user-5"></script>
+  <script src="./static/data-explorer.js?v=gir-t24-20260720-3" defer></script>
+</body>
+</html>

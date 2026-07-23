@@ -53,7 +53,7 @@
   const clamp = (value, min = 0, max = 100) => Math.max(min, Math.min(max, Number(value) || 0));
   const trainingKey = () => `${state.country}:${state.year}`;
   const routeButton = (target, label, cls = "secondary") => `<button type="button" class="s4-action ${cls}" data-s4-route="${h(target)}">${h(label)}<span aria-hidden="true">→</span></button>`;
-  const icon = (name) => `<img src="static/icons/${h(name)}.svg" alt="" aria-hidden="true">`;
+  const icon = (name) => `<img src="/static/icons/${h(name)}.svg" alt="" aria-hidden="true">`;
   const dataYearText = (year) => year == null ? "—" : String(year);
 
   async function fetchJson(url) {

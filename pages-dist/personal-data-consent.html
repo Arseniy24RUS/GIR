@@ -4,34 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
-  <link rel="icon" href="static/brand/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="static/brand/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="static/brand/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="./static/brand/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./static/brand/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="./static/brand/apple-touch-icon.png" sizes="180x180">
+    <script src="./pages-runtime.js"></script>
+<script src="./static/user-context-core.js?v=gir-context-20260723-1"></script>
+  <script src="./static/user-context-bootstrap.js?v=gir-context-20260723-1"></script>
   <title>Согласие на обработку персональных данных | GIR</title>
   <meta name="description" content="Условия обработки данных, передаваемых через форму сотрудничества GIR.">
-  <script>
-    (() => {
-      const query = new URLSearchParams(location.search);
-      const requestedLang = query.get("lang") || localStorage.getItem("lang") || navigator.language || "ru";
-      const preferredTheme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      const requestedTheme = query.get("theme") || localStorage.getItem("theme") || preferredTheme;
-      document.documentElement.lang = String(requestedLang).toLowerCase().startsWith("en") ? "en" : "ru";
-      document.documentElement.dataset.theme = requestedTheme === "light" ? "light" : "dark";
-    })();
-  </script>
-  <link rel="stylesheet" href="static/cooperation.css?v=gir-cooperation-20260711-1">
-  <link rel="stylesheet" href="static/pages.css?v=gir-pages-20260713-1">
+  <link rel="stylesheet" href="./static/cooperation.css?v=gir-cooperation-20260711-1">
+  <link rel="stylesheet" href="./pages.css">
 </head>
 <body>
-
   <!-- LEGAL REVIEW REQUIRED: MGIMO must approve this consent text before public deployment. -->
   <header class="gir-consent-header" aria-label="GIR">
     <a class="gir-consent-brand" href="/#landing" aria-label="GIR">
-      <img data-consent-brand src="static/brand/gir-ru-dark.svg" alt="GIR — Глобальный рейтинг индексов">
+      <img data-consent-brand src="./static/brand/gir-ru-dark.svg" alt="GIR — Глобальный рейтинг индексов">
     </a>
     <div class="gir-consent-controls" data-consent-controls aria-label="Настройки интерфейса">
       <button class="gir-consent-control" type="button" data-consent-theme-toggle aria-label="Включить светлую тему" title="Включить светлую тему">
-        <img data-consent-theme-icon src="static/icons/sun.svg" alt="">
+        <img data-consent-theme-icon src="./static/icons/sun.svg" alt="">
       </button>
       <button class="gir-consent-control" type="button" data-consent-lang-toggle aria-label="Язык: русский" title="Язык: русский">RU</button>
       <a class="gir-consent-cooperation" href="mailto:project_office@inno.mgimo.ru" data-open-cooperation data-cooperation-tooltip aria-label="Сотрудничество">
@@ -66,7 +58,6 @@
       </section>
     </article>
   </main>
-  <script src="static/pages-runtime.js?v=gir-pages-20260713-1"></script>
-  <script src="static/cooperation.js?v=gir-cooperation-20260711-1"></script>
+  <script src="./static/cooperation.js?v=gir-cooperation-20260711-2"></script>
 </body>
 </html>

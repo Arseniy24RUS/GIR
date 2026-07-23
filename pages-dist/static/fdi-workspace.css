@@ -1,0 +1,217 @@
+/* GIR · IMF Financial Development Index · native workspace additions */
+.fdi-native { min-width: 0; }
+.fdi-view { min-width: 0; }
+.fdi-control-strip {
+  display: grid;
+  grid-template-columns: minmax(200px, .95fr) minmax(300px, 1.35fr) minmax(130px, .5fr) minmax(210px, .72fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.fdi-control-strip > label,
+.fdi-control-meta {
+  min-width: 0;
+  min-height: 82px;
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  padding: 14px 16px;
+  background: var(--panel);
+}
+.fdi-control-strip label > span,
+.fdi-control-meta > span {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.fdi-control-strip .select,
+.fdi-sort-label .select,
+.fdi-compare-toolbar .select {
+  width: 100%;
+  min-height: 39px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: var(--control-bg);
+  color: var(--control-text);
+  font-size: 10px;
+}
+.fdi-control-meta b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 500; }
+.fdi-control-meta small { color: var(--muted); font-size: 8px; }
+.fdi-qa-badge { border-color: var(--orange) !important; color: var(--orange) !important; }
+.fdi-command-stack { width: min(880px, 100%); display: grid; gap: 8px; margin-top: 10px; text-align: left; }
+.fdi-command-stack code { display: block; padding: 12px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--accent-text); font-size: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+.fdi-origin-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 12px; border: 1px solid var(--line); background: var(--line); }
+.fdi-origin-strip div { min-width: 0; display: grid; grid-template-columns: minmax(145px, .45fr) minmax(0, 1fr); gap: 18px; padding: 13px 16px; background: var(--panel); }
+.fdi-origin-strip span { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.fdi-origin-strip b { overflow-wrap: anywhere; font-size: 10px; font-weight: 500; text-align: right; }
+.fdi-subheading { display: grid; grid-template-columns: minmax(180px, .4fr) minmax(0, 1fr); gap: 24px; align-items: start; margin: 26px 0 15px; }
+.fdi-subheading span { color: var(--accent-text); font-size: 9px; text-transform: uppercase; letter-spacing: .07em; }
+.fdi-subheading p { max-width: 760px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.fdi-branch-card .value { color: var(--accent-text); }
+.fdi-inline-indicator { padding: 0; border: 0; background: transparent; color: var(--text); cursor: pointer; font-size: 10px; }
+.fdi-inline-indicator:hover { color: var(--accent-text); }
+
+.fdi-map-grid { display: grid; grid-template-columns: minmax(0, 1.48fr) minmax(300px, .52fr); gap: 12px; }
+.fdi-map-frame { min-height: 420px; display: grid; align-items: center; padding: 18px; overflow: hidden; background: color-mix(in srgb, var(--panel) 95%, var(--blue) 5%); }
+.fdi-map-svg { width: 100%; height: auto; max-height: 520px; display: block; }
+.fdi-map-country { stroke: color-mix(in srgb, var(--panel) 80%, var(--line2)); stroke-width: .65; vector-effect: non-scaling-stroke; cursor: pointer; transition: opacity .16s ease, stroke-width .16s ease; }
+.fdi-map-country:hover,
+.fdi-map-country:focus { opacity: .82; stroke: var(--text); stroke-width: 1.4; outline: none; }
+.fdi-map-country.is-selected { stroke: var(--green); stroke-width: 2.4; }
+.fdi-bin-0 { fill: var(--surface); background: var(--surface); }
+.fdi-bin-1 { fill: var(--map-bin-1); background: var(--map-bin-1); }
+.fdi-bin-2 { fill: var(--map-bin-2); background: var(--map-bin-2); }
+.fdi-bin-3 { fill: var(--map-bin-3); background: var(--map-bin-3); }
+.fdi-bin-4 { fill: var(--map-bin-4); background: var(--map-bin-4); }
+.fdi-bin-5 { fill: var(--map-bin-5); background: var(--map-bin-5); }
+.fdi-bin-6 { fill: var(--map-bin-6); background: var(--map-bin-6); }
+.fdi-bin-7 { fill: var(--map-bin-7); background: var(--map-bin-7); }
+.fdi-map-legend { display: flex; justify-content: flex-end; align-items: center; gap: 2px; margin-top: 12px; }
+.fdi-map-legend span { margin-right: 8px; color: var(--muted); font-size: 8px; }
+.fdi-map-legend i { width: 28px; height: 7px; display: block; }
+.fdi-leader-list { display: grid; }
+.fdi-leader-list button { min-width: 0; display: grid; grid-template-columns: 35px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 13px 16px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--text); text-align: left; cursor: pointer; }
+.fdi-leader-list button:hover,
+.fdi-leader-list button.is-selected { background: var(--surface); }
+.fdi-leader-list span { color: var(--muted); font-size: 9px; }
+.fdi-leader-list b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 500; }
+.fdi-leader-list em { color: var(--accent-text); font-size: 11px; font-style: normal; }
+.fdi-selected-context { margin: 18px; padding: 16px; border-left: 3px solid var(--green); background: var(--iw-soft-green); }
+.fdi-selected-context span { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.fdi-selected-context strong { display: block; margin-top: 8px; font-size: 17px; font-weight: 500; }
+.fdi-selected-context p { margin: 7px 0 0; color: var(--muted); font-size: 9px; }
+
+.fdi-architecture-panel { overflow: hidden; }
+.fdi-pyramid { display: grid; gap: 24px; padding: 28px; background: linear-gradient(135deg, color-mix(in srgb, var(--panel) 94%, var(--blue) 6%), var(--panel)); }
+.fdi-pyramid-root { width: min(480px, 100%); margin-inline: auto; position: relative; }
+.fdi-pyramid-root::after { content: ""; position: absolute; left: 50%; bottom: -24px; width: 1px; height: 24px; background: var(--line); }
+.fdi-pyramid-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; position: relative; }
+.fdi-pyramid-branches::before { content: ""; position: absolute; top: -1px; left: 25%; right: 25%; height: 1px; background: var(--line); }
+.fdi-branch-column { min-width: 0; display: grid; gap: 12px; padding-top: 16px; position: relative; }
+.fdi-branch-column::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 16px; background: var(--line); }
+.fdi-leaves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.fdi-node { min-width: 0; display: grid; gap: 7px; padding: 16px; border: 1px solid var(--line); border-radius: 0; background: var(--panel); color: var(--text); text-align: left; cursor: pointer; }
+.fdi-leaves .fdi-node { border: 0; }
+.fdi-node:hover,
+.fdi-node.is-active { background: var(--surface); border-color: var(--green); }
+.fdi-node > span { color: var(--accent-text); font-size: 8px; letter-spacing: .08em; }
+.fdi-node > b { min-height: 28px; overflow-wrap: anywhere; font-size: 10px; font-weight: 500; }
+.fdi-node > strong { margin-top: 4px; font-size: 24px; line-height: 1; font-weight: 500; }
+.fdi-node > i { height: 5px; display: block; background: var(--surface); }
+.fdi-node > i u { height: 100%; display: block; background: var(--green); text-decoration: none; }
+.fdi-node-root { align-items: center; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; }
+.fdi-node-root > b { min-height: 0; }
+.fdi-node-root > strong { margin: 0; font-size: 34px; }
+.fdi-node-root > i { grid-column: 1 / -1; width: 100%; }
+.fdi-node-branch { min-height: 116px; }
+.fdi-node-leaf { min-height: 144px; }
+.fdi-architecture-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 12px; margin-top: 12px; }
+.fdi-aspect-matrix { display: grid; }
+.fdi-aspect-row { display: grid; grid-template-columns: 96px minmax(125px, .8fr) minmax(120px, 1fr) minmax(125px, .8fr); gap: 12px; align-items: center; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+.fdi-aspect-row:last-child { border-bottom: 0; }
+.fdi-aspect-row > span { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.fdi-aspect-row button { min-width: 0; display: grid; gap: 4px; padding: 0; border: 0; background: transparent; color: var(--text); text-align: left; cursor: pointer; }
+.fdi-aspect-row button:last-child { text-align: right; }
+.fdi-aspect-row button:hover { color: var(--accent-text); }
+.fdi-aspect-row button b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 9px; font-weight: 500; }
+.fdi-aspect-row button strong { font-size: 16px; font-weight: 500; }
+.fdi-aspect-row > i { height: 10px; display: block; position: relative; background: var(--surface); }
+.fdi-aspect-row > i::after { content: ""; position: absolute; top: -3px; bottom: -3px; left: 50%; width: 1px; background: var(--line2); }
+.fdi-aspect-row > i u::before,
+.fdi-aspect-row > i u::after { content: ""; position: absolute; top: 1px; height: 8px; }
+.fdi-aspect-row > i u::before { right: 50%; width: calc(var(--fdi-left) / 2); background: var(--blue2); }
+.fdi-aspect-row > i u::after { left: 50%; width: calc(var(--fdi-right) / 2); background: var(--green); }
+.fdi-balance { padding: 24px; }
+.fdi-balance-value { font-size: clamp(48px, 6vw, 78px); line-height: 1; font-weight: 500; letter-spacing: -.05em; }
+.fdi-balance-value.is-market { color: var(--blue2); }
+.fdi-balance-value.is-institution { color: var(--green); }
+.fdi-balance-axis { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; margin: 22px 0; }
+.fdi-balance-axis span { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.fdi-balance-axis i { height: 6px; display: block; position: relative; background: linear-gradient(90deg, var(--blue2), var(--surface) 49%, var(--surface) 51%, var(--green)); }
+.fdi-balance-axis i::after { content: ""; position: absolute; top: -4px; bottom: -4px; left: 50%; width: 1px; background: var(--line2); }
+.fdi-balance-axis i u { width: 9px; height: 18px; position: absolute; top: 50%; transform: translate(-50%, -50%); border: 1px solid var(--text); background: var(--panel); text-decoration: none; }
+
+.fdi-series-line { fill: none; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.fdi-series-dot { stroke: var(--panel); stroke-width: 2; }
+.fdi-series-0 { stroke: var(--green); fill: var(--green); background: var(--green); }
+.fdi-series-1 { stroke: var(--blue2); fill: var(--blue2); background: var(--blue2); }
+.fdi-series-2 { stroke: var(--orange); fill: var(--orange); background: var(--orange); }
+.fdi-series-3 { stroke: var(--chart-line); fill: var(--chart-line); background: var(--chart-line); }
+.fdi-series-4 { stroke: var(--map-bin-5); fill: var(--map-bin-5); background: var(--map-bin-5); }
+.fdi-series-5 { stroke: var(--map-bin-2); fill: var(--map-bin-2); background: var(--map-bin-2); }
+.fdi-compare-toolbar { display: grid; grid-template-columns: minmax(230px, .42fr) minmax(0, .58fr); gap: 12px; margin-bottom: 12px; }
+.fdi-compare-toolbar > label { min-width: 0; display: grid; gap: 6px; padding: 13px 15px; border: 1px solid var(--line); background: var(--panel); }
+.fdi-compare-toolbar > label span { color: var(--muted); font-size: 8px; text-transform: uppercase; }
+.fdi-compare-toolbar > small { align-self: end; padding-bottom: 10px; color: var(--muted); font-size: 9px; }
+.fdi-current-comparison { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.fdi-current-comparison button { min-width: 0; display: grid; grid-template-columns: 8px minmax(0, 1fr); gap: 9px; align-items: center; padding: 12px; border: 0; background: var(--panel); color: var(--text); text-align: left; cursor: pointer; }
+.fdi-current-comparison button:hover { background: var(--surface); }
+.fdi-current-comparison i { width: 8px; height: 34px; display: block; }
+.fdi-current-comparison strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 500; }
+.fdi-current-comparison span { grid-column: 2; color: var(--muted); font-size: 7px; }
+.fdi-comparison-grid { display: grid; grid-template-columns: minmax(0, 1.42fr) minmax(290px, .58fr); gap: 12px; }
+.fdi-compare-list { display: grid; }
+.fdi-compare-list div { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.fdi-compare-list i { width: 8px; height: 28px; display: block; }
+.fdi-compare-list span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+.fdi-compare-list b { font-size: 12px; font-weight: 500; }
+.fdi-sort-label { min-width: 190px !important; }
+.fdi-sort-label .select { min-width: 190px; }
+.fdi-ranking-table th:nth-child(n+3),
+.fdi-ranking-table td:nth-child(n+3) { text-align: right; }
+.fdi-ranking-table .iw-country-cell { grid-template-columns: 42px minmax(0, 1fr); }
+.fdi-iso-badge { width: 38px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line2); color: var(--muted); font-size: 8px; font-weight: 500; font-style: normal; }
+.fdi-origin-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 18px; border: 1px solid var(--line); background: var(--line); }
+.fdi-origin-cards div { min-width: 0; display: grid; gap: 8px; padding: 13px; background: var(--panel); }
+.fdi-origin-cards span { color: var(--muted); font-size: 7px; text-transform: uppercase; }
+.fdi-origin-cards b { overflow-wrap: anywhere; font-size: 9px; font-weight: 500; }
+.fdi-provenance-panel { margin-top: 12px; }
+.fdi-provenance-panel .iw-source-list { margin: 0 22px 22px; }
+.fdi-provenance-panel code { color: var(--muted); font-size: 9px; word-break: break-all; }
+.fdi-live-region { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 1180px) {
+  .fdi-control-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fdi-map-grid,
+  .fdi-comparison-grid,
+  .fdi-architecture-grid { grid-template-columns: 1fr; }
+  .fdi-map-frame { min-height: 360px; }
+  .fdi-current-comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .fdi-control-strip { grid-template-columns: 1fr; }
+  .fdi-control-strip > label,
+  .fdi-control-meta { min-height: 70px; }
+  .fdi-control-meta b { white-space: normal; }
+  .fdi-origin-strip,
+  .fdi-origin-strip div,
+  .fdi-subheading { grid-template-columns: 1fr; }
+  .fdi-origin-strip b { text-align: left; }
+  .fdi-map-frame { min-height: 250px; padding: 8px; }
+  .fdi-map-legend { justify-content: flex-start; flex-wrap: wrap; }
+  .fdi-map-legend i { width: 19px; }
+  .fdi-pyramid { padding: 14px; }
+  .fdi-pyramid-branches { grid-template-columns: 1fr; gap: 18px; }
+  .fdi-pyramid-branches::before,
+  .fdi-pyramid-root::after,
+  .fdi-branch-column::before { display: none; }
+  .fdi-branch-column { padding-top: 0; }
+  .fdi-leaves { grid-template-columns: 1fr; }
+  .fdi-node-leaf { min-height: 0; }
+  .fdi-aspect-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fdi-aspect-row > span { grid-column: 1 / -1; }
+  .fdi-aspect-row > i { grid-column: 1 / -1; grid-row: 3; }
+  .fdi-aspect-row button:last-child { text-align: left; }
+  .fdi-compare-toolbar { grid-template-columns: 1fr; }
+  .fdi-compare-toolbar > small { padding: 0; }
+  .fdi-current-comparison { grid-template-columns: 1fr; }
+  .fdi-origin-cards { grid-template-columns: 1fr; }
+  .fdi-sort-label,
+  .fdi-sort-label .select { min-width: 0 !important; width: 100%; }
+  .fdi-provenance-panel .iw-source-list { margin-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fdi-native,
+  .fdi-native * { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

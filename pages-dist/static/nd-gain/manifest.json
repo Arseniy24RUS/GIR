@@ -1,0 +1,22 @@
+{
+  "schema_version": "gir-static-asset-manifest-v1",
+  "generated_at": "2026-07-17T12:30:00+02:00",
+  "dataset_id": "ND_GAIN_ARCHIVAL_PANEL_1995_2021",
+  "core": {
+    "path": "nd-gain-core.json",
+    "bytes": 432919,
+    "sha256": "a42ba65529a9d470291dd57c36882e1c558fc8890c9d41eaf4c454a850ce78bb"
+  },
+  "coverage": {
+    "countries": 185,
+    "first_year": 1995,
+    "last_year": 2021,
+    "years": 27,
+    "observation_rows": 4995,
+    "metrics": 3,
+    "complete_country_year_grid": true
+  },
+  "current_official_edition": 2026,
+  "current_official_latest_data_year": 2024,
+  "releases_merged": false
+}

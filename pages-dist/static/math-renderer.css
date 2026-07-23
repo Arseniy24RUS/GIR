@@ -1,0 +1,78 @@
+/* GIR T24 — native MathML presentation and formula containers. */
+.gir-math-rendered,
+.method-math-display,
+.method-math-inline {
+  font-family: "STIX Two Math", "Cambria Math", "Noto Sans Math", "Latin Modern Math", serif;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.gir-math-display,
+.method-math-display {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--line, rgba(120, 140, 175, .28));
+  border-left: 3px solid var(--accent, #28d9c0);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel, #111b35) 88%, transparent);
+  color: var(--text, #eef4ff);
+  text-align: center;
+  font-size: clamp(1.02rem, 1.1vw, 1.28rem);
+  line-height: 1.55;
+  scrollbar-width: thin;
+}
+.gir-math-inline,
+.method-math-inline {
+  display: inline-flex;
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: middle;
+  padding: .08em .2em;
+}
+.gir-math-rendered math {
+  font-family: inherit;
+  font-size: 1em;
+}
+.gir-math-display math { display: math; margin-inline: auto; }
+.gir-math-fallback {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--muted, #a7b4cc);
+}
+.method-prose .gir-math-display {
+  margin: 1.35rem 0 1.55rem;
+  padding: 1.1rem 1.25rem;
+}
+.method-prose .gir-math-display::before {
+  content: "FORMULA";
+  display: block;
+  margin-bottom: .65rem;
+  color: var(--accent, #28d9c0);
+  font: 700 .68rem/1.2 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .12em;
+}
+@media (max-width: 640px) {
+  .gir-math-display,
+  .method-math-display {
+    margin: .75rem 0 1rem;
+    padding: .8rem .85rem;
+    border-radius: 9px;
+    text-align: left;
+    font-size: 1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gir-math-rendered { scroll-behavior: auto; }
+}
+@media print {
+  .gir-math-display,
+  .method-math-display {
+    overflow: visible;
+    break-inside: avoid;
+    border-color: #777;
+    background: #fff;
+    color: #000;
+  }
+}

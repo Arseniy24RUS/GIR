@@ -1,0 +1,60 @@
+{
+  "index_code": "UNCTAD_LSCI",
+  "score": {
+    "status": "official_after_verified_import",
+    "direction": "higher_is_more_connected",
+    "reference_period": "2023-Q1",
+    "reference_value": 100
+  },
+  "components": [
+    {
+      "code": "weekly_calls",
+      "name_en": "Number of scheduled ship calls per week",
+      "name_ru": "Число регулярных судозаходов в неделю"
+    },
+    {
+      "code": "deployed_capacity",
+      "name_en": "Annual deployed capacity in TEU",
+      "name_ru": "Развёрнутая годовая провозная способность, TEU"
+    },
+    {
+      "code": "regular_services",
+      "name_en": "Number of regular liner shipping services",
+      "name_ru": "Число регулярных линейных сервисов"
+    },
+    {
+      "code": "direct_connections",
+      "name_en": "Number of economies connected without transshipment",
+      "name_ru": "Число экономик с прямым сообщением без перевалки"
+    },
+    {
+      "code": "service_providers",
+      "name_en": "Number of liner shipping companies providing services",
+      "name_ru": "Число линейных судоходных компаний"
+    },
+    {
+      "code": "largest_ship",
+      "name_en": "Average size of the largest ships by service",
+      "name_ru": "Средний размер крупнейших судов по сервисам"
+    }
+  ],
+  "component_count": 6,
+  "revision": {
+    "name": "LSCI 2024 revision",
+    "applied_to_full_series": true,
+    "first_period": "2006-Q1"
+  },
+  "derived_by_gir": [
+    "standard-competition rank within a quarter",
+    "percentile within a quarter",
+    "quarter-on-quarter absolute and percentage change",
+    "year-on-year absolute and percentage change"
+  ],
+  "not_recomputed_by_gir": [
+    "official LSCI score",
+    "six source components"
+  ],
+  "comparability_warning": "Use the revised 2006-Q1 onward series within this release; do not mix it with pre-revision LSCI values or the port-level PLSCI.",
+  "official_methodology_url": "https://unctad.org/news/new-context-calls-changing-how-we-measure-maritime-connectivity",
+  "official_metadata_url": "https://unctadstat.unctad.org/datacentre/reportInfo/US.LSCI"
+}

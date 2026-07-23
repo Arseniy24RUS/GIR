@@ -1,0 +1,127 @@
+{
+  "api_audience": "disabled",
+  "constant_usd_base_year": 2024,
+  "csv_export_allowed": false,
+  "earliest_data_year": 1949,
+  "imported": false,
+  "index_code": "SIPRI_MILEX",
+  "latest_data_year": 2025,
+  "name": "SIPRI Military Expenditure",
+  "numeric_dataset_bundled": false,
+  "permission": null,
+  "release": {
+    "available_series_count": 0,
+    "constant_usd_base_year": 2024,
+    "country_count": 0,
+    "data_status": "awaiting_authorized_local_import",
+    "doi": "10.55163/CQGC9685",
+    "earliest_data_year": 1949,
+    "entity_count": 0,
+    "imported_at": null,
+    "latest_data_year": 2025,
+    "metadata": {
+      "manifest": {
+        "files": {
+          "country_entities.json": {
+            "bytes": 62100,
+            "sha256": "1a4e335399fa1cc22b30721b38358cd68aee43d39f652b583db260fbd21d4151"
+          },
+          "release_catalog.json": {
+            "bytes": 1954,
+            "sha256": "203c72d79e009ba5de064bcdcaaa66d12b02b397e08daa276f19631c8d591a96"
+          },
+          "series_catalog.json": {
+            "bytes": 5050,
+            "sha256": "a8c4280abb964e30d6644585d20d11d2bbb82d61540b3e2f37eed5339d2eb3f2"
+          }
+        },
+        "formula_version": "sipri-published-values-derived-standard-competition-ranks-v1",
+        "index_code": "SIPRI_MILEX",
+        "legal_mode": "metadata_only_fail_closed_until_operator_authorization",
+        "numeric_dataset_in_bundle": false,
+        "official_workbook_in_bundle": false,
+        "quality_model": [
+          "sipri_reported_or_unmarked",
+          "sipri_estimate",
+          "sipri_uncertain",
+          "sipri_colour_unresolved"
+        ],
+        "required_latest_year": 2025,
+        "required_series": [
+          "constant_usd_millions",
+          "current_usd_millions",
+          "share_gdp_percent",
+          "per_capita_usd",
+          "share_government_spending_percent"
+        ],
+        "schema_version": "1.0.0",
+        "stage": 7,
+        "transform_id": "gir-sipri-milex-xlsx-v1"
+      },
+      "release": {
+        "bundle_contains_official_workbook": false,
+        "bundle_contains_sipri_numeric_dataset": false,
+        "constant_usd_base_year": 2024,
+        "data_state_on_install": "awaiting_authorized_local_import",
+        "doi": "10.55163/CQGC9685",
+        "earliest_data_year": 1949,
+        "index_code": "SIPRI_MILEX",
+        "latest_data_year": 2025,
+        "licence_gate": {
+          "attribution": "SIPRI Military Expenditure Database; Stockholm International Peace Research Institute (SIPRI).",
+          "csv_or_public_static_export_requires": [
+            "commercial_license",
+            "written_permission"
+          ],
+          "default_api_audience": "disabled",
+          "public_api_requires": [
+            "commercial_license",
+            "written_permission"
+          ]
+        },
+        "official_database_url": "https://www.sipri.org/databases/milex",
+        "official_revised_at": "2026-04-27T19:00:00+02:00",
+        "official_workbook_filename": "SIPRI-Milex-data-1949-2025_v1.2.xlsx",
+        "official_workbook_sha256": null,
+        "official_workbook_url": "https://www.sipri.org/sites/default/files/SIPRI-Milex-data-1949-2025_v1.2.xlsx",
+        "publication_date": "2026-04-27",
+        "publisher": "Stockholm International Peace Research Institute (SIPRI)",
+        "release_id": "SIPRI_MILEX:2026:v1.2",
+        "release_summary": {
+          "global_military_burden_2025_percent": 2.5,
+          "global_military_expenditure_2025_usd_billions": 2887,
+          "per_capita_2025_usd": 352,
+          "real_change_2025_percent": 2.9,
+          "status": "official_release_level_facts_only_not_country_dataset"
+        },
+        "release_year": 2026,
+        "retrieved_at": "2026-07-17T00:00:00Z",
+        "schema_version": "1.0.0",
+        "sources_and_methods_url": "https://www.sipri.org/databases/milex/sources-and-methods",
+        "terms_url": "https://www.sipri.org/about/terms-and-conditions",
+        "title": "SIPRI Military Expenditure Database 1949–2025",
+        "workbook_hash_policy": "compute_sha256_after_local_download_and_optionally_require_an_operator_trusted_pin; no checksum is bundled by this patch",
+        "workbook_version": "v1.2"
+      }
+    },
+    "official_database_url": "https://www.sipri.org/databases/milex",
+    "official_revised_at": "2026-04-27T19:00:00+02:00",
+    "official_workbook_filename": "SIPRI-Milex-data-1949-2025_v1.2.xlsx",
+    "official_workbook_url": "https://www.sipri.org/sites/default/files/SIPRI-Milex-data-1949-2025_v1.2.xlsx",
+    "publication_date": "2026-04-27",
+    "publisher": "Stockholm International Peace Research Institute (SIPRI)",
+    "release_id": "SIPRI_MILEX:2026:v1.2",
+    "release_year": 2026,
+    "title": "SIPRI Military Expenditure Database 1949–2025",
+    "value_count": 0,
+    "workbook_bytes": null,
+    "workbook_sha256": null,
+    "workbook_version": "v1.2"
+  },
+  "release_id": "SIPRI_MILEX:2026:v1.2",
+  "release_year": 2026,
+  "scientific_warning": "Military expenditure measures resources devoted to the military; it is not a direct measure of military capability.",
+  "status": "awaiting_authorized_local_import",
+  "workbook_bundled": false,
+  "workbook_version": "v1.2"
+}

@@ -1,0 +1,14 @@
+{
+  "source_id": "UNCTAD_LSCI",
+  "license": {
+    "spdx_like": "CC-BY-3.0-IGO",
+    "name": "Creative Commons Attribution 3.0 IGO",
+    "attribution_required": true,
+    "redistribution_allowed": true,
+    "notes": "UNCTAD attribution and applicable UN disclaimer required."
+  },
+  "attribution_required": true,
+  "official_bulk_url": "https://unctadstat-api.unctad.org/bulkdownload/US.LSCI/US_LSCI",
+  "official_numeric_dataset_in_bundle": false,
+  "redistribution_policy": "CC BY 3.0 IGO with attribution; the static frontend ships metadata only."
+}

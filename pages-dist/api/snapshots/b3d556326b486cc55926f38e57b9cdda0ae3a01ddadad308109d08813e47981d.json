@@ -1,0 +1,16 @@
+{
+  "attribution": "World Bank, Logistics Performance Indicators, Data360",
+  "bundled_normalized_snapshots": true,
+  "bundled_raw_official_snapshots": true,
+  "license": {
+    "attribution_required": true,
+    "commercial_use_allowed": true,
+    "modifications_notice": "GIR adds normalized records, ISO3-preserving keys, row hashes and clearly marked derived per-indicator ranks.",
+    "name": "Creative Commons Attribution 4.0 International",
+    "redistribution_allowed": true,
+    "spdx": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "modifications": "GIR normalization, immutable row hashes and clearly identified derived LPI 2.0 ranks.",
+  "source_id": "WORLD_BANK_LPI"
+}

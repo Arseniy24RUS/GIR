@@ -1,0 +1,133 @@
+{
+  "index_code": "UNCTAD_LSCI",
+  "active_release_id": "UNCTAD_LSCI:US.LSCI:2026Q2",
+  "release": {
+    "schema_version": 1,
+    "index_code": "UNCTAD_LSCI",
+    "source_id": "UNCTAD_LSCI",
+    "release_id": "UNCTAD_LSCI:US.LSCI:2026Q2",
+    "table_code": "US.LSCI",
+    "title": "Liner shipping: Connectivity index - Quarterly (analytical)",
+    "publisher": "United Nations Conference on Trade and Development (UNCTAD)",
+    "data_partner": "MDS Transmodal",
+    "last_updated": "2026-06-23",
+    "published_release_date": "2026-06-19",
+    "first_period": "2006-Q1",
+    "latest_period": "2026-Q2",
+    "frequency": "quarterly",
+    "score_direction": "higher_is_better_connected",
+    "score_scale": "index; theoretical average economy in Q1 2023 = 100",
+    "reference_period": "2023-Q1",
+    "reference_value": 100,
+    "reference_description": "Theoretical average economy in Q1 2023; 100 is a reference value, not a named economy.",
+    "methodology_revision": "LSCI 2024 revision",
+    "revision_applied_to_full_series": true,
+    "backcast_start_period": "2006-Q1",
+    "component_count": 6,
+    "components": [
+      {
+        "code": "weekly_calls",
+        "name_en": "Number of scheduled ship calls per week",
+        "name_ru": "Число регулярных судозаходов в неделю"
+      },
+      {
+        "code": "deployed_capacity",
+        "name_en": "Annual deployed capacity in TEU",
+        "name_ru": "Развёрнутая годовая провозная способность, TEU"
+      },
+      {
+        "code": "regular_services",
+        "name_en": "Number of regular liner shipping services",
+        "name_ru": "Число регулярных линейных сервисов"
+      },
+      {
+        "code": "direct_connections",
+        "name_en": "Number of economies connected without transshipment",
+        "name_ru": "Число экономик с прямым сообщением без перевалки"
+      },
+      {
+        "code": "service_providers",
+        "name_en": "Number of liner shipping companies providing services",
+        "name_ru": "Число линейных судоходных компаний"
+      },
+      {
+        "code": "largest_ship",
+        "name_en": "Average size of the largest ships by service",
+        "name_ru": "Средний размер крупнейших судов по сервисам"
+      }
+    ],
+    "official_data_viewer_url": "https://unctadstat.unctad.org/datacentre/dataviewer/US.LSCI",
+    "official_metadata_url": "https://unctadstat.unctad.org/datacentre/reportInfo/US.LSCI",
+    "official_bulk_url": "https://unctadstat-api.unctad.org/bulkdownload/US.LSCI/US_LSCI",
+    "official_release_calendar_url": "https://unctadstat.unctad.org/release-calendar",
+    "official_methodology_url": "https://unctad.org/news/new-context-calls-changing-how-we-measure-maritime-connectivity",
+    "official_license_url": "https://unctadstat.unctad.org/EN/FAQ.html",
+    "license": {
+      "spdx_like": "CC-BY-3.0-IGO",
+      "name": "Creative Commons Attribution 3.0 IGO",
+      "attribution_required": true,
+      "redistribution_allowed": true,
+      "notes": "UNCTAD attribution and applicable UN disclaimer required."
+    },
+    "coverage_contract": {
+      "historical_reference_economies": 187,
+      "strict_latest_minimum_economies": 160,
+      "expected_latest_leader_iso3": "CHN",
+      "aggregate_rows_allowed_in_source": true,
+      "aggregate_rows_receive_country_rank": false
+    },
+    "import_contract": {
+      "accepted_formats": [
+        "csv",
+        "csv.gz",
+        "zip containing one csv"
+      ],
+      "accepted_shapes": [
+        "long",
+        "wide periods in columns"
+      ],
+      "official_file_bundled": false,
+      "numeric_rows_bundled": 0,
+      "fail_closed_before_import": true,
+      "operator_must_verify_sha256": true,
+      "strict_official_default": true
+    },
+    "latest_release_facts": {
+      "period": "2026-Q2",
+      "regional_leaders": {
+        "Asia": "China",
+        "Northern America": "United States of America",
+        "Europe": "Spain",
+        "Africa": "Egypt",
+        "Latin America and the Caribbean": "Panama"
+      }
+    },
+    "retrieved_at": "2026-07-18T00:00:00Z"
+  },
+  "installed_state": {
+    "release_id": "UNCTAD_LSCI:US.LSCI:2026Q2",
+    "table_code": "US.LSCI",
+    "title": "Liner shipping: Connectivity index - Quarterly (analytical)",
+    "publisher": "United Nations Conference on Trade and Development (UNCTAD)",
+    "data_partner": "MDS Transmodal",
+    "first_period": "2006-Q1",
+    "latest_period": "2026-Q2",
+    "last_updated": "2026-06-23",
+    "methodology_revision": "LSCI 2024 revision",
+    "reference_period": "2023-Q1",
+    "reference_value": 100,
+    "score_direction": "higher_is_better_connected",
+    "component_count": 6,
+    "license_id": "CC-BY-3.0-IGO",
+    "official_data_viewer_url": "https://unctadstat.unctad.org/datacentre/dataviewer/US.LSCI",
+    "official_metadata_url": "https://unctadstat.unctad.org/datacentre/reportInfo/US.LSCI",
+    "official_bulk_url": "https://unctadstat-api.unctad.org/bulkdownload/US.LSCI/US_LSCI",
+    "data_status": "awaiting_verified_local_import",
+    "row_count": 0,
+    "economy_count": 0,
+    "aggregate_count": 0,
+    "period_count": 0,
+    "central_sync_status": "not_imported"
+  },
+  "metadata_only_bundle": true
+}

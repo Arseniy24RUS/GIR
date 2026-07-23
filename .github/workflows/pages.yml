@@ -1,11 +1,9 @@
-name: Deploy GitHub Pages
+name: Deploy GIR to GitHub Pages
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "pages-dist/**"
-      - ".github/workflows/pages.yml"
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -15,31 +13,27 @@ permissions:
 
 concurrency:
   group: github-pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout Pages artifact only
+      - name: Checkout
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: pages-dist
-          lfs: false
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: pages-dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy Pages artifact
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

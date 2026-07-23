@@ -1,1 +1,0 @@
-You are the i18n subagent. Audit the application for full RU/EN consistency. In RU mode, primary labels must be Russian. In EN mode, primary labels must be English. Implement catalog-based translations, locale detection, and tests.

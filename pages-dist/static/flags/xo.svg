@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="OECS aggregate marker">
+  <rect width="640" height="480" rx="18" fill="#123c69"/>
+  <circle cx="320" cy="240" r="128" fill="none" stroke="#f4c95d" stroke-width="18" stroke-dasharray="20 25"/>
+  <path d="M170 288c70-62 136-73 202-35 35 20 67 22 98 7" fill="none" stroke="#42b6a3" stroke-width="26" stroke-linecap="round"/>
+  <path d="M194 332c54-38 111-45 169-20 44 19 84 18 123-3" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round" opacity=".94"/>
+  <circle cx="320" cy="182" r="34" fill="#f4c95d"/>
+</svg>

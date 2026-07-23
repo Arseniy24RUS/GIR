@@ -1,0 +1,14 @@
+{
+  "api_audience": "disabled",
+  "counts": {
+    "entities_count": 0,
+    "series_count": 8,
+    "successful_imports": 0,
+    "values_count": 0
+  },
+  "data_access_status": "awaiting_authorized_local_import",
+  "index_code": "SIPRI_MILEX",
+  "numeric_dataset_bundled": false,
+  "status": "ok",
+  "workbook_bundled": false
+}

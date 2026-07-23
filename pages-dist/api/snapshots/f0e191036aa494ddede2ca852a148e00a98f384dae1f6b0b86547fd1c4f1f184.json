@@ -1,0 +1,164 @@
+{
+  "count": 1,
+  "index_code": "DHL_GCI",
+  "releases": [
+    {
+      "country_count": 0,
+      "country_count_latest": 180,
+      "csv_bytes": null,
+      "csv_md5": null,
+      "csv_sha256": null,
+      "data_status": "awaiting_authorized_local_import",
+      "doi": "10.58153/rm518-hve77",
+      "earliest_score_year": 2001,
+      "edition_year": 2026,
+      "flow_type_count": 14,
+      "imported_at": null,
+      "latest_score_year": 2024,
+      "metadata": {
+        "manifest": {
+          "files": {
+            "pillar_catalog.json": {
+              "bytes": 4910,
+              "sha256": "c755cf44d1e45d2b652ae4a2419765109237a1c7bb668a46440adb48cf7984d3"
+            },
+            "release_catalog.json": {
+              "bytes": 4041,
+              "sha256": "6f0c5a5eac2f9577b27b9d5b7e8366b31040047ce1363d8d69718295394cdf78"
+            }
+          },
+          "index_code": "DHL_GCI",
+          "manifest_schema_version": 1,
+          "metadata_only": true,
+          "official_csv_in_bundle": false,
+          "official_numeric_dataset_in_bundle": false,
+          "release_id": "DHL_GCI:2026:v1",
+          "required_pillars": [
+            "overall",
+            "trade",
+            "capital",
+            "information",
+            "people"
+          ],
+          "synthetic_country_data_in_bundle": false
+        },
+        "release": {
+          "authors": [
+            "Steven A. Altman",
+            "Caroline R. Bastian"
+          ],
+          "bundle_contains_official_csv": false,
+          "bundle_contains_official_numeric_dataset": false,
+          "citation": "Altman, Steven A. & Bastian, Caroline R. (2026). DHL Global Connectedness Report 2026. DHL Group. DOI: 10.58153/rm518-hve77.",
+          "country_count_latest": 180,
+          "data_state_on_install": "awaiting_authorized_local_import",
+          "doi": "10.58153/rm518-hve77",
+          "earliest_country_score_year": 2001,
+          "edition_year": 2026,
+          "expected_columns": [
+            "pillar",
+            "iso",
+            "country",
+            "year",
+            "overall_score",
+            "depth_score",
+            "breadth_score",
+            "overall_rank",
+            "depth_rank",
+            "breadth_rank"
+          ],
+          "expected_latest_coverage": {
+            "capital": 158,
+            "information": 144,
+            "overall": 180,
+            "people": 133,
+            "trade": 180
+          },
+          "expected_latest_top_overall": [
+            {
+              "iso3": "SGP",
+              "rank": 1
+            },
+            {
+              "iso3": "LUX",
+              "rank": 2
+            },
+            {
+              "iso3": "NLD",
+              "rank": 3
+            }
+          ],
+          "flow_type_count": 14,
+          "global_gdp_coverage_percent": 99.6,
+          "global_population_coverage_percent": 99.0,
+          "index_code": "DHL_GCI",
+          "latest_country_score_year": 2024,
+          "licence_gate": {
+            "attribution": "DHL Global Connectedness Report 2026; Steven A. Altman and Caroline R. Bastian; DHL Group; DOI 10.58153/rm518-hve77.",
+            "default_redistribution_allowed": false,
+            "default_storage_allowed": false,
+            "default_transformation_allowed": false,
+            "public_api_requires": [
+              "commercial_license",
+              "written_permission"
+            ],
+            "public_export_requires": [
+              "commercial_license",
+              "written_permission"
+            ]
+          },
+          "methodology": {
+            "country_score_scale": "0_to_100",
+            "cross_edition_warning": "Compare historical scores within one report edition. Panel normalization is refreshed when a new edition is produced.",
+            "csv_dimension_storage": "The official CSV stores depth_score and breadth_score on 0–50 component scales. The corresponding 0–100 dimension levels equal twice those values.",
+            "dimensions": {
+              "breadth": "Geographic distribution of international flows across partner countries.",
+              "depth": "International flows relative to domestic activity."
+            },
+            "overall_relation": "overall_score = geometric mean(depth_level_0_100, breadth_level_0_100)",
+            "pillar_weights": {
+              "capital": 0.35,
+              "information": 0.15,
+              "people": 0.15,
+              "trade": 0.35
+            },
+            "score_direction": "higher_is_more_connected"
+          },
+          "official_csv_filename": "dhl-global-connectedness-scores-ranks-2001-2024.csv",
+          "official_csv_md5": "38eef209aa9e055302d2b965eac6411c",
+          "official_csv_repository_size_label": "1.5 MB",
+          "official_csv_repository_url": "https://ultraviolet.library.nyu.edu/records/rm518-hve77",
+          "official_csv_url": "https://ultraviolet.library.nyu.edu/records/rm518-hve77/files/dhl-global-connectedness-scores-ranks-2001-2024.csv?download=1",
+          "official_download_center_url": "https://www.dhl.com/global-en/microsites/core/global-connectedness/download-center.html",
+          "official_key_highlights_url": "https://www.dhl.com/content/dam/dhl/global/delivered/documents/pdf/dhl-global-connectedness-report-2026-key-highlights.pdf",
+          "official_report_hub_url": "https://www.dhl.com/global-en/microsites/core/global-connectedness/report.html",
+          "official_report_url": "https://www.dhl.com/content/dam/dhl/global/delivered/documents/pdf/dhl-global-connectedness-report-2026-complete.pdf",
+          "official_xlsx_url": "https://www.dhl.com/content/dam/dhl/global/delivered/documents/docs/global-connectedness-scores-ranks-2001-2024.xlsx",
+          "publication_date": "2026-03-10",
+          "publisher": "DHL Group",
+          "release_id": "DHL_GCI:2026:v1",
+          "report_global_data_end_year": 2025,
+          "repository_rights": "All Rights Reserved",
+          "research_partner": "DHL Initiative on Globalization at NYU Stern School of Business",
+          "terms_url": "https://www.dhl.com/global-en/footer/terms-of-use.html",
+          "title": "DHL Global Connectedness Report 2026"
+        }
+      },
+      "official_csv_expected_md5": "38eef209aa9e055302d2b965eac6411c",
+      "official_csv_filename": "dhl-global-connectedness-scores-ranks-2001-2024.csv",
+      "official_csv_repository_url": "https://ultraviolet.library.nyu.edu/records/rm518-hve77",
+      "official_csv_url": "https://ultraviolet.library.nyu.edu/records/rm518-hve77/files/dhl-global-connectedness-scores-ranks-2001-2024.csv?download=1",
+      "official_download_center_url": "https://www.dhl.com/global-en/microsites/core/global-connectedness/download-center.html",
+      "official_report_url": "https://www.dhl.com/content/dam/dhl/global/delivered/documents/pdf/dhl-global-connectedness-report-2026-complete.pdf",
+      "pillar_count": 5,
+      "publication_date": "2026-03-10",
+      "publisher": "DHL Group",
+      "release_id": "DHL_GCI:2026:v1",
+      "repository_rights": "All Rights Reserved",
+      "research_partner": "DHL Initiative on Globalization at NYU Stern School of Business",
+      "row_count": 0,
+      "title": "DHL Global Connectedness Report 2026",
+      "year_count": 0
+    }
+  ]
+}

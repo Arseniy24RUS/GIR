@@ -1,0 +1,20 @@
+{
+  "status": "awaiting_verified_local_import",
+  "index_code": "UNCTAD_LSCI",
+  "release_id": "UNCTAD_LSCI:US.LSCI:2026Q2",
+  "table_code": "US.LSCI",
+  "latest_official_period": "2026-Q2",
+  "latest_imported_period": null,
+  "numeric_routes_ready": false,
+  "data_status": "awaiting_verified_local_import",
+  "rows": 0,
+  "economy_count": 0,
+  "aggregate_count": 0,
+  "period_count": 0,
+  "raw_csv_sha256": null,
+  "normalized_snapshot_sha256": null,
+  "central_sync_status": "not_imported",
+  "official_bulk_url": "https://unctadstat-api.unctad.org/bulkdownload/US.LSCI/US_LSCI",
+  "license": "CC-BY-3.0-IGO",
+  "synthetic_country_data": false
+}

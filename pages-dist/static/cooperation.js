@@ -219,13 +219,13 @@
     const dictionary = COPY[currentLang].consentPage;
     const logo = document.querySelector("[data-consent-brand]");
     if (logo) {
-      logo.src = `static/brand/gir-${currentLang}-${theme}.svg`;
+      logo.src = `/static/brand/gir-${currentLang}-${theme}.svg`;
       logo.alt = dictionary.brand;
     }
     const themeIcon = document.querySelector("[data-consent-theme-icon]");
     const nextThemeLabel = theme === "dark" ? dictionary.lightTheme : dictionary.darkTheme;
     if (themeIcon) {
-      themeIcon.src = theme === "dark" ? "static/icons/sun.svg" : "static/icons/moon.svg";
+      themeIcon.src = theme === "dark" ? "/static/icons/sun.svg" : "/static/icons/moon.svg";
       themeIcon.alt = "";
     }
     const themeButton = document.querySelector("[data-consent-theme-toggle]");
@@ -339,7 +339,7 @@
             </label>
             <label class="gir-consent-field gir-form-field--full">
               <input name="consent" type="checkbox" value="agreed" required aria-describedby="gir-cooperation-error-consent">
-              <span><span data-cooperation-i18n="consentBefore"></span><a href="personal-data-consent.html" target="_blank" rel="noopener noreferrer"><span data-cooperation-i18n="consentLink"></span></a><span data-cooperation-i18n="consentAfter"></span></span>
+              <span><span data-cooperation-i18n="consentBefore"></span><a href="/personal-data-consent" target="_blank" rel="noopener noreferrer"><span data-cooperation-i18n="consentLink"></span></a><span data-cooperation-i18n="consentAfter"></span></span>
             </label>
             <small id="gir-cooperation-error-consent" class="gir-form-error gir-form-field--full" data-error-for="consent"></small>
             <input class="gir-form-honeypot" name="_honey" type="text" tabindex="-1" autocomplete="off" hidden>
@@ -477,13 +477,11 @@
   function initializeConsentPage() {
     if (document.documentElement.dataset.page !== "personal-data-consent") return;
     const params = new URLSearchParams(window.location.search);
-    const storedLang = params.get("lang") || localStorage.getItem("lang") || navigator.language;
     const preferredTheme = window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
     const requestedTheme = params.get("theme") || localStorage.getItem("theme") || preferredTheme;
     const theme = requestedTheme === "light" ? "light" : "dark";
-    currentLang = normalizeLang(storedLang);
+    currentLang = window.GIRUserContext?.snapshot?.().language || "en";
     document.documentElement.dataset.theme = theme;
-    localStorage.setItem("lang", currentLang);
     localStorage.setItem("theme", theme);
 
     init({ getLang: () => currentLang });
@@ -491,7 +489,7 @@
     const themeButton = document.querySelector("[data-consent-theme-toggle]");
     langButton?.addEventListener("click", () => {
       currentLang = currentLang === "ru" ? "en" : "ru";
-      localStorage.setItem("lang", currentLang);
+      window.GIRUserContext?.setManualLanguage?.(currentLang);
       updateLocale(currentLang);
     });
     themeButton?.addEventListener("click", () => {

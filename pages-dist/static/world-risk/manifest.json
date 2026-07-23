@@ -1,0 +1,208 @@
+{
+  "schema": "gir-world-risk-frontend-manifest-v2",
+  "dataset_id": "WORLD_RISK_INDEX_2025_OFFICIAL_TREND",
+  "edition": 2025,
+  "core_path": "world-risk-core.json",
+  "core_sha256": "831204f4e688df8713f0aec645a1c00ad76f2dd7d2f0d53a9668e12b5b262a24",
+  "core_bytes": 1644848,
+  "dataset_sha256": "d7f4704f17bedabcdd565b2671561e1f77dbf3798208f21b125a84c39cadea56",
+  "countries": 193,
+  "years": 26,
+  "records": 5018,
+  "aggregate_components": 49,
+  "hierarchy_nodes": 149,
+  "indicator_metadata": 100,
+  "direct_indicator_values": 96,
+  "indicator_static_fallback_complete": true,
+  "indicator_year_files": {
+    "2000": {
+      "path": "indicators/2000.json",
+      "sha256": "23b61c2b7692749fa2ce1627e1f70eb6d00eb3479f7ca17148eaef100189a7ad",
+      "bytes": 230809,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2001": {
+      "path": "indicators/2001.json",
+      "sha256": "3bb1897631b19e9545fa3358e589b0025544ebb66027573f56e9a5b361a8aa67",
+      "bytes": 230540,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2002": {
+      "path": "indicators/2002.json",
+      "sha256": "12fdd361ae8d67debae477b1693c3f766a69c9a6c56998820519fb33fb1d43b4",
+      "bytes": 230665,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2003": {
+      "path": "indicators/2003.json",
+      "sha256": "cc802c0005fd207555a323239ae735d66958466dd057212e71256c7190ee1e98",
+      "bytes": 230747,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2004": {
+      "path": "indicators/2004.json",
+      "sha256": "fc861e5c84408015e17a9031530d70ec21417618ac5d36d025daa5dffef1e666",
+      "bytes": 230703,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2005": {
+      "path": "indicators/2005.json",
+      "sha256": "bb7c400523b6f34ea4a69d8f1e930ec9ae1174de91f89329b78a9fd111c98078",
+      "bytes": 230850,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2006": {
+      "path": "indicators/2006.json",
+      "sha256": "25dff6dab70e6f66fb7ccdb35d5b138adf1073d248b4b5e097ac91c72b0fd96e",
+      "bytes": 230928,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2007": {
+      "path": "indicators/2007.json",
+      "sha256": "c03f606b3d17f66f8326a79ed1d300915a5ebda1d7305584e3e548cd2b03ff26",
+      "bytes": 230985,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2008": {
+      "path": "indicators/2008.json",
+      "sha256": "9e340694350ac7ee101f2e52450ef449aede02b5a1af1f50b666785fbd036a56",
+      "bytes": 230454,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2009": {
+      "path": "indicators/2009.json",
+      "sha256": "67eb19540907f20fb5a35cd0faf92d58688f33ee8c6e37bcf764f5a94b2c17e2",
+      "bytes": 229975,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2010": {
+      "path": "indicators/2010.json",
+      "sha256": "cf1f2bf041536d7e12ae7682fda7640d2dc74c3848a7d4106108077044690b19",
+      "bytes": 230234,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2011": {
+      "path": "indicators/2011.json",
+      "sha256": "c8d4c6f75f7334c5d8431bb78a90208296998b84296d0f9feaa31d0ffa38d856",
+      "bytes": 230292,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2012": {
+      "path": "indicators/2012.json",
+      "sha256": "4d1100c4f0c52ae5ab32235613963725e0b438594622e1ada34245ada43dd562",
+      "bytes": 230372,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2013": {
+      "path": "indicators/2013.json",
+      "sha256": "0ef0d3295fb4a3e298d52e6a0155bbdbe4c74db1dfc6bc2f6e6f5e01ab84327a",
+      "bytes": 230624,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2014": {
+      "path": "indicators/2014.json",
+      "sha256": "323b9dd746b9938f4adbb76aadb8280779fea4f24906922a937be71ef99615c2",
+      "bytes": 230614,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2015": {
+      "path": "indicators/2015.json",
+      "sha256": "74d009bda37d156ca3f408ca15031441dba94e1ec95fe9b84c86996f38290368",
+      "bytes": 230775,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2016": {
+      "path": "indicators/2016.json",
+      "sha256": "d3ffbcbfb187c7e9d04046ca73b41670ca03e2680c4fc2c80b93d12ec1de8aec",
+      "bytes": 230863,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2017": {
+      "path": "indicators/2017.json",
+      "sha256": "c968afdabdbb509351623ab837481b0d1fb9d4e4a3136b2812850de4bb140cd8",
+      "bytes": 230859,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2018": {
+      "path": "indicators/2018.json",
+      "sha256": "f9caa8b1284943b2293897be4fbeb8b79ddeaccb8f5dec5960ccc7c6ff0ab49c",
+      "bytes": 230941,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2019": {
+      "path": "indicators/2019.json",
+      "sha256": "252cccfba70e023cc1498a48d796534b781c52a95c93312394eb98fbd8b12616",
+      "bytes": 231123,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2020": {
+      "path": "indicators/2020.json",
+      "sha256": "f981cf54061a1f988588ee612ddc183108b8cefd76d16c11c704e83a0ef13e0d",
+      "bytes": 231165,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2021": {
+      "path": "indicators/2021.json",
+      "sha256": "bc070f168c364fd541e0a4857a20302f84467f091a2d68e76667a9f3210bad82",
+      "bytes": 231328,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2022": {
+      "path": "indicators/2022.json",
+      "sha256": "bdfa6a3b04555c940a572e548901a63dc70a723c4ca2b96021c2a4e96066a37f",
+      "bytes": 231373,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2023": {
+      "path": "indicators/2023.json",
+      "sha256": "545df64ccb732edf21b34477e70b2e2d0a1162d624f469f589fef714e99e4fb3",
+      "bytes": 231452,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2024": {
+      "path": "indicators/2024.json",
+      "sha256": "027bd539458897deb365d60f68455310510e10ab5f13ec8d224667faf2e4fcef",
+      "bytes": 231451,
+      "countries": 193,
+      "values_per_country": 200
+    },
+    "2025": {
+      "path": "indicators/2025.json",
+      "sha256": "34bde60601522ebfd385015ef63fa0dd3a03ffd2cd283720e003d5deb9bad4dc",
+      "bytes": 231451,
+      "countries": 193,
+      "values_per_country": 200
+    }
+  },
+  "indicator_country_year_records": 5018,
+  "indicator_value_slots": 1003600,
+  "scores_recomputed": false,
+  "release_spliced": false,
+  "nulls_coerced_to_zero": false,
+  "source": "WorldRiskIndex 2025 official harmonized trend file",
+  "licence": "CC BY 4.0"
+}

@@ -1,0 +1,52 @@
+{
+  "comparability": {
+    "cross_family_comparison_allowed": false,
+    "legacy_longitudinal_series_allowed_with_caution": true,
+    "lpi2_cross_indicator_composite_allowed": false,
+    "reason": "LPI 2.0 is an objective operational framework with 21 separate indicators; the legacy LPI is a perception survey with a six-component composite."
+  },
+  "index_code": "WORLD_BANK_LPI",
+  "legacy_survey": {
+    "components": [
+      "overall",
+      "customs",
+      "infrastructure",
+      "international_shipments",
+      "logistics_quality",
+      "tracking_tracing",
+      "timeliness"
+    ],
+    "method": "survey of international logistics professionals",
+    "overall_score_official": true,
+    "rank_official": true,
+    "score_scale": "1–5, higher is better",
+    "series_status": "discontinued_after_2023",
+    "years": [
+      2007,
+      2010,
+      2012,
+      2014,
+      2016,
+      2018,
+      2023
+    ]
+  },
+  "lpi2": {
+    "composite_available": false,
+    "core_design": "one connectivity and one time indicator for each logistics mode",
+    "core_indicator_count": 6,
+    "gir_rank_policy": "standard-competition rank within the same indicator, metric and year",
+    "indicator_count": 21,
+    "method": "objective operational indicators derived from large-scale logistics data",
+    "modes": [
+      "maritime",
+      "aviation",
+      "postal"
+    ],
+    "rank_is_official": false,
+    "score_is_official": true,
+    "supplementary_indicator_count": 15
+  },
+  "methodology_url": "https://lpi.worldbank.org/en/about/methodology",
+  "report_url": "https://documents.worldbank.org/en/publication/documents-reports/documentdetail/099042226142014971"
+}

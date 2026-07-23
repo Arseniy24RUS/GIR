@@ -1,0 +1,25 @@
+{
+  "attribution": "DHL Global Connectedness Report 2026; Steven A. Altman and Caroline R. Bastian; DHL Group; DOI 10.58153/rm518-hve77.",
+  "index_code": "DHL_GCI",
+  "notice_path": "docs/NOTICE_DHL_GCI_DATA.md",
+  "policy": {
+    "default_api_audience": "disabled",
+    "implicit_download": false,
+    "implicit_import": false,
+    "official_csv_in_patch": false,
+    "official_numeric_dataset_in_patch": false,
+    "operator_attestation_required": true,
+    "public_api_requires": [
+      "commercial_license",
+      "written_permission"
+    ],
+    "public_export_requires": [
+      "commercial_license",
+      "written_permission"
+    ],
+    "software_gate_grants_legal_rights": false,
+    "terms_acceptance_required": true
+  },
+  "repository_rights": "All Rights Reserved",
+  "terms_url": "https://www.dhl.com/global-en/footer/terms-of-use.html"
+}

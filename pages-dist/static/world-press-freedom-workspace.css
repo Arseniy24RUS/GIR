@@ -1,0 +1,2350 @@
+/*
+ * GIR Governance Stage 14 — World Press Freedom Index.
+ * This workspace is a child of the existing GIR shell. It uses the host design
+ * tokens, shared country/year context bar, local map geometry and native drawer.
+ */
+
+.wpfi-workspace {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  display: grid;
+  gap: clamp(40px, 5vw, 68px);
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  font-family: var(--font);
+  line-height: 1.5;
+  overflow: visible;
+}
+
+.wpfi-workspace *,
+.wpfi-workspace *::before,
+.wpfi-workspace *::after {
+  box-sizing: border-box;
+}
+
+.wpfi-workspace > *,
+.wpfi-view-stage,
+.wpfi-panel,
+.wpfi-section-heading,
+.wpfi-card,
+.wpfi-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.wpfi-workspace :where(button, input, select, textarea) {
+  font: inherit;
+}
+
+.wpfi-workspace :where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+
+.wpfi-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.wpfi-hero,
+.wpfi-controls,
+.wpfi-tabs,
+.wpfi-card,
+.wpfi-metric,
+.wpfi-domain-card,
+.wpfi-tracer-card,
+.wpfi-method-card,
+.wpfi-state-card,
+.wpfi-dialog {
+  border-radius: var(--radius);
+  box-shadow: none;
+  background-image: none;
+}
+
+.wpfi-hero {
+  min-height: 286px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+  align-items: stretch;
+  gap: 1px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.wpfi-hero-copy,
+.wpfi-hero-score {
+  min-width: 0;
+  background: var(--panel);
+}
+
+.wpfi-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+}
+
+.wpfi-hero-score {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: 28px;
+}
+
+.wpfi-hero-badges,
+.wpfi-hero-links,
+.wpfi-source-links,
+.wpfi-radar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.wpfi-hero-badges span,
+.wpfi-source-link,
+.wpfi-tracer-card footer,
+.wpfi-audit-card .is-passed,
+.wpfi-audit-card .is-review {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.wpfi-kicker,
+.wpfi-section-heading p,
+.wpfi-card-title p,
+.wpfi-tracer-card header p {
+  margin: 0;
+  color: var(--accent-text);
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.wpfi-hero-copy .wpfi-kicker {
+  margin-top: 18px;
+}
+
+.wpfi-hero h1 {
+  max-width: 880px;
+  margin: 16px 0 14px;
+  color: var(--text);
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.04;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+
+.wpfi-hero-copy > p:not(.wpfi-kicker) {
+  max-width: 780px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.wpfi-hero-links {
+  margin-top: 22px;
+}
+
+.wpfi-source-link {
+  min-height: 38px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.wpfi-source-link:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.wpfi-score-block {
+  min-height: 118px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  padding: 18px;
+  border: 1px solid var(--line2);
+  border-left: 3px solid var(--green);
+  background: var(--surface);
+}
+
+.wpfi-score-block > span,
+.wpfi-hero-score-meta span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.wpfi-score-block strong {
+  color: var(--text);
+  font-size: clamp(42px, 5vw, 64px);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.wpfi-score-block small,
+.wpfi-hero-score-meta small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-score-block[data-tone="high"] { border-left-color: var(--green); }
+.wpfi-score-block[data-tone="mid"] { border-left-color: var(--blue2); }
+.wpfi-score-block[data-tone="low"] { border-left-color: var(--orange); }
+.wpfi-score-block[data-tone="critical"] { border-left-color: var(--red); }
+
+.wpfi-hero-score-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-hero-score-meta > div {
+  min-height: 82px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 12px;
+  background: var(--panel);
+}
+
+.wpfi-hero-score-meta strong {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.wpfi-hero-score-meta > div {
+  min-width: 0;
+}
+
+.wpfi-hero-score-meta strong {
+  display: block;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.wpfi-hero-score-meta .wpfi-situation-meta strong {
+  font-size: clamp(15px, 1.35vw, 20px);
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* The shared GIR context bar is the only visible country/year surface. */
+.wpfi-controls {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.wpfi-control-primary {
+  display: none;
+}
+
+.wpfi-control-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.wpfi-button,
+.wpfi-ranking-filters :where(input, select),
+.wpfi-inline-field select,
+.wpfi-pagination button,
+.wpfi-text-button,
+.wpfi-dialog-head button {
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: var(--control-bg);
+  color: var(--control-text);
+  box-shadow: none;
+  transform: none;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wpfi-button:hover,
+.wpfi-pagination button:hover:not(:disabled),
+.wpfi-text-button:hover,
+.wpfi-dialog-head button:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.wpfi-button-primary {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--button-text, var(--text));
+}
+
+.wpfi-button-primary:hover {
+  border-color: var(--blue2);
+  background: var(--blue2);
+}
+
+.wpfi-tabs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.wpfi-tabs button {
+  position: relative;
+  min-width: 130px;
+  min-height: 54px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--panel);
+  color: var(--muted);
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wpfi-tabs button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--blue) 20%, var(--panel));
+  color: var(--text);
+  box-shadow: inset 0 -3px 0 var(--green);
+}
+
+.wpfi-view-stage {
+  min-height: 0;
+}
+
+.wpfi-panel {
+  display: grid;
+  gap: 24px;
+}
+
+.wpfi-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 4px;
+}
+
+.wpfi-section-heading > div {
+  min-width: 0;
+}
+
+.wpfi-section-heading h2 {
+  margin: 6px 0 10px;
+  color: var(--text);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.wpfi-section-heading span {
+  display: block;
+  max-width: 840px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.wpfi-card,
+.wpfi-domain-card,
+.wpfi-tracer-card,
+.wpfi-method-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+}
+
+.wpfi-card {
+  padding: 24px;
+}
+
+.wpfi-card-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.wpfi-card-title h3 {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.wpfi-card-title > span {
+  max-width: 360px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.wpfi-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-metric {
+  min-height: 112px;
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  padding: 16px;
+  border: 0;
+  background: var(--panel);
+}
+
+.wpfi-metric > span {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wpfi-metric strong {
+  color: var(--text);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.wpfi-metric small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  gap: 16px;
+}
+
+.wpfi-map-canvas,
+.wpfi-map-fallback,
+.wpfi-chart,
+.wpfi-chart-empty,
+.wpfi-radar-wrap {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+.wpfi-map-canvas {
+  min-height: 360px;
+  display: grid;
+  align-content: center;
+  padding: 14px;
+  overflow: hidden;
+}
+
+.wpfi-map-canvas svg {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+}
+
+.wpfi-map-country {
+  stroke: var(--map-stroke);
+  stroke-width: .65;
+  vector-effect: non-scaling-stroke;
+  transition: opacity .15s ease, stroke-width .15s ease;
+}
+
+.wpfi-map-country:hover,
+.wpfi-map-country.is-selected {
+  stroke: var(--text);
+  stroke-width: 1.8;
+}
+
+.wpfi-map-bin-0 { fill: var(--surface); }
+.wpfi-map-bin-1 { fill: color-mix(in srgb, var(--red) 32%, var(--surface)); }
+.wpfi-map-bin-2 { fill: color-mix(in srgb, var(--orange) 38%, var(--surface)); }
+.wpfi-map-bin-3 { fill: color-mix(in srgb, var(--orange) 62%, var(--surface)); }
+.wpfi-map-bin-4 { fill: color-mix(in srgb, var(--blue2) 42%, var(--surface)); }
+.wpfi-map-bin-5 { fill: color-mix(in srgb, var(--blue2) 68%, var(--surface)); }
+.wpfi-map-bin-6 { fill: color-mix(in srgb, var(--green) 58%, var(--surface)); }
+.wpfi-map-bin-7 { fill: color-mix(in srgb, var(--green) 82%, var(--surface)); }
+
+.wpfi-map-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.wpfi-map-legend i {
+  width: 22px;
+  height: 7px;
+  display: block;
+  border: 1px solid var(--line);
+}
+
+.wpfi-map-fallback,
+.wpfi-chart-empty {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.wpfi-domain-bars {
+  display: grid;
+  gap: 10px;
+}
+
+.wpfi-domain-bar {
+  width: 100%;
+  min-height: 70px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(90px, .8fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--panel);
+  color: var(--text);
+  text-align: left;
+}
+
+.wpfi-domain-bar:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.wpfi-domain-bar > span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.wpfi-domain-bar b {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wpfi-domain-bar small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.wpfi-domain-bar > i,
+.wpfi-domain-progress {
+  height: 8px;
+  display: block;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.wpfi-domain-bar > i em,
+.wpfi-domain-bar > i b,
+.wpfi-domain-progress i {
+  height: 100%;
+  display: block;
+  background: var(--green);
+}
+
+.wpfi-domain-bar strong {
+  min-width: 32px;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.wpfi-neighbors-card {
+  padding-bottom: 16px;
+}
+
+.wpfi-table-scroll {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.wpfi-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+.wpfi-table th {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--line2);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.wpfi-table td {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  vertical-align: middle;
+}
+
+.wpfi-table tbody tr:hover td,
+.wpfi-table tbody tr.is-selected td {
+  background: var(--surface);
+}
+
+.wpfi-country-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.wpfi-country-link:hover {
+  color: var(--green);
+}
+
+.wpfi-country-link > span:not(.wpfi-flag-inline) {
+  display: grid;
+  gap: 2px;
+}
+
+.wpfi-country-link b {
+  color: inherit;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wpfi-country-link small,
+.wpfi-aggregate-cell small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.wpfi-aggregate-cell {
+  display: grid;
+  gap: 2px;
+}
+
+.wpfi-flag-slot,
+.wpfi-flag-inline {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.wpfi-flag-slot { width: 44px; height: 30px; }
+.wpfi-flag-inline { width: 31px; height: 21px; }
+
+.wpfi-flag-slot img,
+.wpfi-flag-inline img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.wpfi-flag-slot > span,
+.wpfi-flag-inline > span {
+  display: none;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.wpfi-flag-slot.is-fallback > span,
+.wpfi-flag-inline.is-fallback > span {
+  display: block;
+}
+
+.wpfi-domain-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, .75fr) minmax(0, 1.25fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.wpfi-radar-wrap {
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.wpfi-radar-wrap svg {
+  width: min(100%, 330px);
+  height: auto;
+}
+
+.wpfi-radar-ring,
+.wpfi-radar-axis {
+  fill: none;
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+
+.wpfi-radar-country {
+  fill: color-mix(in srgb, var(--green) 22%, transparent);
+  stroke: var(--green);
+  stroke-width: 2;
+}
+
+.wpfi-radar-world {
+  fill: color-mix(in srgb, var(--blue2) 14%, transparent);
+  stroke: var(--blue2);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.wpfi-radar-legend {
+  justify-content: center;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-radar-legend i {
+  width: 18px;
+  height: 3px;
+  display: block;
+}
+
+.wpfi-radar-legend .is-country { background: var(--green); }
+.wpfi-radar-legend .is-world { background: var(--blue2); }
+
+.wpfi-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wpfi-domain-card {
+  min-height: 240px;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 18px;
+  border-left: 3px solid var(--blue2);
+}
+
+.wpfi-domain-card.is-selected {
+  border-left-color: var(--green);
+  background: color-mix(in srgb, var(--green) 6%, var(--panel));
+}
+
+.wpfi-domain-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.wpfi-domain-card header span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.wpfi-domain-card h3 {
+  margin: 5px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.wpfi-domain-card header strong {
+  color: var(--text);
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.wpfi-domain-card dl,
+.wpfi-tracer-card dl,
+.wpfi-audit-list,
+.wpfi-provenance {
+  margin: 0;
+}
+
+.wpfi-domain-card dl > div,
+.wpfi-tracer-card dl > div,
+.wpfi-audit-list > div,
+.wpfi-provenance > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.wpfi-domain-card dt,
+.wpfi-tracer-card dt,
+.wpfi-audit-list dt,
+.wpfi-provenance dt {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-domain-card dd,
+.wpfi-tracer-card dd,
+.wpfi-audit-list dd,
+.wpfi-provenance dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 10px;
+  text-align: right;
+}
+
+.wpfi-text-button {
+  justify-self: start;
+  min-height: 38px;
+  padding: 7px 10px;
+}
+
+.wpfi-inline-field {
+  min-width: min(310px, 100%);
+  display: grid;
+  gap: 5px;
+}
+
+.wpfi-inline-field > span,
+.wpfi-ranking-filters label > span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wpfi-inline-field select {
+  width: 100%;
+}
+
+.wpfi-notice,
+.wpfi-ranking-note {
+  display: grid;
+  gap: 5px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue2);
+  background: var(--surface);
+}
+
+.wpfi-notice strong,
+.wpfi-ranking-note strong {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wpfi-notice p,
+.wpfi-ranking-note code {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.wpfi-tracer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wpfi-tracer-card {
+  min-height: 290px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 14px;
+  padding: 18px;
+}
+
+.wpfi-tracer-card header {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.wpfi-tracer-card header > span {
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-tracer-card h3 {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.wpfi-tracer-card dl > div {
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+}
+
+.wpfi-tracer-card dd {
+  overflow-wrap: anywhere;
+}
+
+.wpfi-tracer-card footer {
+  align-self: end;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.wpfi-tracer-card footer.is-available {
+  border-color: var(--green);
+  color: var(--positive-text);
+}
+
+.wpfi-tracer-card footer.is-catalogue {
+  border-color: var(--line2);
+  color: var(--muted);
+}
+
+.wpfi-chart-card {
+  display: grid;
+  gap: 16px;
+}
+
+.wpfi-chart {
+  min-height: 380px;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.wpfi-chart svg {
+  width: 100%;
+  min-width: 680px;
+  height: auto;
+  display: block;
+}
+
+.wpfi-chart text {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-size: 9px;
+}
+
+.wpfi-chart-grid {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+
+.wpfi-chart-line {
+  fill: none;
+  stroke: var(--chart-accent);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.wpfi-chart-dots circle {
+  fill: var(--panel);
+  stroke: var(--green);
+  stroke-width: 2;
+}
+
+.wpfi-series-details {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.wpfi-series-details summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.wpfi-ranking-card {
+  display: grid;
+  gap: 16px;
+}
+
+.wpfi-ranking-filters {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.25fr) minmax(150px, .8fr) minmax(150px, .8fr) minmax(100px, .45fr) auto auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.wpfi-ranking-filters label:not(.wpfi-check-field) {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.wpfi-ranking-filters :where(input, select) {
+  width: 100%;
+}
+
+.wpfi-check-field {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line2);
+  background: var(--control-bg);
+}
+
+.wpfi-check-field input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--green);
+}
+
+.wpfi-check-field span {
+  color: var(--control-text);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.wpfi-ranking-note {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.wpfi-ranking-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-ranking-table {
+  min-width: 820px;
+}
+
+.wpfi-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.wpfi-pagination button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.wpfi-pagination span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-method-card {
+  min-height: 230px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px;
+  border: 0;
+}
+
+.wpfi-method-card > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-method-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.wpfi-method-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.wpfi-method-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.wpfi-method-layout details {
+  border-top: 1px solid var(--line);
+}
+
+.wpfi-method-layout summary {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--text);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.wpfi-method-layout summary b {
+  font-weight: 500;
+}
+
+.wpfi-method-layout summary span {
+  min-width: 28px;
+  min-height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-method-layout ul {
+  display: grid;
+  gap: 0;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.wpfi-method-layout li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, .7fr);
+  gap: 16px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-method-layout li small {
+  color: var(--muted);
+  text-align: right;
+}
+
+.wpfi-audit-card .is-passed {
+  border-color: var(--green);
+  color: var(--positive-text);
+}
+
+.wpfi-audit-card .is-review {
+  border-color: var(--orange);
+  color: var(--negative-text);
+}
+
+.wpfi-audit-list > div,
+.wpfi-provenance > div {
+  grid-template-columns: minmax(130px, .6fr) minmax(0, 1.4fr);
+}
+
+.wpfi-audit-list dd,
+.wpfi-provenance dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.wpfi-audit-list code,
+.wpfi-provenance code,
+.wpfi-ranking-note code {
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  overflow-wrap: anywhere;
+}
+
+.wpfi-source-links {
+  margin-top: 18px;
+}
+
+.wpfi-provenance-note {
+  margin: 18px 0 0;
+  padding: 12px;
+  border-left: 3px solid var(--blue2);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.wpfi-state-shell {
+  min-height: min(560px, calc(100vh - var(--header-h) - 160px));
+  display: grid;
+  align-items: center;
+}
+
+.wpfi-state-card {
+  width: min(760px, 100%);
+  padding: 40px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  text-align: left;
+}
+
+.wpfi-state-mark {
+  width: 80px;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--green);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.wpfi-state-card h1 {
+  margin: 8px 0 14px;
+  color: var(--text);
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.wpfi-state-card > p:not(.wpfi-kicker) {
+  max-width: 620px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.wpfi-dialog {
+  width: min(760px, calc(100% - 32px));
+  max-height: calc(100vh - 40px);
+  padding: 0;
+  border: 1px solid var(--line2);
+  background: var(--panel);
+  color: var(--text);
+}
+
+.wpfi-dialog::backdrop {
+  background: color-mix(in srgb, var(--bg) 74%, transparent);
+}
+
+.wpfi-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.wpfi-dialog-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.wpfi-dialog > .wpfi-provenance,
+.wpfi-dialog > .wpfi-provenance-note {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
+
+/* Stage 10 component contracts used by the production renderer. */
+.wpfi-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.wpfi-index-code,
+.wpfi-state-code {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 5px 8px;
+  border: 1px solid var(--line2);
+  color: var(--accent-text);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.wpfi-hero-notes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.wpfi-hero-notes span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  border: 1px solid var(--line2);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.wpfi-country-heading {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wpfi-country-heading > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.wpfi-country-heading > div > span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.wpfi-country-heading strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wpfi-hero-flag {
+  width: 52px;
+  height: 36px;
+  flex: 0 0 52px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+}
+
+.wpfi-hero-flag img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.wpfi-hero-flag > span {
+  display: none;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.wpfi-hero-flag.is-fallback > span {
+  display: block;
+}
+
+.wpfi-score-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.wpfi-score-line strong {
+  color: var(--text);
+  font-size: clamp(46px, 5vw, 66px);
+  font-weight: 500;
+  letter-spacing: -.035em;
+  line-height: .92;
+}
+
+.wpfi-score-line span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.wpfi-score-track {
+  width: 100%;
+  height: 8px;
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.wpfi-score-track i {
+  height: 100%;
+  display: block;
+  background: var(--green);
+}
+
+.wpfi-score-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.wpfi-score-meta span {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.wpfi-score-meta .is-high { border-left: 3px solid var(--green); }
+.wpfi-score-meta .is-mid { border-left: 3px solid var(--blue2); }
+.wpfi-score-meta .is-low { border-left: 3px solid var(--orange); }
+.wpfi-score-meta .is-critical { border-left: 3px solid var(--red); }
+
+.wpfi-button-secondary {
+  border-color: var(--line2);
+  background: var(--control-bg);
+  color: var(--control-text);
+}
+
+.wpfi-link {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid var(--line2);
+  color: var(--text);
+  font-size: 10px;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.wpfi-link:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.wpfi-inline-control {
+  min-width: min(310px, 100%);
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-inline-control > span {
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wpfi-inline-control select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 36px 0 12px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background-color: var(--control-bg);
+  color: var(--control-text);
+}
+
+.wpfi-map-card,
+.wpfi-profile-card,
+.wpfi-tracer-groups {
+  min-width: 0;
+}
+
+.wpfi-radar {
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.wpfi-radar svg {
+  width: min(100%, 330px);
+  height: auto;
+  overflow: visible;
+}
+
+.wpfi-radar-grid polygon,
+.wpfi-radar-grid line {
+  fill: none;
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+
+.wpfi-radar-grid text {
+  fill: var(--muted);
+  stroke: none;
+  font-family: var(--font);
+  font-size: 10px;
+}
+
+.wpfi-radar-primary {
+  fill: color-mix(in srgb, var(--green) 21%, transparent);
+  stroke: var(--green);
+  stroke-width: 2.2;
+}
+
+.wpfi-radar-compare {
+  fill: color-mix(in srgb, var(--blue2) 14%, transparent);
+  stroke: var(--blue2);
+  stroke-width: 1.8;
+  stroke-dasharray: 5 4;
+}
+
+.wpfi-radar-legend .is-primary { background: var(--green); }
+.wpfi-radar-legend .is-compare { background: var(--blue2); }
+
+.wpfi-domain-number {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-domain-card > h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.wpfi-domain-card > p {
+  margin: -10px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wpfi-domain-score {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.wpfi-domain-score strong {
+  color: var(--text);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.wpfi-domain-score span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-tracer-groups {
+  display: grid;
+  gap: 16px;
+}
+
+.wpfi-tracer-head {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wpfi-tracer-head code {
+  padding: 5px 7px;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  overflow-wrap: anywhere;
+}
+
+.wpfi-tracer-head span {
+  max-width: 58%;
+  padding: 5px 7px;
+  border: 1px solid var(--line2);
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.3;
+  text-align: right;
+}
+
+.wpfi-tracer-head span[data-numeric-values="true"] {
+  border-color: var(--green);
+  color: var(--positive-text);
+}
+
+.wpfi-tracer-card h4 {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.wpfi-line {
+  fill: none;
+  stroke-width: 2.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.wpfi-line-0 { stroke: var(--green); }
+.wpfi-line-1 { stroke: var(--blue2); }
+.wpfi-line-2 { stroke: var(--orange); }
+.wpfi-line-3 { stroke: var(--red); }
+.wpfi-line-4 { stroke: var(--accent-text); }
+
+.wpfi-chart-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.wpfi-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wpfi-chart-legend i {
+  width: 20px;
+  height: 3px;
+  display: block;
+}
+
+.wpfi-chart-legend .wpfi-line-0 { background: var(--green); }
+.wpfi-chart-legend .wpfi-line-1 { background: var(--blue2); }
+.wpfi-chart-legend .wpfi-line-2 { background: var(--orange); }
+.wpfi-chart-legend .wpfi-line-3 { background: var(--red); }
+.wpfi-chart-legend .wpfi-line-4 { background: var(--accent-text); }
+
+.wpfi-chart-grid text {
+  stroke: none;
+}
+
+.wpfi-table-details {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.wpfi-table-details summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.wpfi-loader {
+  width: 32px;
+  height: 32px;
+  display: block;
+  margin-top: 18px;
+  border: 2px solid var(--line2);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: wpfi-spin .75s linear infinite;
+}
+
+@keyframes wpfi-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1180px) {
+  .wpfi-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wpfi-overview-grid,
+  .wpfi-domain-layout,
+  .wpfi-method-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-tracer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wpfi-method-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wpfi-ranking-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .wpfi-workspace {
+    gap: 42px;
+  }
+
+  .wpfi-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-hero-copy,
+  .wpfi-hero-score {
+    padding: 24px;
+  }
+
+  .wpfi-tabs {
+    display: flex;
+    scroll-snap-type: x proximity;
+  }
+
+  .wpfi-tabs button {
+    flex: 0 0 150px;
+    scroll-snap-align: start;
+  }
+
+  .wpfi-section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wpfi-inline-field {
+    width: 100%;
+  }
+
+  .wpfi-domain-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-ranking-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .wpfi-workspace {
+    gap: 34px;
+  }
+
+  .wpfi-hero-copy,
+  .wpfi-hero-score,
+  .wpfi-card,
+  .wpfi-state-card {
+    padding: 18px;
+  }
+
+  .wpfi-hero h1 {
+    font-size: clamp(28px, 9vw, 40px);
+  }
+
+  .wpfi-hero-score-meta,
+  .wpfi-score-meta,
+  .wpfi-metric-grid,
+  .wpfi-method-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-hero-notes { align-items: stretch; flex-direction: column; }
+  .wpfi-hero-notes span { width: 100%; }
+  .wpfi-country-heading strong { font-size: 16px; }
+  .wpfi-score-line strong { font-size: 46px; }
+  .wpfi-inline-control { width: 100%; min-width: 0; }
+
+  .wpfi-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wpfi-control-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wpfi-control-actions .wpfi-button {
+    width: 100%;
+  }
+
+  .wpfi-card-title {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wpfi-card-title > span {
+    max-width: none;
+    text-align: left;
+  }
+
+  .wpfi-map-canvas {
+    min-height: 260px;
+    padding: 8px;
+  }
+
+  .wpfi-map-canvas svg {
+    min-height: 220px;
+  }
+
+  .wpfi-domain-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .wpfi-domain-bar > i {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .wpfi-tracer-grid,
+  .wpfi-ranking-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-tracer-card {
+    min-height: 0;
+  }
+
+  .wpfi-ranking-note {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-ranking-summary,
+  .wpfi-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wpfi-pagination button {
+    width: 100%;
+  }
+
+  .wpfi-method-layout li,
+  .wpfi-audit-list > div,
+  .wpfi-provenance > div,
+  .wpfi-tracer-card dl > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wpfi-method-layout li small,
+  .wpfi-audit-list dd,
+  .wpfi-provenance dd,
+  .wpfi-tracer-card dd {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wpfi-workspace *,
+  .wpfi-workspace *::before,
+  .wpfi-workspace *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media print {
+  .wpfi-controls,
+  .wpfi-tabs,
+  .wpfi-control-actions,
+  .wpfi-pagination,
+  .wpfi-ranking-filters {
+    display: none !important;
+  }
+
+  .wpfi-workspace {
+    color: var(--text);
+  }
+
+  .wpfi-hero,
+  .wpfi-card,
+  .wpfi-metric,
+  .wpfi-domain-card,
+  .wpfi-tracer-card,
+  .wpfi-method-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+
+/* WPFI-specific source, confidence-interval and significant-change views. */
+.wpfi-ci-card,
+.wpfi-source-detail,
+.wpfi-change-card,
+.wpfi-region-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: none;
+  background-image: none;
+}
+
+.wpfi-ci-card,
+.wpfi-source-detail {
+  padding: 18px;
+}
+
+.wpfi-ci-track {
+  position: relative;
+  height: 12px;
+  margin: 28px 0 14px;
+  border: 1px solid var(--line2);
+  background: var(--surface);
+}
+
+.wpfi-ci-range {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  background: var(--blue2);
+  opacity: .48;
+}
+
+.wpfi-ci-point {
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 24px;
+  background: var(--green);
+  transform: translateX(-1px);
+}
+
+.wpfi-ci-axis,
+.wpfi-source-summary,
+.wpfi-change-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.wpfi-source-grid,
+.wpfi-change-grid,
+.wpfi-region-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-source-card,
+.wpfi-change-card,
+.wpfi-region-card {
+  min-width: 0;
+  padding: 16px;
+  border: 0;
+}
+
+.wpfi-source-card header,
+.wpfi-change-card header,
+.wpfi-region-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.wpfi-source-card h3,
+.wpfi-change-card h3,
+.wpfi-region-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.wpfi-source-card p,
+.wpfi-change-card p,
+.wpfi-region-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.wpfi-source-score,
+.wpfi-change-value,
+.wpfi-region-score {
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.wpfi-source-card.is-selected {
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.wpfi-source-card button {
+  width: 100%;
+  min-height: 38px;
+  margin-top: 14px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.wpfi-source-card button:hover {
+  border-color: var(--green);
+  background: var(--surface);
+}
+
+.wpfi-change-card[data-category="Improver"] {
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.wpfi-change-card[data-category="Decliner"] {
+  box-shadow: inset 3px 0 0 var(--red);
+}
+
+.wpfi-change-chip,
+.wpfi-source-chip,
+.wpfi-rank-chip {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 7px;
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.wpfi-source-layout,
+.wpfi-change-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: 1px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-source-layout > *,
+.wpfi-change-layout > * {
+  background: var(--panel);
+}
+
+.wpfi-source-list,
+.wpfi-change-list {
+  min-width: 0;
+}
+
+.wpfi-source-detail dl,
+.wpfi-release-facts {
+  display: grid;
+  gap: 1px;
+  margin: 14px 0 0;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-source-detail dl > div,
+.wpfi-release-facts > div {
+  display: grid;
+  grid-template-columns: minmax(110px, .42fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--surface);
+}
+
+.wpfi-source-detail dt,
+.wpfi-source-detail dd,
+.wpfi-release-facts dt,
+.wpfi-release-facts dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.wpfi-source-detail dt,
+.wpfi-release-facts dt {
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.wpfi-source-detail dd,
+.wpfi-release-facts dd {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.wpfi-confidence-line {
+  fill: none;
+  stroke: var(--blue2);
+  stroke-width: 7;
+  opacity: .24;
+}
+
+.wpfi-chart-area {
+  fill: var(--blue2);
+  opacity: .08;
+}
+
+.wpfi-change-filters,
+.wpfi-source-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wpfi-change-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-bottom: 18px;
+  padding: 1px;
+  background: var(--line);
+}
+
+.wpfi-change-summary > div {
+  min-height: 88px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 14px;
+  background: var(--panel);
+}
+
+.wpfi-change-summary span {
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.wpfi-change-summary strong {
+  color: var(--text);
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.wpfi-method-warning {
+  border-left: 3px solid var(--orange);
+}
+
+.wpfi-source-order-warning {
+  border-left: 3px solid var(--blue2);
+}
+
+@media (max-width: 1080px) {
+  .wpfi-source-grid,
+  .wpfi-change-grid,
+  .wpfi-region-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wpfi-source-layout,
+  .wpfi-change-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .wpfi-source-grid,
+  .wpfi-change-grid,
+  .wpfi-region-grid,
+  .wpfi-change-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .wpfi-source-detail dl > div,
+  .wpfi-release-facts > div {
+    grid-template-columns: 1fr;
+  }
+
+  .wpfi-change-filters,
+  .wpfi-source-toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Highest official WPFI score band (80–100). */
+.wpfi-map-bin-8 { fill: var(--green); }
+
+
+/* Stage 14 semantic aliases and native interactive affordances. */
+.wpfi-indicator-grid { display: grid; }
+.wpfi-indicator-card {
+  cursor: pointer;
+  text-align: left;
+  background: var(--panel);
+  color: var(--text);
+}
+.wpfi-situation-scale { align-items: stretch; }
+.wpfi-map-legend .wpfi-map-bin-1 { background: color-mix(in srgb, var(--red) 32%, var(--surface)); }
+.wpfi-map-legend .wpfi-map-bin-3 { background: color-mix(in srgb, var(--orange) 62%, var(--surface)); }
+.wpfi-map-legend .wpfi-map-bin-5 { background: color-mix(in srgb, var(--blue2) 68%, var(--surface)); }
+.wpfi-map-legend .wpfi-map-bin-7 { background: color-mix(in srgb, var(--green) 82%, var(--surface)); }
+.wpfi-map-legend .wpfi-map-bin-8 { background: var(--green); }
+
+
+/* Stage 14 final layout polish. */
+.wpfi-indicator-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.wpfi-indicator-card .wpfi-source-chip {
+  justify-self: start;
+}
+
+.wpfi-indicator-card .wpfi-source-score {
+  display: block;
+  margin-top: 4px;
+}
+
+.wpfi-indicator-card > small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.wpfi-ranking-filters .wpfi-page-size-field {
+  min-width: 82px;
+}
+
+.wpfi-ranking-filters .wpfi-page-size-field select {
+  min-width: 82px;
+  padding-inline: 10px 28px;
+}
+
+
+@media (min-width: 1100px) {
+  .wpfi-indicator-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .wpfi-indicator-grid > .wpfi-indicator-card { grid-column: span 2; }
+  .wpfi-indicator-grid > .wpfi-indicator-card:nth-child(4),
+  .wpfi-indicator-grid > .wpfi-indicator-card:nth-child(5) { grid-column: span 3; }
+}
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .wpfi-indicator-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wpfi-indicator-grid > .wpfi-indicator-card { grid-column: span 1; }
+  .wpfi-indicator-grid > .wpfi-indicator-card:last-child { grid-column: span 2; }
+}
+
+@media (max-width: 767px) {
+  .wpfi-indicator-grid { grid-template-columns: minmax(0, 1fr); }
+  .wpfi-indicator-grid > .wpfi-indicator-card { grid-column: span 1; }
+}

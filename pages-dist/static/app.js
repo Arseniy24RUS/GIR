@@ -1,7 +1,30 @@
 const $ = (query, root = document) => root.querySelector(query);
 const $$ = (query, root = document) => Array.from(root.querySelectorAll(query));
 const INDEX_ORDER = ["HDI", "HCI_PLUS", "GTCI", "GII", "IDI", "QS_ET", "HTEI"];
+const INDEX_ROUTE_CODES = [...INDEX_ORDER, "NRI", "EGDI", "GCI", "GARI", "AIPI", "CF_IQI", "TOP500"];
+// Compatibility metadata for the specialised digital workspaces. Navigation is
+// rendered by index-portfolio.js, while this object keeps route discovery and
+// bilingual labels available to the app shell and regression contracts.
+const DIGITAL_AI_NAV_META = {
+  navDigitalAi: {
+    title_ru: "Цифровизация, ИИ и вычисления",
+    title_en: "Digitalisation, AI & computing",
+    items: [
+      { key: "index-NRI", code: "NRI" },
+      { key: "index-EGDI", code: "EGDI" },
+      { key: "index-GCI", code: "GCI" },
+      { key: "index-GARI", code: "GARI" },
+      { key: "index-AIPI", code: "AIPI" },
+      { key: "index-CF_IQI", code: "CF_IQI" },
+      { key: "index-TOP500", code: "TOP500" },
+    ],
+  },
+};
+const NAV_INDEX_ORDER = ["HDI", "HCI_PLUS", "PISA_SKI", "GTCI", "GII", "IDI", "QS_ET", "THE_ENG", "ARWU", "HTEI"];
+const STANDARD_INDEX_CODES = ["HDI", "HCI_PLUS", "GTCI", "GII", "IDI", "QS_ET"];
+const PORTFOLIO_INDEX_CODES = window.GIRIndexPortfolio?.allCodes?.() || NAV_INDEX_ORDER;
 const SIDEBAR_STORAGE_KEY = "gir-sidebar";
+const INDEX_GROUPS_STORAGE_KEY = "gir-index-groups-v1";
 const PRODUCT_NAMES = {
   ru: "GIR — Глобальный рейтинг индексов",
   en: "GIR — Global Index Ranker",
@@ -9,10 +32,38 @@ const PRODUCT_NAMES = {
 const STATIC_INDEX_META = {
   HDI: { code: "HDI", short_name_ru: "ИЧР", short_name_en: "HDI", name_ru: "Индекс человеческого развития", name_en: "Human Development Index" },
   HCI_PLUS: { code: "HCI_PLUS", short_name_ru: "HCI+", short_name_en: "HCI+", name_ru: "Индекс человеческого капитала плюс", name_en: "Human Capital Index Plus" },
+  PISA_SKI: { code: "PISA_SKI", short_name_ru: "PISA", short_name_en: "PISA", name_ru: "Индекс оценки знаний школьников PISA", name_en: "PISA School Knowledge Index" },
   GTCI: { code: "GTCI", short_name_ru: "GTCI", short_name_en: "GTCI", name_ru: "Индекс глобальной конкурентоспособности талантов", name_en: "Global Talent Competitiveness Index" },
   GII: { code: "GII", short_name_ru: "GII", short_name_en: "GII", name_ru: "Глобальный инновационный индекс", name_en: "Global Innovation Index" },
   IDI: { code: "IDI", short_name_ru: "IDI", short_name_en: "IDI", name_ru: "Индекс развития ИКТ", name_en: "ICT Development Index" },
-  QS_ET: { code: "QS_ET", short_name_ru: "QS", short_name_en: "QS", name_ru: "QS: инженерия и технологии", name_en: "QS Engineering & Technology" },
+  QS_ET: { code: "QS_ET", short_name_ru: "QS", short_name_en: "QS", name_ru: "QS: университеты и академические дисциплины", name_en: "QS University Intelligence" },
+  THE_ENG: { code: "THE_ENG", short_name_ru: "THE", short_name_en: "THE", name_ru: "THE: инженерные науки", name_en: "THE Engineering" },
+  ARWU: { code: "ARWU", short_name_ru: "ARWU", short_name_en: "ARWU", name_ru: "ARWU: исследовательские университеты", name_en: "ARWU Research Universities" },
+  // GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — metadata
+  EPI: { code: "EPI", short_name_ru: "EPI", short_name_en: "EPI", name_ru: "Индекс экологической эффективности", name_en: "Environmental Performance Index", authority: "Yale Center for Environmental Law & Policy / CIESIN", edition: 2026 },
+  // GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — metadata
+  ND_GAIN: { code: "ND_GAIN", short_name_ru: "ND-GAIN", short_name_en: "ND-GAIN", name_ru: "Страновой индекс ND-GAIN", name_en: "ND-GAIN Country Index", authority: "Notre Dame Global Adaptation Initiative", edition: 2026 },
+  // GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — metadata
+  ETI: { code: "ETI", short_name_ru: "ETI", short_name_en: "ETI", name_ru: "Индекс энергетического перехода", name_en: "Energy Transition Index", authority: "World Economic Forum / Accenture", edition: 2026 },
+  // GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — metadata
+  WORLD_RISK_INDEX: { code: "WORLD_RISK_INDEX", short_name_ru: "WRI", short_name_en: "WRI", name_ru: "Всемирный индекс риска", name_en: "WorldRiskIndex", authority: "Bündnis Entwicklung Hilft / IFHV, Ruhr University Bochum", edition: 2025 },
+  GPI: { code: "GPI", short_name_ru: "GPI", short_name_en: "GPI", name_ru: "Глобальный индекс миролюбия", name_en: "Global Peace Index", authority: "Institute for Economics & Peace", edition: 2026 },
+  GMI: { code: "GMI", short_name_ru: "GMI", short_name_en: "GMI", name_ru: "Глобальный индекс милитаризации", name_en: "Global Militarisation Index", authority: "BICC", edition: 2023 },
+  GOCI: { code: "GOCI", short_name_ru: "GOCI", short_name_en: "GOCI", name_ru: "Глобальный индекс организованной преступности", name_en: "Global Organized Crime Index", authority: "GI-TOC", edition: 2025 },
+  SIPRI_MILEX: { code: "SIPRI_MILEX", short_name_ru: "SIPRI", short_name_en: "SIPRI", name_ru: "Военные расходы SIPRI", name_en: "SIPRI Military Expenditure", authority: "SIPRI", edition: 2025 },
+  DHL_GCI: { code: "DHL_GCI", short_name_ru: "DHL GCI", short_name_en: "DHL GCI", name_ru: "Глобальный индекс связанности DHL", name_en: "DHL Global Connectedness Index", authority: "DHL / NYU Stern", edition: 2026 },
+  WORLD_BANK_LPI: { code: "WORLD_BANK_LPI", short_name_ru: "LPI", short_name_en: "LPI", name_ru: "Показатели эффективности логистики Всемирного банка", name_en: "World Bank Logistics Performance Indicators", authority: "World Bank", edition: 2024 },
+  UNCTAD_LSCI: { code: "UNCTAD_LSCI", short_name_ru: "LSCI", short_name_en: "LSCI", name_ru: "Индекс связанности линейного судоходства UNCTAD", name_en: "UNCTAD Liner Shipping Connectivity Index", authority: "UN Trade and Development", edition: 2026 },
+  SPI: { code: "SPI", short_name_ru: "SPI", short_name_en: "SPI", name_ru: "Индекс социального прогресса", name_en: "Social Progress Index", authority: "Social Progress Imperative" },
+  SDG: { code: "SDG", short_name_ru: "SDG", short_name_en: "SDG", name_ru: "Индекс достижения ЦУР", name_en: "SDG Index", authority: "SDSN" },
+  WHR: { code: "WHR", short_name_ru: "WHR", short_name_en: "WHR", name_ru: "Всемирный доклад о счастье", name_en: "World Happiness Report", authority: "Wellbeing Research Centre" },
+  GGGI: { code: "GGGI", short_name_ru: "GGGI", short_name_en: "GGGI", name_ru: "Глобальный индекс гендерного разрыва", name_en: "Global Gender Gap Index", authority: "World Economic Forum" },
+  UHC_SCI: { code: "UHC_SCI", short_name_ru: "UHC", short_name_en: "UHC", name_ru: "Индекс охвата основными медицинскими услугами", name_en: "UHC Service Coverage Index", authority: "WHO / World Bank" },
+  CPI: { code: "CPI", short_name_ru: "CPI", short_name_en: "CPI", name_ru: "Индекс восприятия коррупции", name_en: "Corruption Perceptions Index", authority: "Transparency International" },
+  WPFI: { code: "WPFI", short_name_ru: "WPFI", short_name_en: "WPFI", name_ru: "Индекс свободы прессы", name_en: "World Press Freedom Index", authority: "Reporters Without Borders" },
+  ROLI: { code: "ROLI", short_name_ru: "WJP", short_name_en: "WJP", name_ru: "Индекс верховенства права WJP", name_en: "WJP Rule of Law Index", authority: "World Justice Project" },
+  WGI: { code: "WGI", short_name_ru: "WGI", short_name_en: "WGI", name_ru: "Показатели государственного управления", name_en: "Worldwide Governance Indicators", authority: "World Bank", edition: 2025 },
+  VDEM: { code: "VDEM", short_name_ru: "V-Dem", short_name_en: "V-Dem", name_ru: "Индексы демократии V-Dem", name_en: "V-Dem Democracy Indices", authority: "V-Dem Institute", edition: 2026 },
   HTEI: { code: "HTEI", short_name_ru: "HTEI", short_name_en: "HTEI", name_ru: "Индекс занятости в высокотехнологичных отраслях", name_en: "High-Tech Employment Index" },
 };
 const BRAND_ASSETS = {
@@ -27,13 +78,15 @@ const BRAND_ASSETS = {
 };
 const NAV_ICONS = {
   landing: "house.svg",
-  country: "user-round.svg",
+  country: "flag.svg",
   matrix: "table-2.svg",
   "htei-model": "graduation-cap.svg",
   "policy-center": "briefcase-business.svg",
   "data-lab": "chart-no-axes-combined.svg",
+  "data-updates": "database.svg",
   methodology: "database.svg",
   acceptance: "clipboard-check.svg",
+  portfolio: "boxes.svg",
 };
 let DATA = null;
 let PLATFORM_CONTEXT = null;
@@ -51,21 +104,26 @@ let sidebarReturnFocus = null;
 let drawerReturnFocus = null;
 let toastTimer = null;
 let staticGlobalBound = false;
+let navigationGeneration = 0;
 window.__GIIP_READY__ = false;
 
 const params = new URLSearchParams(location.search);
-const initialLang = params.get("lang") || localStorage.getItem("lang") || (navigator.language || "ru").slice(0, 2);
+const initialUserContext = window.GIRUserContext?.snapshot?.() || { language: "en", country: null };
+const initialLang = initialUserContext.language;
 const preferredTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 const storedSidebar = localStorage.getItem(SIDEBAR_STORAGE_KEY);
 const state = {
   page: "landing",
-  country: (params.get("country") || "RUS").toUpperCase(),
+  country: initialUserContext.country || null,
+  pisaEntity: (params.get("pisa_entity") || initialUserContext.country || "").toUpperCase() || null,
   year: Number(params.get("year") || 0),
   index: normalizeIndex(params.get("index") || "HTEI"),
   lang: initialLang === "en" ? "en" : "ru",
   theme: ["light", "dark"].includes(params.get("theme") || localStorage.getItem("theme")) ? (params.get("theme") || localStorage.getItem("theme")) : preferredTheme,
   trendMetric: "rank",
   hteiMode: params.get("htei_mode") || "common_support",
+  wgiDimension: (["VA", "PV", "GE", "RQ", "RL", "CC"].includes((params.get("dimension") || "GE").toUpperCase()) ? (params.get("dimension") || "GE").toUpperCase() : "GE"),
+  vdemDimension: (["EDI", "LDI", "PDI", "DDI", "EGDI"].includes((params.get("dimension") || "EDI").toUpperCase()) ? (params.get("dimension") || "EDI").toUpperCase() : "EDI"),
   rankingOffset: 0,
   rankingPageSize: 25,
   rankingQuery: "",
@@ -80,7 +138,9 @@ const state = {
   customBenchmark: [],
   sidebarExpanded: storedSidebar ? storedSidebar === "expanded" : window.innerWidth >= 1440,
   sidebarOverlayOpen: false,
+  openIndexGroups: null,
 };
+state.openIndexGroups = readOpenIndexGroups();
 
 const COPY = {
   ru: {
@@ -88,13 +148,15 @@ const COPY = {
     country: "Профиль страны",
     commandTitle: "Панель ЛПР по стране",
     commandText: "Сводная аналитика по международным индексам человеческого капитала, талантов, инноваций, цифровой инфраструктуры, инженерно-технологического образования и высокотехнологичной занятости.",
-    landingMeta: "GIR объединяет официальные международные индексы, исторические ряды, методологии и рекомендации в единой доказательной среде для принятия решений.",
+    landingMeta: "GIR объединяет 44 индекса и рейтинга в восьми тематических направлениях: профили стран, сравнения, исходные данные, методологии и воспроизводимые аналитические модели.",
     matrix: "Сравнение стран",
     methodology: "Методология и источники",
     acceptance: "ТЗ МГИМО / Приёмка",
     hteiModel: "Модель подготовки кадров",
     policyCenter: "Рекомендации России",
     dataLab: "Данные и исследование",
+    dataExplorer: "Обозреватель данных",
+    dataUpdates: "Обновление данных",
     year: "Год",
     countryLabel: "Страна",
     region: "Регион",
@@ -167,6 +229,7 @@ const COPY = {
     hteiExact: "Индекс занятости в высокотехнологичных отраслях (High-tech employment index)",
     navOverview: "Обзор",
     navIndices: "Индексы",
+    navPortfolio: "Индексы и рейтинги",
     navAnalytics: "Аналитика",
     navMethodology: "Методология",
     openNavigation: "Открыть навигацию",
@@ -180,13 +243,15 @@ const COPY = {
     country: "Country profile",
     commandTitle: "Country command center",
     commandText: "Integrated analytics across human development, human capital, talent, innovation, digital infrastructure, engineering education and high-tech employment.",
-    landingMeta: "GIR brings official international indices, historical series, methodologies and recommendations into one evidence environment for decision-making.",
+    landingMeta: "GIR brings 44 indices and rankings across eight thematic groups into one evidence environment for country profiles, comparison, source data and reproducible analytical models.",
     matrix: "Country comparison",
     methodology: "Methodology and sources",
     acceptance: "MGIMO ToR / Acceptance",
     hteiModel: "Training-system model",
     policyCenter: "Russia recommendations",
     dataLab: "Data & research",
+    dataExplorer: "Data Explorer",
+    dataUpdates: "Data updates",
     year: "Year",
     countryLabel: "Country",
     region: "Region",
@@ -259,6 +324,7 @@ const COPY = {
     hteiExact: "High-Tech Employment Index",
     navOverview: "Overview",
     navIndices: "Indices",
+    navPortfolio: "Indices & rankings",
     navAnalytics: "Analytics",
     navMethodology: "Methodology",
     openNavigation: "Open navigation",
@@ -273,17 +339,145 @@ function t(key) { return COPY[state.lang][key] || key; }
 function normalizeIndex(code) {
   const value = String(code || "").toUpperCase().replace(/[-\s]/g, "_");
   if (["QS", "QSET", "QS_E_T"].includes(value)) return "QS_ET";
-  return INDEX_ORDER.includes(value) ? value : "HTEI";
+  if (["THE", "THEENG", "THE_ENGINEERING", "THE__ENG"].includes(value)) return "THE_ENG";
+  if (["PISA", "PISA_SCHOOL", "PISA_SCHOOL_KNOWLEDGE", "SCHOOL_KNOWLEDGE", "PISA__SKI"].includes(value)) return "PISA_SKI";
+  if (["SHANGHAI", "SHANGHAI_RANKING", "SHANGHAI_ARWU", "ARWU_GIR"].includes(value)) return "ARWU";
+  if (["SOCIAL_PROGRESS", "SOCIAL_PROGRESS_INDEX", "SPI"].includes(value)) return "SPI";
+  if (["SDG_INDEX", "SDG"].includes(value)) return "SDG";
+  if (["WORLD_HAPPINESS", "HAPPINESS", "WHR"].includes(value)) return "WHR";
+  if (["GLOBAL_GENDER_GAP", "GENDER_GAP", "GGGI"].includes(value)) return "GGGI";
+  if (["WHO_UHC", "UHC", "UHC_SCI"].includes(value)) return "UHC_SCI";
+  if (["PRESS_FREEDOM", "WORLD_PRESS_FREEDOM", "WPFI"].includes(value)) return "WPFI";
+  if (["WJP_ROL", "WJP_RULE_OF_LAW", "RULE_OF_LAW", "ROLI"].includes(value)) return "ROLI";
+  if (["GLOBAL_PEACE", "PEACE_INDEX", "GPI"].includes(value)) return "GPI";
+  if (["GLOBAL_MILITARISATION", "GLOBAL_MILITARIZATION", "MILITARISATION", "GMI"].includes(value)) return "GMI";
+  if (["ORG_CRIME", "OC_INDEX", "GLOBAL_ORGANIZED_CRIME", "GOCI"].includes(value)) return "GOCI";
+  if (["SIPRI", "MILEX", "SIPRI_MILEX"].includes(value)) return "SIPRI_MILEX";
+  if (["DHL_CONNECTEDNESS", "DHL", "GCI_DHL", "DHL_GCI"].includes(value)) return "DHL_GCI";
+  if (["LPI", "WB_LPI", "WB_LPI2", "LPI2", "WORLD_BANK_LPI"].includes(value)) return "WORLD_BANK_LPI";
+  if (["LSCI", "UNCTAD_LSCI"].includes(value)) return "UNCTAD_LSCI";
+  // GIR PATCH:T17 Digitalisation, AI & compute aliases.
+  if (["NETWORK_READINESS", "NETWORK_READINESS_INDEX", "NRI"].includes(value)) return "NRI";
+  if (["E_GOVERNMENT", "E_GOVERNMENT_DEVELOPMENT", "EGDI"].includes(value)) return "EGDI";
+  if (["ITU_GCI", "GLOBAL_CYBERSECURITY_INDEX", "GCI"].includes(value)) return "GCI";
+  if (["GOV_AI_READINESS", "GOVERNMENT_AI_READINESS", "GAIR", "GARI"].includes(value)) return "GARI";
+  if (["IMF_AIPI", "AI_PREPAREDNESS", "AIPI"].includes(value)) return "AIPI";
+  if (["CLOUDFLARE_IQI", "INTERNET_QUALITY_INDEX", "IQI", "CF_IQI"].includes(value)) return "CF_IQI";
+  if (["TOP500_COUNTRY", "TOP500_COUNTRY_AGGREGATION", "TOP500"].includes(value)) return "TOP500";
+  // GIR PATCH: T16 Economy & Finance aliases.
+  if (["PCI", "UNCTAD_PCI"].includes(value)) return "UNCTAD_PCI";
+  if (["B_READY", "BUSINESS_READY", "BREADY"].includes(value)) return "BREADY";
+  if (["ECI", "ECONOMIC_COMPLEXITY"].includes(value)) return "ECI";
+  if (["KOF", "KOFGI", "KOF_GLOBAL", "KOF_GLOBALISATION"].includes(value)) return "KOF_GLOBAL";
+  if (["FD", "FDI", "IMF_FDI", "FINANCIAL_DEVELOPMENT"].includes(value)) return "IMF_FDI";
+  if (["FINDEX", "GLOBAL_FINDEX"].includes(value)) return "GLOBAL_FINDEX";
+  // GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — normalize
+  if (value === "EPI") return "EPI";
+  // GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — normalize
+  if (["ND_GAIN", "NDGAIN"].includes(value)) return "ND_GAIN";
+  // GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — normalize
+  if (["ETI", "ETI_TRANSITION", "ENERGY_TRANSITION", "ENERGY_TRANSITION_INDEX"].includes(value)) return "ETI";
+  // GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — normalize
+  if (["WORLD_RISK_INDEX", "WORLD_RISK", "WORLDRISK", "WORLDRISKINDEX", "WRI"].includes(value)) return "WORLD_RISK_INDEX";
+  return PORTFOLIO_INDEX_CODES.includes(value) ? value : "HTEI";
 }
 function escapeHtml(value) { return String(value ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function fmt(value, digits = 1) { return value == null || Number.isNaN(Number(value)) ? "—" : Number(value).toFixed(digits); }
 function intFmt(value) { return value == null ? "—" : Number(value).toLocaleString(state.lang === "ru" ? "ru-RU" : "en-US"); }
-function isStandardIndexPage(page) { return page.startsWith("index-") && normalizeIndex(page.replace("index-", "")) !== "HTEI"; }
-function pageUsesPlatformContext(page) { return PLATFORM_CONTEXT_PAGES.has(page) || isStandardIndexPage(page); }
-function activeContext() { return DATA || PLATFORM_CONTEXT || { countries: [], years: [], indices: [], regions: [], income_groups: [] }; }
-function byCode(code) { return DATA?.indices?.find((item) => item.code === code) || PLATFORM_CONTEXT?.indices?.find((item) => item.code === code) || STATIC_INDEX_META[code] || { code, short_name_ru: code, short_name_en: code, name_ru: code, name_en: code }; }
+function isTheEngineeringPage(page) { return normalizeIndex(String(page || "").replace("index-", "")) === "THE_ENG" && String(page || "").startsWith("index-"); }
+function isPisaSchoolPage(page) { return normalizeIndex(String(page || "").replace("index-", "")) === "PISA_SKI" && String(page || "").startsWith("index-"); }
+function isArwuPage(page) { return normalizeIndex(String(page || "").replace("index-", "")) === "ARWU" && String(page || "").startsWith("index-"); }
+// GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — standalone workspace
+// GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — standalone workspace
+// GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — standalone workspace
+// GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — standalone workspace
+function isNriPage(page) { return page === "index-NRI"; }
+function isEgdiPage(page) { return page === "index-EGDI"; }
+function isGciPage(page) { return page === "index-GCI"; }
+function isGariPage(page) { return page === "index-GARI"; }
+function isAipiPage(page) { return page === "index-AIPI"; }
+function isIqiPage(page) { return page === "index-CF_IQI"; }
+function isTop500Page(page) { return page === "index-TOP500"; }
+function isStandardIndexPage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return STANDARD_INDEX_CODES.includes(normalizeIndex(page.replace("index-", "")));
+}
+function isPlannedIndexPage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return Boolean(window.GIRIndexPortfolio?.isPlanned?.(normalizeIndex(page.replace("index-", ""))));
+}
+const SECURITY_CONNECTIVITY_CODES = new Set(["GPI", "GMI", "GOCI", "SIPRI_MILEX", "DHL_GCI", "WORLD_BANK_LPI", "UNCTAD_LSCI"]);
+function isSecurityConnectivityPage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return SECURITY_CONNECTIVITY_CODES.has(normalizeIndex(page.replace("index-", "")));
+}
+
+const ECONOMY_FINANCE_CODES = new Set(["UNCTAD_PCI", "BREADY", "ECI", "KOF_GLOBAL", "IMF_FDI", "GLOBAL_FINDEX"]);
+const ECONOMY_FINANCE_MODULES = Object.freeze({
+  UNCTAD_PCI: { global: "GIRPCI", viewClass: "pci-view" },
+  BREADY: { global: "GIRBREADY", viewClass: "bready-view" },
+  ECI: { global: "GIRECI", viewClass: "eci-view" },
+  KOF_GLOBAL: { global: "GIRKOF", viewClass: "kof-view" },
+  IMF_FDI: { global: "GIRFDI", viewClass: "fdi-view" },
+  GLOBAL_FINDEX: { global: "GIRFindex", viewClass: "findex-view" },
+});
+function isEconomyFinancePage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return ECONOMY_FINANCE_CODES.has(normalizeIndex(page.replace("index-", "")));
+}
+function renderEconomyFinanceWorkspace(code) {
+  const root = $("#view");
+  const config = ECONOMY_FINANCE_MODULES[code];
+  const module = config ? window[config.global] : null;
+  if (!root || !config || typeof module?.render !== "function") {
+    if (root) root.innerHTML = `<section class="card"><h1>${escapeHtml(currentPageLabel())}</h1><p>${escapeHtml(state.lang === "ru" ? "Аналитический модуль временно недоступен." : "The analytical workspace is temporarily unavailable.")}</p></section>`;
+    return;
+  }
+  return module.render({ root, lang: state.lang, theme: state.theme, country: state.country, year: state.year });
+}
+
+const SOCIETY_INDEX_ORDER = ["SPI", "SDG", "WHR", "GGGI", "UHC_SCI"];
+const GOVERNANCE_INDEX_ORDER = ["CPI", "WPFI", "ROLI"];
+const GOVERNANCE_DIMENSION_CODES = new Set(["WGI", "VDEM"]);
+function isGovernanceDimensionPage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return GOVERNANCE_DIMENSION_CODES.has(normalizeIndex(page.replace("index-", "")));
+}
+const THEMATIC_INDEX_ORDER = [...SOCIETY_INDEX_ORDER, ...GOVERNANCE_INDEX_ORDER];
+const THEMATIC_GROUP_LABELS = { ru: { society: "Общество и человеческое развитие", governance: "Государство и институты" }, en: { society: "Society and human development", governance: "Governance & institutions" } };
+const SOCIETY_GOVERNANCE_CODES = new Set(THEMATIC_INDEX_ORDER);
+function isSocietyIndexPage(page) {
+  if (!String(page || "").startsWith("index-")) return false;
+  return SOCIETY_GOVERNANCE_CODES.has(normalizeIndex(page.replace("index-", "")));
+}
+
+function pageUsesPlatformContext(page) { return page === "country" || PLATFORM_CONTEXT_PAGES.has(page) || isStandardIndexPage(page) || isTheEngineeringPage(page) || isPisaSchoolPage(page) || isArwuPage(page) || isSecurityConnectivityPage(page) || isSocietyIndexPage(page) || isGovernanceDimensionPage(page) || isNriPage(page) || isEgdiPage(page) || isGciPage(page) || isGariPage(page) || isAipiPage(page) || isIqiPage(page) || isTop500Page(page); }
+function activeContext() {
+  return DATA || PLATFORM_CONTEXT || {
+    countries: window.GIRUserContext?.snapshot?.().countries || [],
+    years: [], indices: [], regions: [], income_groups: [],
+  };
+}
+function byCode(code) {
+  return DATA?.indices?.find((item) => item.code === code)
+    || PLATFORM_CONTEXT?.indices?.find((item) => item.code === code)
+    || STATIC_INDEX_META[code]
+    || window.GIRIndexPortfolio?.meta?.(code)
+    || { code, short_name_ru: code, short_name_en: code, name_ru: code, name_en: code };
+}
 function indexPayload(code) { return DATA.index_payloads[code]; }
 function countryName(country) { return state.lang === "ru" ? country.name_ru : country.name_en; }
+function selectUserCountry(iso3) {
+  const code = String(iso3 || "").trim().toUpperCase();
+  if (!/^[A-Z]{3}$/.test(code)) return false;
+  if (code !== state.country) {
+    LANDING_SUMMARY = null;
+    LANDING_SUMMARY_LOADING = null;
+  }
+  state.country = code;
+  window.GIRUserContext?.setManualCountry?.(code);
+  return true;
+}
 function componentName(component) { return state.lang === "ru" ? component.name_ru : component.name_en; }
 function indexLabel(code) { const idx = byCode(code); return idx ? (state.lang === "ru" ? idx.short_name_ru : idx.short_name_en) : code; }
 function indexFullName(index) { return state.lang === "ru" ? index.name_ru : index.name_en; }
@@ -298,7 +492,7 @@ function incomeGroupLabel(value) {
   })[value] || value;
 }
 function yearNote(valueYear, requestedYear = state.year) { return valueYear ? `${t("dataYear")}: ${valueYear}${Number(valueYear) === Number(requestedYear) ? "" : ` / ${requestedYear}`}` : ""; }
-function initialCountryName() { return state.country === "RUS" ? (state.lang === "ru" ? "\u0420\u043e\u0441\u0441\u0438\u044f" : "Russia") : state.country; }
+function initialCountryName() { return state.country || (state.lang === "ru" ? "Страна не выбрана" : "Country not selected"); }
 function renderLoadingShell() {
   document.documentElement.lang = state.lang;
   const langBtn = $("#langBtn");
@@ -327,7 +521,7 @@ function flagImage(country, className = "flag-img") {
   const iso = escapeHtml(String(country?.iso3 || iso2 || "").toUpperCase());
   if (!iso2) return `<span class="${className} flag-fallback" aria-label="${label}">${iso}</span>`;
   const size = className.includes("big") ? "big" : "inline";
-  return `<span class="flag-slot ${size}"><img class="${className}" src="static/flags/${iso2}.svg" alt="${label}" loading="lazy" decoding="async" data-flag-image><span class="flag-fallback ${size}" aria-label="${label}">${iso}</span></span>`;
+  return `<span class="flag-slot ${size}"><img class="${className}" src="/static/flags/${iso2}.svg" alt="${label}" loading="lazy" decoding="async" data-flag-image><span class="flag-fallback ${size}" aria-label="${label}">${iso}</span></span>`;
 }
 function cleanSelectText(text) { return String(text || "").replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "").trim(); }
 function selectShell(selectHtml, label) { return `<span class="select-shell">${selectHtml}<span class="select-display" aria-hidden="true">${escapeHtml(cleanSelectText(label))}</span></span>`; }
@@ -336,9 +530,9 @@ function syncSelectDisplay(select) {
   if (!display) return;
   display.textContent = cleanSelectText(select.selectedOptions[0]?.textContent || select.value);
   if (select.id === "countrySelect") {
-    const country = DATA?.countries?.find((item) => item.iso3 === select.value);
-    const iso2 = flagIso2(country);
-    const image = iso2 ? `url("static/flags/${iso2}.svg")` : "none";
+    const country = activeContext().countries?.find((item) => item.iso3 === select.value);
+    const iso2 = flagIso2(country) || String(select.selectedOptions[0]?.dataset.iso2 || "").toLowerCase();
+    const image = iso2 ? `url("/static/flags/${iso2}.svg")` : "none";
     select.classList.add("country-select");
     display.classList.add("country-select-display");
     select.style.setProperty("--country-flag-url", image);
@@ -384,7 +578,7 @@ function setImageSource(nodes, src, alt) {
 
 function applyBrandAssets() {
   const assets = BRAND_ASSETS[state.lang][state.theme];
-  const prefix = "static/brand/";
+  const prefix = "/static/brand/";
   const alts = state.lang === "ru"
     ? {
         mgimo: "Московский государственный институт международных отношений (университет) МИД России",
@@ -417,12 +611,58 @@ function applyBrandAssets() {
     else if (state.page === "methodology") description.content = state.lang === "ru"
       ? "Методология GIR: источники, данные, формулы индексов, авторские модели, provenance, качество и ограничения интерпретации."
       : "GIR methodology: sources, data, index formulae, project models, provenance, quality and interpretation limits.";
+    else if (state.page === "index-THE_ENG") description.content = state.lang === "ru"
+      ? "THE Engineering 2026 в GIR: официальная университетская методика, разрешённый доказательный слой и прозрачная производная страновая диагностика."
+      : "THE Engineering 2026 in GIR: the official institution methodology, rights-governed evidence and a transparent derived country diagnostic.";
+    else if (state.page === "index-PISA_SKI") description.content = state.lang === "ru"
+      ? "PISA 2022 в GIR: официальные результаты ОЭСР по математике, чтению и естественным наукам, международные ориентиры, качество данных и прозрачная сводная оценка GIR."
+      : "PISA 2022 in GIR: official OECD mathematics, reading and science results, international benchmarks, data quality and a transparent GIR composite.";
+    else if (state.page === "index-ARWU") description.content = state.lang === "ru"
+      ? "ARWU 2025 в GIR: официальная методика ShanghaiRanking, университетский слой, международное поле и прозрачная производная страновая диагностика исследовательских университетов."
+      : "ARWU 2025 in GIR: the official ShanghaiRanking methodology, institution layer, international field and a transparent derived country research-university diagnostic.";
+    else if (state.page === "index-EPI") description.content = state.lang === "ru"
+      ? "EPI 2026 в GIR: экологическая результативность 177 стран, 63 компонента, карта, иерархия показателей, рейтинг, методика и provenance."
+      : "EPI 2026 in GIR: environmental performance across 177 countries, 63 components, map, indicator hierarchy, ranking, methodology and provenance.";
+    else if (state.page === "index-ND_GAIN") description.content = state.lang === "ru"
+      ? "ND-GAIN в GIR: климатическая уязвимость и готовность к адаптации, проверенная панель 1995–2021 и отдельно документированный официальный выпуск 2026."
+      : "ND-GAIN in GIR: climate vulnerability and adaptation readiness, a verified 1995–2021 panel and a separately documented official 2026 release.";
+    else if (state.page === "index-ETI") description.content = state.lang === "ru"
+      ? "Energy Transition Index 2026 в GIR: энергетическая система, готовность к переходу, 44 индикатора и международное сравнение 120 стран."
+      : "Energy Transition Index 2026 in GIR: energy-system performance, transition readiness, 44 indicators and comparison across 120 countries.";
+    else if (state.page === "index-WORLD_RISK_INDEX") description.content = state.lang === "ru"
+      ? "WorldRiskIndex 2025 в GIR: риск природных бедствий, экспозиция, уязвимость и официальный сопоставимый ряд 2000–2025 для 193 стран."
+      : "WorldRiskIndex 2025 in GIR: disaster risk, exposure, vulnerability and the official harmonised 2000–2025 panel for 193 countries.";
+    else if (isSocietyIndexPage(state.page)) description.content = state.lang === "ru"
+      ? `${currentPageLabel()}: официальный международный показатель, страновой профиль, компоненты, динамика, методика и доказательная цепочка.`
+      : `${currentPageLabel()}: official international measure, country profile, components, trends, methodology and evidence chain.`;
+    else if (state.page === "index-WGI") description.content = state.lang === "ru"
+      ? "Worldwide Governance Indicators в GIR: шесть официальных измерений Всемирного банка, неопределённость, динамика и source-level данные без искусственного общего индекса."
+      : "Worldwide Governance Indicators in GIR: six official World Bank dimensions, uncertainty, trends and source-level evidence without an invented overall index.";
+    else if (state.page === "index-VDEM") description.content = state.lang === "ru"
+      ? "V-Dem v16 в GIR: пять самостоятельных индексов демократии, исторические политии, интервалы неопределённости и международное сравнение без искусственного среднего."
+      : "V-Dem v16 in GIR: five distinct democracy indices, historical polities, uncertainty intervals and international comparison without an invented average.";
+    else if (isSecurityConnectivityPage(state.page)) description.content = state.lang === "ru"
+      ? `${currentPageLabel()}: международные данные безопасности и связанности, страновой профиль, доказательная база, методика и ограничения интерпретации.`
+      : `${currentPageLabel()}: international security and connectedness data, country profile, evidence, methodology and interpretation limits.`;
+    else if (isEconomyFinancePage(state.page)) description.content = state.lang === "ru"
+      ? `${currentPageLabel()}: официальные международные экономические и финансовые данные, страновой профиль, динамика, международное поле, методика и provenance.`
+      : `${currentPageLabel()}: official international economy and finance data, country profile, trends, international field, methodology and provenance.`;
+    else if (isPlannedIndexPage(state.page)) {
+      const planned = window.GIRIndexPortfolio?.get?.(normalizeIndex(state.page.replace("index-", "")));
+      const name = planned ? (state.lang === "ru" ? planned.name_ru : planned.name_en) : currentPageLabel();
+      description.content = state.lang === "ru"
+        ? `${name}: подготовленная страница тематического портфеля GIR до публикации проверенного числового выпуска.`
+        : `${name}: a prepared GIR thematic-portfolio page pending a validated numeric release.`;
+    }
+    else if (state.page === "data-updates") description.content = state.lang === "ru"
+      ? "Центр обновления данных GIR: реестр источников, проверка выпусков, staging, научные gates, атомарная публикация и rollback."
+      : "GIR Data Update Center: source registry, release checks, staging, scientific gates, atomic publication and rollback.";
     else description.content = t("commandText");
   }
   const footerBrand = $("#footerBrand");
   if (footerBrand) footerBrand.textContent = state.lang === "ru" ? "© 2026 GIR / МГИМО — ФНИСЦ РАН" : "© 2026 GIR / MGIMO — FCTAS RAS";
   const themeIcon = $("#themeIcon");
-  if (themeIcon) themeIcon.src = state.theme === "dark" ? "static/icons/sun.svg" : "static/icons/moon.svg";
+  if (themeIcon) themeIcon.src = state.theme === "dark" ? "/static/icons/sun.svg" : "/static/icons/moon.svg";
   const themeColor = document.querySelector('meta[name="theme-color"]');
   if (themeColor) themeColor.content = state.theme === "dark" ? "#0A132D" : "#FFFFFF";
 }
@@ -434,6 +674,7 @@ function currentPageLabel() {
   if (state.page === "htei-model") return t("hteiModel");
   if (state.page === "policy-center") return t("policyCenter");
   if (state.page === "methodology") return t("methodology");
+  if (state.page === "data-updates") return t("dataUpdates");
   if (state.page === "acceptance") return t("acceptance");
   if (state.page.startsWith("index-")) {
     const idx = byCode(normalizeIndex(state.page.replace("index-", "")));
@@ -445,9 +686,76 @@ function currentPageLabel() {
 function renderContextBar() {
   const bar = $("#contextBar");
   if (!bar) return;
-  const isIndependentPage = state.page === "landing" || state.page === "methodology";
-  bar.hidden = isIndependentPage;
-  if (isIndependentPage) { bar.replaceChildren(); return; }
+  const availableContext = activeContext();
+  if (!state.country && (availableContext.countries || []).length) {
+    const message = state.lang === "ru"
+      ? "Не удалось определить страну автоматически. Выберите её, чтобы открыть страновые данные."
+      : "Your country could not be detected automatically. Select it to open country data.";
+    bar.hidden = false;
+    bar.innerHTML = `<div class="context-heading"><span>${escapeHtml(state.lang === "ru" ? "Контекст пользователя" : "User context")}</span><strong>${escapeHtml(message)}</strong></div><div class="context-controls"><label><span>${t("countryLabel")}</span>${selectShell(`<select id="countrySelect" class="select" aria-label="${t("countryLabel")}" required>${countryOptions()}</select>`, state.lang === "ru" ? "Выберите страну" : "Select a country")}</label></div>`;
+    return;
+  }
+  const isIndependentPage = state.page === "landing" || state.page === "methodology" || isEconomyFinancePage(state.page);
+  const isAuxiliaryIndependentPage = state.page === "data-updates" || isPlannedIndexPage(state.page);
+  const shouldHideContextBar = isIndependentPage || isAuxiliaryIndependentPage;
+  bar.hidden = shouldHideContextBar;
+  if (shouldHideContextBar) { bar.replaceChildren(); return; }
+  if (isSocietyIndexPage(state.page)) {
+    const thematicCode = normalizeIndex(state.page.replace("index-", ""));
+    state.index = thematicCode;
+    bar.hidden = false;
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls" data-society-context-host data-society-code="${escapeHtml(thematicCode)}"><span class="tiny muted">${escapeHtml(state.lang === "ru" ? "Загрузка стран и периодов…" : "Loading countries and periods…")}</span></div>`;
+    return;
+  }
+  const securityContext = {
+    "index-GPI": { period: "2026", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-GMI": { period: "GMI 2023 · данные 2022", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-GOCI": { period: "2021 · 2023 · 2025", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-SIPRI_MILEX": { period: "1949–2025", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-DHL_GCI": { period: "2001–2024 / отчёт 2026", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-WORLD_BANK_LPI": { period: "2007–2024", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+    "index-UNCTAD_LSCI": { period: "2006 Q1–2026 Q2", sectionRu: "Безопасность и международная связанность", sectionEn: "Security & international connectedness" },
+  }[state.page];
+  const digitalContext = {
+    "index-NRI": { edition: "2025 · published 04.02.2026" },
+    "index-EGDI": { edition: "2024" },
+    "index-GCI": { edition: "2024" },
+    "index-GARI": { edition: "2025 · corrected 2026" },
+    "index-AIPI": { edition: "2023" },
+    "index-CF_IQI": { edition: state.lang === "ru" ? "контракт данных" : "data contract" },
+    "index-TOP500": { edition: "June 2026" },
+  }[state.page];
+  if (digitalContext) {
+    const ctx = activeContext();
+    const selected = (ctx.countries || []).find((item) => item.iso3 === state.country) || { iso3: state.country, name_ru: initialCountryName(), name_en: initialCountryName() };
+    bar.hidden = false;
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls"><label><span>${t("countryLabel")}</span>${selectShell(`<select id="countrySelect" class="select" aria-label="${t("countryLabel")}">${countryOptions()}</select>`, countryName(selected))}</label><div class="context-fixed"><span>${state.lang === "ru" ? "Раздел" : "Section"}</span><strong>${escapeHtml(state.lang === "ru" ? "Цифровизация, ИИ и вычислительные мощности" : "Digitalisation, AI & compute")}</strong></div><div class="context-fixed"><span>${state.lang === "ru" ? "Выпуск" : "Edition"}</span><strong>${escapeHtml(digitalContext.edition)}</strong></div></div>`;
+    return;
+  }
+  if (securityContext) {
+  const ctx = activeContext();
+    const selected = (ctx.countries || []).find((item) => item.iso3 === state.country) || { iso3: state.country, name_ru: initialCountryName(), name_en: initialCountryName() };
+    bar.hidden = false;
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls"><label><span>${t("countryLabel")}</span>${selectShell(`<select id="countrySelect" class="select" aria-label="${t("countryLabel")}">${countryOptions()}</select>`, countryName(selected))}</label><div class="context-fixed"><span>${state.lang === "ru" ? "Раздел" : "Section"}</span><strong>${escapeHtml(state.lang === "ru" ? securityContext.sectionRu : securityContext.sectionEn)}</strong></div><div class="context-fixed"><span>${state.lang === "ru" ? "Выпуск / период" : "Edition / period"}</span><strong>${escapeHtml(securityContext.period)}</strong></div></div>`;
+    return;
+  }
+  // GIR PATCH: ECOLOGY/NATIVE FRONTEND REVISION 06R — context bar
+  const ecologyContext = {
+    // GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — context
+    "index-EPI": { edition: "2026", sectionRu: "Экология и устойчивость", sectionEn: "Environment & Sustainability" },
+    // GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — context
+    "index-ND_GAIN": { edition: "1995–2021 / выпуск 2026", sectionRu: "Экология и устойчивость", sectionEn: "Environment & Sustainability" },
+    // GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — context
+    "index-ETI": { edition: "2026", sectionRu: "Экология и устойчивость", sectionEn: "Environment & Sustainability" },
+    // GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — context
+    "index-WORLD_RISK_INDEX": { edition: "2000–2025", sectionRu: "Экология и устойчивость", sectionEn: "Environment & Sustainability" },
+  }[state.page];
+  if (ecologyContext) {
+    bar.hidden = false;
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div>
+      <div class="context-controls context-fixed-controls"><div class="context-fixed"><span>${state.lang === "ru" ? "Раздел" : "Section"}</span><strong>${escapeHtml(state.lang === "ru" ? ecologyContext.sectionRu : ecologyContext.sectionEn)}</strong></div><div class="context-fixed"><span>${state.lang === "ru" ? "Выпуск / период" : "Edition / period"}</span><strong>${escapeHtml(ecologyContext.edition)}</strong></div></div>`;
+    return;
+  }
   const ctx = activeContext();
   const selected = (ctx.countries || []).find((item) => item.iso3 === state.country) || { iso3: state.country, name_ru: initialCountryName(), name_en: initialCountryName() };
   if (state.page === "policy-center") {
@@ -461,6 +769,20 @@ function renderContextBar() {
       <div class="context-controls context-fixed-controls"><label><span>${t("year")}</span>${selectShell(`<select id="yearSelect" class="select context-year" aria-label="${t("year")}">${yearsOptions()}</select>`, state.year)}</label><div class="context-fixed"><span>${state.lang === "ru" ? "Масштаб сравнения" : "Comparison scale"}</span><strong>${state.lang === "ru" ? "Процентиль 0–100" : "Percentile 0–100"}</strong></div></div>`;
     return;
   }
+  if (state.page === "index-PISA_SKI") {
+    const pisaSelected = (ctx.countries || []).find((item) => item.iso3 === state.pisaEntity);
+    const entityLabel = pisaSelected ? countryName(pisaSelected) : state.pisaEntity;
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls context-fixed-controls"><div class="context-fixed"><span>${state.lang === "ru" ? "Образовательная система" : "Education system"}</span><strong data-pisa-context-entity>${escapeHtml(entityLabel)}</strong></div><div class="context-fixed"><span>${state.lang === "ru" ? "Сопоставимый цикл" : "Comparable cycle"}</span><strong>2022</strong></div></div>`;
+    return;
+  }
+  if (state.page === "index-THE_ENG") {
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls"><label><span>${t("countryLabel")}</span>${selectShell(`<select id="countrySelect" class="select" aria-label="${t("countryLabel")}">${countryOptions()}</select>`, countryName(selected))}</label><div class="context-fixed"><span>${state.lang === "ru" ? "Редакция рейтинга" : "Ranking edition"}</span><strong>2026</strong></div></div>`;
+    return;
+  }
+  if (state.page === "index-ARWU") {
+    bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(currentPageLabel())}</strong></div><div class="context-controls"><label><span>${t("countryLabel")}</span>${selectShell(`<select id="countrySelect" class="select" aria-label="${t("countryLabel")}">${countryOptions()}</select>`, countryName(selected))}</label><div class="context-fixed"><span>${state.lang === "ru" ? "Редакция ARWU" : "ARWU edition"}</span><strong>2025</strong></div></div>`;
+    return;
+  }
   if (!(ctx.countries || []).length) {
     bar.innerHTML = `<div class="context-heading"><span>${t("contextLabel")}</span><strong>${escapeHtml(initialCountryName())}</strong></div>`;
     return;
@@ -471,15 +793,31 @@ function renderContextBar() {
 function bindContextControls() {
   const countrySelect = $("#countrySelect");
   if (countrySelect) countrySelect.onchange = (event) => {
-    state.country = event.target.value;
-    if (isStandardIndexPage(state.page)) { window.GIRIndexWorkspace?.invalidate?.(state.index, state.country, state.year); render(); }
+    if (!selectUserCountry(event.target.value)) return;
+    if (isNriPage(state.page)) { window.GIRNriWorkspace?.invalidate?.(); render(); }
+    else if (isEgdiPage(state.page)) { window.GIREgdiWorkspace?.invalidate?.(); render(); }
+    else if (isGciPage(state.page)) { window.GIRGciWorkspace?.invalidate?.(); render(); }
+    else if (isGariPage(state.page)) { window.GIRGariWorkspace?.invalidate?.(); render(); }
+    else if (isAipiPage(state.page)) { window.GIRAipiWorkspace?.invalidate?.(); render(); }
+    else if (isIqiPage(state.page)) { window.GIRIqiWorkspace?.invalidate?.(); render(); }
+    else if (isTop500Page(state.page)) { window.GIRTop500Workspace?.invalidate?.(); render(); }
+    else if (state.page === "index-THE_ENG") { window.GIRTHEEngineering?.invalidate?.({ country: state.country }); render(); }
+    else if (state.page === "index-ARWU") { window.GIRARWU?.invalidate?.({ country: state.country }); render(); }
+    else if (isSecurityConnectivityPage(state.page)) {
+      const modules = { GPI: window.GIRGPI, GMI: window.GIRGMI, GOCI: window.GIRGOCI, SIPRI_MILEX: window.GIRSIPRIMilex, DHL_GCI: window.GIRDHLGCI, WORLD_BANK_LPI: window.GIRWorldBankLPI, UNCTAD_LSCI: window.GIRUNCTADLSCI };
+      modules[state.index]?.invalidate?.();
+      render();
+    }
+    else if (state.page === "country") { window.GIRCountryPortfolioV3?.clearCache?.(); window.GIRCountryProfileV2?.clearCache?.(); render(); }
+    else if (isStandardIndexPage(state.page)) { window.GIRIndexWorkspace?.invalidate?.(state.index, state.country, state.year); render(); }
     else if (state.page === "htei-model") { window.GIRStage4?.invalidateTraining?.(state.country, state.year); render(); }
     else refreshData().then(render).catch(renderLoadError);
   };
   const yearSelect = $("#yearSelect");
   if (yearSelect) yearSelect.onchange = (event) => {
     state.year = Number(event.target.value);
-    if (state.page === "matrix" || isStandardIndexPage(state.page) || state.page === "htei-model") render();
+    if (state.page === "country") { window.GIRCountryPortfolioV3?.clearCache?.(); window.GIRCountryProfileV2?.clearCache?.(); render(); }
+    else if (state.page === "matrix" || isStandardIndexPage(state.page) || state.page === "htei-model") render();
     else refreshData().then(render).catch(renderLoadError);
   };
   syncAllSelectDisplays();
@@ -503,7 +841,7 @@ function setSidebarUI() {
     mobile.setAttribute("aria-expanded", String(overlayOpen));
     mobile.setAttribute("aria-label", overlayOpen ? t("closeNavigation") : t("openNavigation"));
   }
-  if (toggleIcon) toggleIcon.src = expandedForAria ? "static/icons/panel-left-close.svg" : "static/icons/panel-left-open.svg";
+  if (toggleIcon) toggleIcon.src = expandedForAria ? "/static/icons/panel-left-close.svg" : "/static/icons/panel-left-open.svg";
 }
 
 function openSidebarOverlay(origin) {
@@ -531,16 +869,58 @@ function toggleSidebar(origin) {
   setSidebarUI();
 }
 
+function readOpenIndexGroups() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(INDEX_GROUPS_STORAGE_KEY) || "null");
+    const known = new Set((window.GIRIndexPortfolio?.groups?.() || []).map((group) => group.key));
+    if (Array.isArray(parsed)) return new Set(parsed.filter((key) => known.has(key)));
+  } catch (_) { /* use the deterministic default below */ }
+  return new Set(["core"]);
+}
+function persistOpenIndexGroups() {
+  try { localStorage.setItem(INDEX_GROUPS_STORAGE_KEY, JSON.stringify([...state.openIndexGroups])); } catch (_) { /* private mode */ }
+}
+function activeIndexGroupKey(page = state.page) {
+  if (!String(page || "").startsWith("index-")) return "";
+  const code = normalizeIndex(String(page).replace("index-", ""));
+  return window.GIRIndexPortfolio?.groupForCode?.(code)?.key || "";
+}
+function openIndexGroupForPage(page = state.page) {
+  const key = activeIndexGroupKey(page);
+  if (!key) return;
+  let hasSavedPreference = false;
+  try { hasSavedPreference = localStorage.getItem(INDEX_GROUPS_STORAGE_KEY) !== null; } catch (_) { /* private mode */ }
+  if (!hasSavedPreference) state.openIndexGroups.clear();
+  state.openIndexGroups.add(key);
+  persistOpenIndexGroups();
+}
+function toggleIndexGroup(key, origin) {
+  const group = window.GIRIndexPortfolio?.getGroup?.(key);
+  if (!group) return;
+  if (sidebarIsOverlay() && !state.sidebarOverlayOpen) openSidebarOverlay(origin);
+  if (!sidebarIsOverlay() && !state.sidebarExpanded) {
+    state.sidebarExpanded = true;
+    localStorage.setItem(SIDEBAR_STORAGE_KEY, "expanded");
+  }
+  if (state.openIndexGroups.has(key)) state.openIndexGroups.delete(key); else state.openIndexGroups.add(key);
+  persistOpenIndexGroups();
+  renderNav();
+  window.requestAnimationFrame(() => document.querySelector(`[data-index-group="${CSS.escape(key)}"]`)?.focus());
+}
+
 function navGroups() {
   return [
     { label: t("navOverview"), items: [{ key: "landing", label: t("landing") }, { key: "country", label: t("country") }, { key: "matrix", label: t("matrix") }] },
-    { label: t("navIndices"), items: INDEX_ORDER.map((code) => ({ key: `index-${code}`, label: indexFullName(byCode(code)), code })) },
+    { label: t("navPortfolio"), kind: "portfolio", groups: window.GIRIndexPortfolio?.groups?.() || [] },
     { label: t("navAnalytics"), items: [{ key: "htei-model", label: t("hteiModel") }, { key: "policy-center", label: t("policyCenter") }] },
-    { label: t("navMethodology"), items: [{ key: "methodology", label: t("methodology") }, { key: "data-lab", label: t("dataLab"), href: "data-lab.html" }] },
+    { label: t("navMethodology"), items: [{ key: "methodology", label: t("methodology") }, { key: "data-explorer", label: t("dataExplorer"), href: "/data-explorer" }, { key: "data-lab", label: t("dataLab"), href: "/data-lab" }, { key: "data-updates", label: t("dataUpdates") }] },
   ];
 }
 
-function countryOptions() { return (activeContext().countries || []).map((c) => `<option value="${c.iso3}" ${c.iso3 === state.country ? "selected" : ""}>${escapeHtml(countryName(c))}</option>`).join(""); }
+function countryOptions() {
+  const prompt = !state.country ? `<option value="" selected disabled>${escapeHtml(state.lang === "ru" ? "Выберите страну" : "Select a country")}</option>` : "";
+  return prompt + (activeContext().countries || []).map((c) => `<option value="${c.iso3}" data-iso2="${escapeHtml(flagIso2(c))}" ${c.iso3 === state.country ? "selected" : ""}>${escapeHtml(countryName(c))}</option>`).join("");
+}
 function yearsOptions() { return (activeContext().years || []).map((year) => `<option value="${year}" ${Number(year) === Number(state.year) ? "selected" : ""}>${year}</option>`).join(""); }
 function selectors(extra = "") {
   return extra ? `<div class="toolbar">${extra}</div>` : "";
@@ -558,37 +938,410 @@ function setTheme() {
 }
 function setLang() {
   document.documentElement.lang = state.lang;
-  localStorage.setItem("lang", state.lang);
   $("#langBtn").textContent = state.lang.toUpperCase();
-  $("#footerIndices").textContent = (DATA || PLATFORM_CONTEXT) ? INDEX_ORDER.map(indexLabel).join(" · ") : "";
+  const chromeLabels = state.lang === "ru"
+    ? {
+        header: "Шапка платформы",
+        institutions: "Организации-партнёры",
+        controls: "Управление интерфейсом",
+        primaryNav: "Основная навигация",
+        sections: "Разделы платформы",
+        language: "Язык",
+      }
+    : {
+        header: "Institutional header",
+        institutions: "Institutional partners",
+        controls: "Interface controls",
+        primaryNav: "Primary navigation",
+        sections: "Platform sections",
+        language: "Language",
+      };
+  document.querySelector(".institutional-header")?.setAttribute("aria-label", chromeLabels.header);
+  document.querySelectorAll(".institutional-strip, .drawer-institutions").forEach((node) => node.setAttribute("aria-label", chromeLabels.institutions));
+  document.querySelector(".top-actions")?.setAttribute("aria-label", chromeLabels.controls);
+  $("#sidebar")?.setAttribute("aria-label", chromeLabels.primaryNav);
+  $("#nav")?.setAttribute("aria-label", chromeLabels.sections);
+  $("#langBtn")?.setAttribute("aria-label", chromeLabels.language);
+  const themeBtn = $("#themeBtn");
+  if (themeBtn) {
+    themeBtn.title = state.theme === "dark" ? t("lightTheme") : t("darkTheme");
+    themeBtn.setAttribute("aria-label", themeBtn.title);
+  }
+  $("#footerIndices").textContent = window.GIRIndexPortfolio?.footerSummary?.(state.lang) || NAV_INDEX_ORDER.map(indexLabel).join(" · ");
   const skip = document.querySelector("[data-skip-link]");
   if (skip) skip.textContent = state.lang === "ru" ? "Перейти к основному содержанию" : "Skip to main content";
   applyBrandAssets();
   window.GIRCooperation?.updateLocale?.(state.lang);
+  window.GIRAuth?.updateLocale?.(state.lang);
   setSidebarUI();
+}
+const ECONOMY_FINANCE_LEGACY_ROUTES = Object.freeze({
+  "economy-finance-pci": "index-UNCTAD_PCI",
+  "economy-finance-bready": "index-BREADY",
+  "economy-finance-eci": "index-ECI",
+  "economy-finance-kof": "index-KOF_GLOBAL",
+  "economy-finance-fdi": "index-IMF_FDI",
+  "economy-finance-findex": "index-GLOBAL_FINDEX",
+});
+function canonicalPage(page) {
+  const value = String(page || "landing").replace(/^#/, "");
+  if (ECONOMY_FINANCE_LEGACY_ROUTES[value]) return ECONOMY_FINANCE_LEGACY_ROUTES[value];
+  return value.startsWith("index-") ? `index-${normalizeIndex(value.slice(6))}` : value;
 }
 function pageFromParams() {
   const hash = location.hash.replace("#", "");
-  if (hash) return hash;
+  if (hash) return canonicalPage(hash);
   if (params.get("index")) return `index-${state.index}`;
   if (params.has("country") || params.has("year")) return "country";
   return "landing";
+}
+
+const PAGE_WORKSPACE_APIS = Object.freeze({
+  "index-QS_ET": "GIRQSIntelligence",
+  "index-NRI": "GIRNriWorkspace",
+  "index-EGDI": "GIREgdiWorkspace",
+  "index-GCI": "GIRGciWorkspace",
+  "index-GARI": "GIRGariWorkspace",
+  "index-AIPI": "GIRAipiWorkspace",
+  "index-CF_IQI": "GIRIqiWorkspace",
+  "index-TOP500": "GIRTop500Workspace",
+  "index-PISA_SKI": "GIRPISASchool",
+  "index-THE_ENG": "GIRTHEEngineering",
+  "index-ARWU": "GIRARWU",
+  "index-GPI": "GIRGPI",
+  "index-GMI": "GIRGMI",
+  "index-GOCI": "GIRGOCI",
+  "index-SIPRI_MILEX": "GIRSIPRIMilex",
+  "index-DHL_GCI": "GIRDHLGCI",
+  "index-WORLD_BANK_LPI": "GIRWorldBankLPI",
+  "index-UNCTAD_LSCI": "GIRUNCTADLSCI",
+  "index-EPI": "GIREPI",
+  "index-WORLD_RISK_INDEX": "GIRWorldRisk",
+  "index-SPI": "GIRSocialProgress",
+  "index-SDG": "GIRSustainableDevelopment",
+  "index-WHR": "GIRWorldHappiness",
+  "index-GGGI": "GIRGlobalGenderGap",
+  "index-UHC_SCI": "GIRUHCServiceCoverage",
+  "index-CPI": "GIRCorruptionPerceptions",
+  "index-WPFI": "GIRWorldPressFreedom",
+  "index-ROLI": "GIRRuleOfLaw",
+  "index-WGI": "GIRWGI",
+  "index-VDEM": "GIRVDEM",
+  "index-UNCTAD_PCI": "GIRPCI",
+  "index-BREADY": "GIRBREADY",
+});
+
+// Specialised workspaces are deliberately loaded per route. Loading every
+// module on the landing page caused more than one hundred cold requests and
+// could starve the shell before auth or the first meaningful paint completed.
+const PAGE_WORKSPACE_SCRIPTS = Object.freeze({
+  "index-EPI": ["GIREPI", "/static/epi-workspace.js?v=20260723-lazy-1"],
+  "index-ND_GAIN": ["GIRNDGAIN", "/static/nd-gain-workspace.js?v=20260723-lazy-1"],
+  "index-ETI": ["GIRETI", "/static/eti-transition-workspace.js?v=20260723-lazy-1"],
+  "index-WORLD_RISK_INDEX": ["GIRWRI", "/static/world-risk-workspace.js?v=20260723-lazy-1"],
+  "index-GPI": ["GIRGPI", "/static/gpi-workspace.js?v=20260723-lazy-1"],
+  "index-GMI": ["GIRGMI", "/static/gmi-workspace.js?v=20260723-lazy-1"],
+  "index-GOCI": ["GIRGOCI", "/static/goci-workspace.js?v=20260723-lazy-1"],
+  "index-SIPRI_MILEX": ["GIRSIPRIMilex", "/static/sipri-milex-workspace.js?v=20260723-lazy-1"],
+  "index-DHL_GCI": ["GIRDHLGCI", "/static/dhl-gci-workspace.js?v=20260723-lazy-1"],
+  "index-WORLD_BANK_LPI": ["GIRWorldBankLPI", "/static/world-bank-lpi-workspace.js?v=20260723-lazy-1"],
+  "index-UNCTAD_LSCI": ["GIRUNCTADLSCI", "/static/unctad-lsci-workspace.js?v=20260723-lazy-1"],
+  "index-SPI": ["GIRSocialProgress", "/static/social-progress-workspace.js?v=20260723-lazy-1"],
+  "index-SDG": ["GIRSustainableDevelopment", "/static/sdg-workspace.js?v=20260723-lazy-1"],
+  "index-WHR": ["GIRWorldHappiness", "/static/world-happiness-workspace.js?v=20260723-lazy-1"],
+  "index-GGGI": ["GIRGlobalGenderGap", "/static/global-gender-gap-workspace.js?v=20260723-lazy-1"],
+  "index-UHC_SCI": ["GIRUHCServiceCoverage", "/static/uhc-service-coverage-workspace.js?v=20260723-lazy-1"],
+  "index-CPI": ["GIRCorruptionPerceptions", "/static/corruption-perceptions-workspace.js?v=20260723-lazy-1"],
+  "index-WPFI": ["GIRWorldPressFreedom", "/static/world-press-freedom-workspace.js?v=20260723-lazy-1"],
+  "index-ROLI": ["GIRRuleOfLaw", "/static/rule-of-law-workspace.js?v=20260723-lazy-1"],
+  "index-WGI": ["GIRWGI", "/static/wgi-workspace.js?v=20260723-lazy-1"],
+  "index-VDEM": ["GIRVDEM", "/static/vdem-workspace.js?v=20260723-lazy-1"],
+  "index-UNCTAD_PCI": ["GIRPCI", "/static/pci-workspace.js?v=20260723-lazy-1"],
+  "index-BREADY": ["GIRBREADY", "/static/bready-workspace.js?v=20260723-lazy-1"],
+  "index-ECI": ["GIRECI", "/static/eci-workspace.js?v=20260723-lazy-1"],
+  "index-KOF_GLOBAL": ["GIRKOF", "/static/kof-workspace.js?v=20260723-lazy-1"],
+  "index-IMF_FDI": ["GIRFDI", "/static/fdi-workspace.js?v=20260723-lazy-1"],
+  "index-GLOBAL_FINDEX": ["GIRFindex", "/static/findex-workspace.js?v=20260723-lazy-1"],
+  "index-NRI": ["GIRNriWorkspace", "/static/nri-workspace.js?v=20260723-lazy-1"],
+  "index-EGDI": ["GIREgdiWorkspace", "/static/egdi-workspace.js?v=20260723-lazy-1"],
+  "index-GCI": ["GIRGciWorkspace", "/static/gci-workspace.js?v=20260723-lazy-1"],
+  "index-GARI": ["GIRGariWorkspace", "/static/gari-workspace.js?v=20260723-lazy-1"],
+  "index-AIPI": ["GIRAipiWorkspace", "/static/aipi-workspace.js?v=20260723-lazy-1"],
+  "index-CF_IQI": ["GIRIqiWorkspace", "/static/iqi-workspace.js?v=20260723-lazy-1"],
+  "index-TOP500": ["GIRTop500Workspace", "/static/top500-workspace.js?v=20260723-lazy-1"],
+});
+const PAGE_WORKSPACE_STYLES = Object.freeze({
+  "index-EPI": ["ecology-workspaces-native.css", "epi-workspace.css"],
+  "index-ND_GAIN": ["ecology-workspaces-native.css", "nd-gain-workspace.css"],
+  "index-ETI": ["ecology-workspaces-native.css", "eti-transition-workspace.css"],
+  "index-WORLD_RISK_INDEX": ["ecology-workspaces-native.css", "world-risk-workspace.css"],
+  "index-GPI": ["security-connectivity-native.css", "gpi-workspace.css"],
+  "index-GMI": ["security-connectivity-native.css", "gmi-workspace.css"],
+  "index-GOCI": ["security-connectivity-native.css", "goci-workspace.css"],
+  "index-SIPRI_MILEX": ["security-connectivity-native.css", "sipri-milex-workspace.css"],
+  "index-DHL_GCI": ["security-connectivity-native.css", "dhl-gci-workspace.css"],
+  "index-WORLD_BANK_LPI": ["security-connectivity-native.css", "world-bank-lpi-workspace.css"],
+  "index-UNCTAD_LSCI": ["security-connectivity-native.css", "unctad-lsci-workspace.css"],
+  "index-SPI": ["society-gir-native.css", "social-progress-workspace.css"],
+  "index-SDG": ["society-gir-native.css", "sdg-workspace.css"],
+  "index-WHR": ["society-gir-native.css", "world-happiness-workspace.css"],
+  "index-GGGI": ["society-gir-native.css", "global-gender-gap-workspace.css"],
+  "index-UHC_SCI": ["society-gir-native.css", "uhc-service-coverage-workspace.css"],
+  "index-CPI": ["society-gir-native.css", "corruption-perceptions-workspace.css"],
+  "index-WPFI": ["society-gir-native.css", "world-press-freedom-workspace.css"],
+  "index-ROLI": ["society-gir-native.css", "rule-of-law-workspace.css"],
+  "index-WGI": ["wgi-workspace.css"],
+  "index-VDEM": ["vdem-workspace.css"],
+  "index-UNCTAD_PCI": ["pci-workspace.css"],
+  "index-BREADY": ["bready-workspace.css"],
+  "index-ECI": ["eci-workspace.css"],
+  "index-KOF_GLOBAL": ["kof-workspace.css"],
+  "index-IMF_FDI": ["fdi-workspace.css"],
+  "index-GLOBAL_FINDEX": ["findex-workspace.css"],
+  "index-NRI": ["nri-workspace.css"],
+  "index-EGDI": ["egdi-workspace.css"],
+  "index-GCI": ["gci-workspace.css"],
+  "index-GARI": ["gari-workspace.css"],
+  "index-AIPI": ["aipi-workspace.css"],
+  "index-CF_IQI": ["iqi-workspace.css"],
+  "index-TOP500": ["top500-workspace.css"],
+});
+const STANDARD_ROUTE_ASSETS = Object.freeze({
+  scripts: [["university-map.js", "GIRUniversityMap"], ["index-workspace.js", "GIRIndexWorkspace"]],
+  styles: ["university-map.css", "index-workspace.css"],
+});
+const PAGE_CORE_ASSETS = Object.freeze({
+  country: {
+    scripts: [["country_profile_v2.js", "GIRCountryProfileV2"], ["country_profile_v3.js", "GIRCountryPortfolioV3"]],
+    styles: ["country_profile_v2.css", "country_profile_v3.css"],
+  },
+  matrix: { scripts: [["stage7_comparison.js", "GIRComparison"]], styles: ["stage7_comparison.css"] },
+  "htei-model": { scripts: [["stage4.js", "GIRStage4"]], styles: ["stage4.css"] },
+  "policy-center": { scripts: [["stage4.js", "GIRStage4"]], styles: ["stage4.css"] },
+  methodology: { scripts: [["methodology.js", "GIRMethodology"]], styles: ["methodology.css"] },
+  "data-updates": { scripts: [["data-update-center.js", "GIRDataUpdates"]], styles: ["data-update-center.css"] },
+  "index-HTEI": { scripts: [["htei-workspace.js", "GIRHTEI"]], styles: ["htei-workspace.css"] },
+  "index-PISA_SKI": { scripts: [["pisa-school-workspace.js", "GIRPISASchool"]], styles: ["pisa-school-workspace.css"] },
+  "index-QS_ET": {
+    scripts: [["university-map.js", "GIRUniversityMap"], ["qs-intelligence-workspace.js", "GIRQSIntelligence"]],
+    styles: ["university-map.css", "qs-intelligence-workspace.css"],
+  },
+  "index-THE_ENG": {
+    scripts: [["university-map.js", "GIRUniversityMap"], ["the-engineering-workspace.js", "GIRTHEEngineering"]],
+    styles: ["university-map.css", "the-engineering-workspace.css"],
+  },
+  "index-ARWU": {
+    scripts: [["university-map.js", "GIRUniversityMap"], ["arwu-workspace.js", "GIRARWU"]],
+    styles: ["university-map.css", "arwu-workspace.css"],
+  },
+});
+const workspaceScriptPromises = new Map();
+const workspaceStylePromises = new Map();
+const deferredScriptPromises = new Map();
+let mathRendererPromise = null;
+
+function ensureWorkspaceStyle(filename) {
+  const source = `/static/${filename}?v=20260723-lazy-1`;
+  if (workspaceStylePromises.has(source)) return workspaceStylePromises.get(source);
+  const promise = new Promise((resolve, reject) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = source;
+    link.dataset.workspaceStyle = filename;
+    link.onload = resolve;
+    link.onerror = () => reject(new Error(`Unable to load workspace style ${filename}`));
+    document.head.appendChild(link);
+  }).catch((error) => {
+    workspaceStylePromises.delete(source);
+    throw error;
+  });
+  workspaceStylePromises.set(source, promise);
+  return promise;
+}
+
+function ensureDeferredScript(filename, globalName) {
+  if (window[globalName]) return Promise.resolve();
+  const source = `/static/${filename}?v=20260723-lazy-1`;
+  if (deferredScriptPromises.has(source)) return deferredScriptPromises.get(source);
+  const promise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = source;
+    script.async = true;
+    script.dataset.routeAsset = filename;
+    script.onload = () => window[globalName]
+      ? resolve()
+      : reject(new Error(`Route asset ${filename} loaded without ${globalName}`));
+    script.onerror = () => reject(new Error(`Unable to load route asset ${filename}`));
+    document.head.appendChild(script);
+  }).catch((error) => {
+    deferredScriptPromises.delete(source);
+    throw error;
+  });
+  deferredScriptPromises.set(source, promise);
+  return promise;
+}
+
+function ensureMathRenderer() {
+  if (mathRendererPromise) return mathRendererPromise;
+  mathRendererPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "/static/math-renderer.mjs?v=gir-t24-20260723-lazy-1";
+    script.onload = resolve;
+    script.onerror = () => reject(new Error("Unable to load mathematical renderer"));
+    document.head.appendChild(script);
+  }).catch((error) => {
+    mathRendererPromise = null;
+    throw error;
+  });
+  return mathRendererPromise;
+}
+
+function coreAssetsForPage(page) {
+  if (PAGE_CORE_ASSETS[page]) return PAGE_CORE_ASSETS[page];
+  if (String(page || "").startsWith("index-") && STANDARD_INDEX_CODES.includes(normalizeIndex(page.slice(6)))) return STANDARD_ROUTE_ASSETS;
+  return null;
+}
+
+function pageHasDeferredAssets(page) {
+  return Boolean(PAGE_WORKSPACE_SCRIPTS[page] || coreAssetsForPage(page));
+}
+
+function ensurePageAssets(page) {
+  const coreAssets = coreAssetsForPage(page);
+  const corePromise = coreAssets
+    ? Promise.all([
+        ...(coreAssets.styles || []).map(ensureWorkspaceStyle),
+        ...(coreAssets.scripts || []).map(([filename, globalName]) => ensureDeferredScript(filename, globalName)),
+      ])
+    : Promise.resolve();
+  return Promise.all([corePromise, ensurePageWorkspaceScript(page), ensureMathRenderer()]).then(() => undefined);
+}
+
+function ensurePageWorkspaceScript(page) {
+  const descriptor = PAGE_WORKSPACE_SCRIPTS[page];
+  if (!descriptor) return Promise.resolve();
+  const [globalName, source] = descriptor;
+  const stylesPromise = Promise.all((PAGE_WORKSPACE_STYLES[page] || []).map(ensureWorkspaceStyle));
+  if (window[globalName]) return stylesPromise;
+  if (workspaceScriptPromises.has(page)) return workspaceScriptPromises.get(page);
+  const scriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = source;
+    script.async = true;
+    script.dataset.workspaceRoute = page;
+    script.onload = () => window[globalName]
+      ? resolve()
+      : reject(new Error(`Workspace ${page} loaded without ${globalName}`));
+    script.onerror = () => reject(new Error(`Unable to load workspace ${page}`));
+    document.head.appendChild(script);
+  });
+  const promise = Promise.all([stylesPromise, scriptPromise]).then(() => undefined).catch((error) => {
+    workspaceScriptPromises.delete(page);
+    throw error;
+  });
+  workspaceScriptPromises.set(page, promise);
+  return promise;
+}
+
+function beginPageTransition(previousPage) {
+  const apiName = PAGE_WORKSPACE_APIS[previousPage];
+  try { if (apiName) window[apiName]?.invalidate?.({ hard: false }); } catch (_) { /* best-effort cancellation */ }
+  if (previousPage === "index-HTEI") invalidateHteiWorkspace();
+
+  // Async workspaces receive the current #view node as their render target. Replacing
+  // that node on a route transition leaves late responses attached to a detached tree,
+  // so a response from one index cannot overwrite the next index or its error state.
+  const currentView = $("#view");
+  if (currentView?.parentNode) {
+    const freshView = currentView.cloneNode(false);
+    freshView.innerHTML = "";
+    currentView.parentNode.replaceChild(freshView, currentView);
+  }
+  closeDrawer({ restoreFocus: false });
+}
+
+function navigationIsCurrent(generation, page) {
+  return generation === navigationGeneration && state.page === page;
 }
 async function load() {
   window.__GIIP_READY__ = false;
   document.documentElement.dataset.appReady = "false";
   document.documentElement.dataset.theme = state.theme;
-  state.page = pageFromParams();
+  setTheme();
+  setLang();
+  const requestedPage = pageFromParams();
+
+  // The public landing page must not wait for GeoIP/geolocation or analytical
+  // workspace assets. Device language is already resolved synchronously by the
+  // head bootstrap; country detection can safely enrich the rendered shell.
+  if (requestedPage === "landing") {
+    state.page = "landing";
+    openIndexGroupForPage(state.page);
+    if (!localStorage.getItem(SIDEBAR_STORAGE_KEY) && !sidebarIsOverlay()) state.sidebarExpanded = false;
+    window.GIRCooperation?.init?.({ getLang: () => state.lang });
+    window.GIRCooperation?.bindTriggers?.(document);
+    setTheme(); setLang(); bindStatic(); renderNav(); render();
+    window.__GIIP_READY__ = true;
+    document.documentElement.dataset.appReady = "true";
+    window.dispatchEvent(new CustomEvent("giip:ready", { detail: { country: state.country, year: state.year, page: state.page } }));
+
+    window.GIRUserContext?.ready?.then((userContext) => {
+      state.lang = userContext.language;
+      state.country = userContext.country || null;
+      if (!params.get("pisa_entity")) state.pisaEntity = state.country;
+      setTheme(); setLang(); renderNav(); renderContextBar();
+      if (state.page === "landing") renderLanding();
+    }).catch((error) => console.error("User context detection failed", error));
+    window.GIRAuth?.ready?.catch((error) => console.error("Authentication status failed", error));
+    return;
+  }
+
+  if (window.GIRUserContext?.ready) {
+    const userContext = await window.GIRUserContext.ready;
+    state.lang = userContext.language;
+    state.country = userContext.country || null;
+    if (!params.get("pisa_entity")) state.pisaEntity = state.country;
+  }
+  if (window.GIRAuth?.ready) await window.GIRAuth.ready;
+  state.page = requestedPage;
+  if (state.page !== "landing" && !window.GIRAuth?.isAuthenticated?.()) {
+    window.GIRAuth?.requireLogin?.({ route: state.page });
+    state.page = "landing";
+    if (location.hash && location.hash !== "#landing") {
+      history.replaceState(null, "", `${location.pathname}${location.search}#landing`);
+    }
+  }
+  openIndexGroupForPage(state.page);
   if (!localStorage.getItem(SIDEBAR_STORAGE_KEY) && !sidebarIsOverlay()) {
     state.sidebarExpanded = state.page === "landing" ? false : window.innerWidth >= 1440;
   }
   window.GIRCooperation?.init?.({ getLang: () => state.lang });
   window.GIRCooperation?.bindTriggers?.(document);
-  bindStatic();
   setTheme(); setLang(); bindStatic(); renderNav();
 
+  if (!state.country && pageRequiresCountry(state.page)) {
+    if (window.GIRAuth?.isAuthenticated?.()) await ensurePlatformContext();
+    render();
+    window.__GIIP_READY__ = true;
+    document.documentElement.dataset.appReady = "true";
+    return;
+  }
+
+  if (pageHasDeferredAssets(state.page)) {
+    renderLoadingShell();
+    try {
+      await ensurePageAssets(state.page);
+    } catch (error) {
+      renderLoadError(error);
+      window.__GIIP_READY__ = true;
+      document.documentElement.dataset.appReady = "true";
+      return;
+    }
+  }
+
   if (!pageNeedsAppData(state.page)) {
-    if (pageUsesPlatformContext(state.page)) {
+    if (pageUsesPlatformContext(state.page) || (!state.country && window.GIRAuth?.isAuthenticated?.())) {
       renderLoadingShell();
       await ensurePlatformContext();
       if (!state.year) state.year = PLATFORM_CONTEXT.default_year;
@@ -613,9 +1366,10 @@ async function load() {
   if (pageNeedsGeo(state.page)) ensureGeo().then(() => render()).catch((err) => console.error("GeoJSON load failed", err));
 }
 function ensureLandingSummary() {
+  if (!state.country) return Promise.resolve(null);
   if (LANDING_SUMMARY) return Promise.resolve(LANDING_SUMMARY);
   if (!LANDING_SUMMARY_LOADING) {
-    LANDING_SUMMARY_LOADING = fetch(`/api/landing-summary?country=RUS`)
+    LANDING_SUMMARY_LOADING = fetch(`/api/landing-summary?country=${encodeURIComponent(state.country)}`)
       .then((response) => {
         if (!response.ok) throw new Error(`Landing summary HTTP ${response.status}`);
         return response.json();
@@ -648,8 +1402,8 @@ function ensurePlatformContext() {
   }
   return PLATFORM_CONTEXT_LOADING;
 }
-function pageNeedsAppData(page) { return page === "country" || page === "index-HTEI" || page === "acceptance"; }
-function pageNeedsGeo(page) { return page === "country" || page === "index-HTEI"; }
+function pageNeedsAppData(page) { return page === "index-HTEI" || page === "acceptance"; }
+function pageNeedsGeo(page) { return page === "index-HTEI"; }
 function ensureGeo() {
   if (GEO) return Promise.resolve(GEO);
   if (!GEO_LOADING) {
@@ -708,15 +1462,16 @@ function runDelegatedAction(control, event) {
   const action = control.dataset.girAction;
   if (!action) return false;
   if (action === "route") { event.preventDefault(); routeTo(control.dataset.route || "landing"); return true; }
+  if (action === "toggle-index-group") { event.preventDefault(); toggleIndexGroup(control.dataset.indexGroup || "", control); return true; }
   if (action === "provenance") { event.preventDefault(); openProvenance(control.dataset.valueId || "", control); return true; }
-  if (action === "country") { event.preventDefault(); goCountry(control.dataset.iso || "RUS"); return true; }
+  if (action === "country") { event.preventDefault(); if (control.dataset.iso) goCountry(control.dataset.iso); return true; }
   if (action === "sort-matrix") { event.preventDefault(); sortMatrix(control.dataset.code || "HTEI"); return true; }
-  if (action === "map-country") { event.preventDefault(); selectMapCountry(control.dataset.iso || "RUS", event); return true; }
+  if (action === "map-country") { event.preventDefault(); if (control.dataset.iso) selectMapCountry(control.dataset.iso, event); return true; }
   return false;
 }
 function bindStatic() {
   $("#themeBtn").onclick = () => { state.theme = state.theme === "dark" ? "light" : "dark"; setTheme(); (!pageNeedsAppData(state.page) || DATA) ? render() : renderLoadingShell(); };
-  $("#langBtn").onclick = () => { state.lang = state.lang === "ru" ? "en" : "ru"; setLang(); if (!pageNeedsAppData(state.page) || DATA) { renderNav(); render(); } else { renderLoadingShell(); } };
+  $("#langBtn").onclick = () => { state.lang = state.lang === "ru" ? "en" : "ru"; window.GIRUserContext?.setManualLanguage?.(state.lang); setLang(); if (!pageNeedsAppData(state.page) || DATA) { renderNav(); render(); } else { renderLoadingShell(); } };
   $("#sidebarToggle").onclick = (event) => toggleSidebar(event.currentTarget);
   $("#mobileMenuBtn").onclick = (event) => toggleSidebar(event.currentTarget);
   $("#sidebarBackdrop").onclick = () => closeSidebarOverlay();
@@ -784,22 +1539,67 @@ function bindStatic() {
   }
 }
 async function navigateTo(page, { updateHash = true } = {}) {
+  page = canonicalPage(page);
+  if (page !== "landing" && !window.GIRAuth?.isAuthenticated?.()) {
+    window.GIRAuth?.requireLogin?.({ route: page });
+    return;
+  }
+  const previousPage = state.page;
+  const generation = ++navigationGeneration;
+  if (page !== previousPage) beginPageTransition(previousPage);
   state.page = page;
+  openIndexGroupForPage(page);
   if (!localStorage.getItem(SIDEBAR_STORAGE_KEY) && !sidebarIsOverlay()) {
     state.sidebarExpanded = page === "landing" ? false : window.innerWidth >= 1440;
   }
-  if (page.startsWith("index-")) state.index = normalizeIndex(page.replace("index-", ""));
+  if (page.startsWith("index-")) {
+    state.index = normalizeIndex(page.replace("index-", ""));
+    if (state.index === "NRI") state.year = 2025;
+    if (state.index === "EGDI") state.year = 2024;
+    if (state.index === "GCI") state.year = 2024;
+    if (state.index === "GARI") state.year = 2025;
+    if (state.index === "AIPI") state.year = 2023;
+    if (state.index === "CF_IQI") state.year = 2026;
+    if (state.index === "TOP500") state.year = 2026;
+    if (state.index === "THE_ENG") state.year = 2026;
+    if (state.index === "PISA_SKI") state.year = 2022;
+    if (state.index === "ARWU") state.year = 2025;
+    if (state.index === "EPI") state.year = 2026;
+    if (state.index === "ND_GAIN") state.year = 2021;
+    if (state.index === "ETI") state.year = 2026;
+    if (state.index === "WORLD_RISK_INDEX") state.year = 2025;
+    if (state.index === "GPI") state.year = 2026;
+    if (state.index === "GMI") state.year = 2022;
+    if (state.index === "GOCI") state.year = 2025;
+    if (state.index === "SIPRI_MILEX") state.year = 2025;
+    if (state.index === "DHL_GCI") state.year = 2024;
+    if (state.index === "WORLD_BANK_LPI") state.year = 2024;
+    if (state.index === "UNCTAD_LSCI") state.year = 2026;
+    if (state.index === "WGI") state.year = Number(params.get("year") || 2024);
+    if (state.index === "VDEM") state.year = Number(params.get("year") || 2025);
+  }
   if (updateHash && location.hash !== `#${page}`) location.hash = page;
   if (sidebarIsOverlay()) closeSidebarOverlay({ restoreFocus: false });
+  if (pageHasDeferredAssets(page)) {
+    renderLoadingShell();
+    try {
+      await ensurePageAssets(page);
+    } catch (error) {
+      if (navigationIsCurrent(generation, page)) renderLoadError(error);
+      return;
+    }
+    if (!navigationIsCurrent(generation, page)) return;
+  }
   if (!pageNeedsAppData(page)) {
     if (pageUsesPlatformContext(page) && !PLATFORM_CONTEXT) {
       renderLoadingShell();
       try { await ensurePlatformContext(); } catch (err) { if (state.page === page) renderLoadError(err); return; }
-      if (state.page !== page) return;
+      if (!navigationIsCurrent(generation, page)) return;
     }
     renderNav();
     const renderResult = render();
     if (renderResult?.then) await renderResult;
+    if (!navigationIsCurrent(generation, page)) return;
     window.requestAnimationFrame(() => $("#view")?.focus?.({ preventScroll: true }));
     return;
   }
@@ -811,30 +1611,76 @@ async function navigateTo(page, { updateHash = true } = {}) {
       if (state.page === page) renderLoadError(err);
       return;
     }
-    if (state.page !== page) return;
+    if (!navigationIsCurrent(generation, page)) return;
   }
   renderNav(); render();
   if (pageNeedsGeo(page) && !GEO) {
-    ensureGeo().then(() => { if (state.page === page) render(); }).catch((err) => console.error("GeoJSON load failed", err));
+    ensureGeo().then(() => { if (navigationIsCurrent(generation, page)) render(); }).catch((err) => console.error("GeoJSON load failed", err));
   }
 }
 function routeTo(page) { return navigateTo(page); }
+// GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — compact navigation code
+// GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — compact navigation code
+// GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — compact navigation code
+function renderNavLeaf(item) {
+  const active = state.page === item.key;
+  const code = item.code ? (item.short || ({ QS_ET: "QS", HCI_PLUS: "HCI+", THE_ENG: "THE", PISA_SKI: "PISA", ND_GAIN: "ND+", ETI: "ETI", WORLD_RISK_INDEX: "WRI", SIPRI_MILEX: "SIPRI", DHL_GCI: "DHL", WORLD_BANK_LPI: "LPI", UNCTAD_LSCI: "LSCI" }[item.code] || item.code)) : "";
+  const icon = item.code
+    ? `<span class="nav-code ${String(code).length > 5 ? "is-long" : ""}" aria-hidden="true">${escapeHtml(code)}</span>`
+    : `<span class="nav-icon-box" aria-hidden="true"><img class="nav-icon" src="/static/icons/${NAV_ICONS[item.key] || "database.svg"}" alt=""></span>`;
+  const statusLabel = item.status === "planned" ? (state.lang === "ru" ? "в интеграции" : "in integration") : "";
+  const meta = code ? `<small><span>${escapeHtml(code)}</span>${statusLabel ? `<span class="nav-index-status is-planned">${escapeHtml(statusLabel)}</span>` : ""}</small>` : "";
+  const content = `${icon}<span class="nav-copy"><strong>${escapeHtml(item.label)}</strong>${meta}</span>`;
+  if (item.href) return `<a class="nav-item" href="${escapeHtml(item.href)}" title="${escapeHtml(item.label)}" aria-label="${escapeHtml(item.label)}">${content}</a>`;
+  const ariaLabel = statusLabel ? `${item.label} — ${statusLabel}` : item.label;
+  return `<button type="button" class="nav-item ${item.status === "planned" ? "is-planned" : ""} ${active ? "active" : ""}" title="${escapeHtml(ariaLabel)}" aria-label="${escapeHtml(ariaLabel)}" ${active ? 'aria-current="page"' : ""} data-gir-action="route" data-route="${escapeHtml(item.key)}">${content}</button>`;
+}
+// GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — navigation
+// GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — navigation
+// GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — navigation
+// GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — navigation
+function renderPortfolioNavigation(section) {
+  const activeGroup = activeIndexGroupKey();
+  return `<section class="nav-group nav-portfolio-section"><h2>${escapeHtml(section.label)}</h2><div class="nav-portfolio">${section.groups.map((group) => {
+    const open = state.openIndexGroups.has(group.key);
+    const active = group.key === activeGroup;
+    const groupLabel = state.lang === "ru" ? group.label_ru : group.label_en;
+    const groupDescription = state.lang === "ru" ? group.description_ru : group.description_en;
+    const ready = group.items.filter((entry) => entry.status === "ready").length;
+    const summary = state.lang === "ru"
+      ? (ready === group.items.length
+        ? `${group.items.length} действующих модулей`
+        : ready === 0 ? `${group.items.length} модулей · в интеграции` : `${group.items.length} модулей · ${ready} действующих`)
+      : (ready === group.items.length
+        ? `${group.items.length} live modules`
+        : ready === 0 ? `${group.items.length} modules · in integration` : `${group.items.length} modules · ${ready} live`);
+    const panelId = `nav-index-group-${group.key}`;
+    const items = group.items.map((entry) => renderNavLeaf({
+      key: entry.route,
+      label: state.lang === "ru" ? entry.name_ru : entry.name_en,
+      code: entry.code,
+      short: state.lang === "ru" ? entry.short_ru : entry.short_en,
+      status: entry.status,
+    })).join("");
+    return `<div class="nav-index-group ${active ? "is-active" : ""}">
+      <button type="button" class="nav-index-group-toggle" data-gir-action="toggle-index-group" data-index-group="${escapeHtml(group.key)}" aria-expanded="${open}" aria-controls="${panelId}" title="${escapeHtml(groupDescription)}">
+        <span class="nav-index-group-icon"><img src="/static/icons/${escapeHtml(group.icon)}" alt="" aria-hidden="true"></span>
+        <span class="nav-index-group-copy"><strong>${escapeHtml(groupLabel)}</strong><small>${escapeHtml(summary)}</small></span>
+        <span class="nav-index-group-count" aria-hidden="true">${group.items.length}</span>
+        <img class="nav-index-group-chevron" src="/static/icons/chevron-down.svg" alt="" aria-hidden="true">
+      </button>
+      <div id="${panelId}" class="nav-index-group-items" ${open ? "" : "hidden"}>${items}</div>
+    </div>`;
+  }).join("")}</div></section>`;
+}
 function renderNav() {
-  $("#nav").innerHTML = navGroups().map((group) => `<section class="nav-group">
-    <h2>${escapeHtml(group.label)}</h2>
-    <div class="nav-group-items">${group.items.map((item) => {
-      const code = item.code ? ({ QS_ET: "QS", HCI_PLUS: "HCI+" }[item.code] || item.code) : "";
-      const icon = item.code
-        ? `<span class="nav-code" aria-hidden="true">${escapeHtml(code)}</span>`
-        : `<img class="nav-icon" src="static/icons/${NAV_ICONS[item.key] || "database.svg"}" alt="" aria-hidden="true">`;
-      const content = `${icon}<span class="nav-copy"><strong>${escapeHtml(item.label)}</strong>${code ? `<small>${escapeHtml(code)}</small>` : ""}</span>`;
-      if (item.href) {
-        return `<a class="nav-item" href="${escapeHtml(item.href)}" title="${escapeHtml(item.label)}" aria-label="${escapeHtml(item.label)}">${content}</a>`;
-      }
-      return `<button type="button" class="nav-item ${state.page === item.key ? "active" : ""}" title="${escapeHtml(item.label)}" aria-label="${escapeHtml(item.label)}" ${state.page === item.key ? 'aria-current="page"' : ""} data-gir-action="route" data-route="${escapeHtml(item.key)}">${content}</button>`;
-    }).join("")}</div>
-  </section>`).join("");
+  $("#nav").innerHTML = navGroups().map((group) => {
+    if (group.kind === "portfolio") return renderPortfolioNavigation(group);
+    return `<section class="nav-group"><h2>${escapeHtml(group.label)}</h2><div class="nav-group-items">${group.items.map(renderNavLeaf).join("")}</div></section>`;
+  }).join("");
   setSidebarUI();
+  const activeGroup = document.querySelector(".nav-index-group.is-active");
+  if (activeGroup) window.requestAnimationFrame(() => activeGroup.scrollIntoView({ block: "nearest", inline: "nearest" }));
 }
 function renderLanding() {
   const view = $("#view");
@@ -849,31 +1695,205 @@ function renderLanding() {
       routeTo(control.dataset.routeTarget || "country");
     });
   });
+  window.GIRLanding?.bind?.({ root: view });
   window.GIRCooperation?.bindTriggers?.(view);
-  if (!LANDING_SUMMARY && !LANDING_SUMMARY_LOADING) {
+  if (state.country && !LANDING_SUMMARY && !LANDING_SUMMARY_LOADING) {
     ensureLandingSummary()
       .then(() => { if (state.page === "landing") renderLanding(); })
       .catch((err) => console.error("Landing summary load failed", err));
   }
 }
+function renderPlannedIndex() {
+  const root = $("#view");
+  const code = normalizeIndex(state.page.replace("index-", ""));
+  if (!window.GIRIndexPortfolio?.renderPlanned?.({ root, code, lang: state.lang })) {
+    root.innerHTML = `<section class="card"><h1>${escapeHtml(currentPageLabel())}</h1><p>${escapeHtml(state.lang === "ru" ? "Страница будущего модуля недоступна." : "The future-module page is unavailable.")}</p></section>`;
+  }
+}
+
+function renderDataUpdates() {
+  const root = $("#view");
+  if (!window.GIRDataUpdates?.render) {
+    root.innerHTML = `<section class="card"><h1>${escapeHtml(t("dataUpdates"))}</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль центра обновлений не загружен." : "The data-update module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRDataUpdates.render({
+    root,
+    lang: state.lang,
+    theme: state.theme,
+    routeTo,
+    showToast,
+    escapeHtml,
+  });
+}
+
+function renderNriWorkspace() {
+  if (!window.GIRNriWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("NRI")))}</h1><p>${state.lang === "ru" ? "Модуль NRI не загружен." : "The NRI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRNriWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRNriWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderEgdiWorkspace() {
+  if (!window.GIREgdiWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("EGDI")))}</h1><p>${state.lang === "ru" ? "Модуль EGDI не загружен." : "The EGDI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIREgdiWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIREgdiWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderGciWorkspace() {
+  if (!window.GIRGciWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("GCI")))}</h1><p>${state.lang === "ru" ? "Модуль GCI не загружен." : "The GCI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRGciWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRGciWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderGariWorkspace() {
+  if (!window.GIRGariWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("GARI")))}</h1><p>${state.lang === "ru" ? "Модуль GARI не загружен." : "The GARI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRGariWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRGariWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderAipiWorkspace() {
+  if (!window.GIRAipiWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("AIPI")))}</h1><p>${state.lang === "ru" ? "Модуль AIPI не загружен." : "The AIPI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRAipiWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRAipiWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderIqiWorkspace() {
+  if (!window.GIRIqiWorkspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("CF_IQI")))}</h1><p>${state.lang === "ru" ? "Модуль Cloudflare IQI не загружен." : "The Cloudflare IQI module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRIqiWorkspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRIqiWorkspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function renderTop500Workspace() {
+  if (!window.GIRTop500Workspace?.render) {
+    $("#view").innerHTML = `<section class="hero"><div class="card"><h1>${escapeHtml(indexFullName(byCode("TOP500")))}</h1><p>${state.lang === "ru" ? "Модуль TOP500 / Green500 не загружен." : "The TOP500 / Green500 module is not loaded."}</p></div></section>`;
+    return;
+  }
+  return window.GIRTop500Workspace.render({
+    root: $("#view"), country: state.country, year: state.year || 2026, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, openProvenance, goCountry, routeTo,
+    selectCountry: (iso3) => { if (!selectUserCountry(iso3)) return; window.GIRTop500Workspace?.invalidate?.(); renderContextBar(); render(); },
+  });
+}
+
+function pageRequiresCountry(page) {
+  return page === "country" || page === "htei-model" || page.startsWith("index-");
+}
+
+function qsUrlCountryOverride() {
+  if (state.page !== "index-QS_ET") return "";
+  const code = String(new URLSearchParams(location.search).get("qs_country") || "").trim().toUpperCase();
+  return /^[A-Z]{3}$/.test(code) ? code : "";
+}
+
+function renderCountryRequired() {
+  const root = $("#view");
+  const title = state.lang === "ru" ? "Выберите страну" : "Select a country";
+  const copy = state.lang === "ru"
+    ? "Платформа не подставляет Россию или другую страну вместо вашего местоположения. Выберите страну в панели контекста."
+    : "The platform does not substitute Russia or another country for your location. Select a country in the context bar.";
+  root.innerHTML = `<section class="hero"><div class="card hero-main"><h1>${escapeHtml(title)}</h1><p class="muted">${escapeHtml(copy)}</p></div></section>`;
+}
+
 function render() {
   document.documentElement.dataset.page = state.page;
   $("#view")?.classList.toggle("landing-view", state.page === "landing");
   $("#view")?.classList.toggle("methodology-view", state.page === "methodology");
+  $("#view")?.classList.toggle("data-updates-view", state.page === "data-updates");
+  $("#view")?.classList.toggle("portfolio-planned-view", isPlannedIndexPage(state.page));
+  $("#view")?.classList.toggle("qsi-root", state.page === "index-QS_ET");
+  const economyCode = state.page.startsWith("index-") ? normalizeIndex(state.page.replace("index-", "")) : "";
+  Object.values(ECONOMY_FINANCE_MODULES).forEach((item) => $("#view")?.classList.toggle(item.viewClass, item === ECONOMY_FINANCE_MODULES[economyCode]));
   renderContextBar();
   bindContextControls();
   applyBrandAssets();
   setSidebarUI();
   window.GIRCooperation?.updateLocale?.(state.lang);
+  if (!state.country && pageRequiresCountry(state.page) && !qsUrlCountryOverride()) return renderCountryRequired();
   if (state.page === "landing") return renderLanding();
+  if (state.page === "country" && window.GIRCountryPortfolioV3?.render) return window.GIRCountryPortfolioV3.render();
   if (state.page === "country" && window.GIRCountryProfileV2?.render) return window.GIRCountryProfileV2.render();
   if (state.page === "country") return renderCountry();
   if (state.page === "matrix") return renderMatrix();
   if (state.page === "htei-model") return renderHteiModel();
   if (state.page === "policy-center") return renderPolicyCenter();
   if (state.page === "methodology") return renderMethodology();
+  if (state.page === "data-updates") return renderDataUpdates();
   if (state.page === "acceptance") return renderAcceptance();
+  if (state.page === "index-NRI") return renderNriWorkspace();
+  if (state.page === "index-EGDI") return renderEgdiWorkspace();
+  if (state.page === "index-GCI") return renderGciWorkspace();
+  if (state.page === "index-GARI") return renderGariWorkspace();
+  if (state.page === "index-AIPI") return renderAipiWorkspace();
+  if (state.page === "index-CF_IQI") return renderIqiWorkspace();
+  if (state.page === "index-TOP500") return renderTop500Workspace();
   if (state.page === "index-HTEI") return renderHteiWorkspace();
+  if (state.page === "index-PISA_SKI") return renderPisaSchoolWorkspace();
+  if (state.page === "index-THE_ENG") return renderTheEngineeringWorkspace();
+  if (state.page === "index-ARWU") return renderArwuWorkspace();
+  if (state.page === "index-GPI") return renderGpiWorkspace();
+  if (state.page === "index-GMI") return renderGmiWorkspace();
+  if (state.page === "index-GOCI") return renderGociWorkspace();
+  if (state.page === "index-SIPRI_MILEX") return renderSipriMilexWorkspace();
+  if (state.page === "index-DHL_GCI") return renderDhlGciWorkspace();
+  if (state.page === "index-WORLD_BANK_LPI") return renderWorldBankLpiWorkspace();
+  if (state.page === "index-UNCTAD_LSCI") return renderUnctadLsciWorkspace();
+  // GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — render
+  if (state.page === "index-EPI") return renderEpiWorkspace();
+  // GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — render
+  if (state.page === "index-ND_GAIN") return renderNdGainWorkspace();
+  // GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — render
+  if (state.page === "index-ETI") return renderEtiWorkspace();
+  // GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — render
+  if (state.page === "index-WORLD_RISK_INDEX") return renderWorldRiskWorkspace();
+  if (state.page === "index-SPI") return renderSocialProgressWorkspace();
+  if (state.page === "index-SDG") return renderSustainableDevelopmentWorkspace();
+  if (state.page === "index-WHR") return renderWorldHappinessWorkspace();
+  if (state.page === "index-GGGI") return renderGlobalGenderGapWorkspace();
+  if (state.page === "index-UHC_SCI") return renderUHCServiceCoverageWorkspace();
+  if (state.page === "index-CPI") return renderCorruptionPerceptionsWorkspace();
+  if (state.page === "index-WPFI") return renderWorldPressFreedomWorkspace();
+  if (state.page === "index-ROLI") return renderRuleOfLawWorkspace();
+  if (state.page === "index-WGI") return renderWgiWorkspace();
+  if (state.page === "index-VDEM") return renderVdemWorkspace();
+  if (isEconomyFinancePage(state.page)) return renderEconomyFinanceWorkspace(normalizeIndex(state.page.replace("index-", "")));
+  if (state.page === "index-QS_ET") return renderQsIntelligenceWorkspace();
+  if (isPlannedIndexPage(state.page)) return renderPlannedIndex();
   if (state.page.startsWith("index-") && window.GIRIndexWorkspace?.render) return renderStandardIndexWorkspace(normalizeIndex(state.page.replace("index-", "")));
   if (state.page.startsWith("index-")) return renderIndex(normalizeIndex(state.page.replace("index-", "")));
   return renderLanding();
@@ -989,6 +2009,18 @@ function invalidateHteiWorkspace() {
   HTEI_WORKSPACE_LOADING = null;
 }
 
+function updateGovernanceDimensionUrlState() {
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set("country", state.country);
+    url.searchParams.set("year", String(state.year));
+    url.searchParams.set("index", state.index);
+    if (state.index === "WGI") url.searchParams.set("dimension", state.wgiDimension);
+    else if (state.index === "VDEM") url.searchParams.set("dimension", state.vdemDimension);
+    history.replaceState(null, "", `${url.pathname}${url.search}${location.hash}`);
+  } catch (_) {}
+}
+
 function updateHteiUrlState() {
   const url = new URL(location.href);
   url.searchParams.set("country", state.country);
@@ -1061,7 +2093,7 @@ function hteiWorkspaceContext(payload = HTEI_WORKSPACE) {
     onCountryChange: (iso3) => {
       const countryCode = String(iso3 || "").toUpperCase();
       if (!countryCode || countryCode === state.country) return;
-      state.country = countryCode;
+      selectUserCountry(countryCode);
       invalidateHteiWorkspace();
       updateHteiUrlState();
       window.GIRHTEI?.loading?.(hteiWorkspaceContext(null));
@@ -1101,6 +2133,461 @@ function renderHteiWorkspace() {
     .catch((err) => {
       if (state.page === "index-HTEI") window.GIRHTEI.error(hteiWorkspaceContext(null), err.message || String(err));
     });
+}
+
+function updatePisaUrlState() {
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set("pisa_entity", state.pisaEntity);
+    url.searchParams.set("year", "2022");
+    history.replaceState(null, "", `${url.pathname}${url.search}${location.hash}`);
+  } catch (_) {
+    // Embedded evidence documents can have an opaque origin. Selection must
+    // still update the live analytical state even when URL persistence is unavailable.
+  }
+}
+
+function renderPisaSchoolWorkspace() {
+  state.index = "PISA_SKI";
+  state.year = 2022;
+  const root = $("#view");
+  if (!window.GIRPISASchool?.render) {
+    root.innerHTML = `<section class="card"><h1>PISA 2022</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль исследовательского пространства не загружен." : "The research workspace module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRPISASchool.render({
+    root,
+    lang: state.lang,
+    theme: state.theme,
+    entity: state.pisaEntity || state.country,
+    year: 2022,
+    platformContext: PLATFORM_CONTEXT,
+    escapeHtml,
+    fmt,
+    intFmt,
+    flagImage,
+    openProvenance,
+    routeTo,
+    selectEntity: (entityCode, iso3, label) => {
+      const selectedEntity = String(entityCode || iso3 || "").toUpperCase();
+      if (!selectedEntity) return;
+      state.pisaEntity = selectedEntity;
+      if (iso3) selectUserCountry(iso3);
+      updatePisaUrlState();
+      const contextLabel = document.querySelector("[data-pisa-context-entity]");
+      if (contextLabel && label) contextLabel.textContent = label;
+      window.GIRPISASchool.invalidate?.();
+      renderPisaSchoolWorkspace();
+    },
+    openCountryProfile: (iso3) => {
+      if (!iso3) return;
+      if (!selectUserCountry(iso3)) return;
+      routeTo("country");
+    },
+  });
+}
+
+function renderTheEngineeringWorkspace() {
+  state.index = "THE_ENG";
+  state.year = 2026;
+  const root = $("#view");
+  if (!window.GIRTHEEngineering?.render) {
+    root.innerHTML = `<section class="card"><h1>THE Engineering</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль исследовательского пространства не загружен." : "The research workspace module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRTHEEngineering.render({
+    root,
+    lang: state.lang,
+    theme: state.theme,
+    country: state.country,
+    year: 2026,
+    platformContext: PLATFORM_CONTEXT,
+    escapeHtml,
+    fmt,
+    intFmt,
+    flagImage,
+    openProvenance,
+    routeTo,
+    selectCountry: (iso3) => {
+      const previous = state.country;
+      if (!selectUserCountry(iso3)) return;
+      window.GIRTHEEngineering.invalidate({ country: previous });
+      renderContextBar();
+      render();
+    },
+  });
+}
+
+function renderArwuWorkspace() {
+  state.index = "ARWU";
+  state.year = 2025;
+  const root = $("#view");
+  if (!window.GIRARWU?.render) {
+    root.innerHTML = `<section class="card"><h1>ARWU 2025</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль исследовательского пространства не загружен." : "The research workspace module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRARWU.render({
+    root,
+    lang: state.lang,
+    theme: state.theme,
+    country: state.country,
+    year: 2025,
+    platformContext: PLATFORM_CONTEXT,
+    escapeHtml,
+    fmt,
+    intFmt,
+    flagImage,
+    openProvenance,
+    routeTo,
+    selectCountry: (iso3) => {
+      const previous = state.country;
+      if (!selectUserCountry(iso3)) return;
+      window.GIRARWU.invalidate({ country: previous });
+      renderContextBar();
+      render();
+    },
+  });
+}
+
+// GIR T13 integration: Security & international connectedness specialist workspaces.
+function securityWorkspaceContext(code, api) {
+  return {
+    root: $("#view"), country: state.country, year: state.year, lang: state.lang, theme: state.theme,
+    platformContext: activeContext(), escapeHtml, fmt, intFmt, flagImage, openProvenance, routeTo,
+    setCountry: (iso3) => { if (!selectUserCountry(iso3)) return; renderContextBar(); bindContextControls(); api?.render?.(securityWorkspaceContext(code, api)); },
+    setYear: (year) => { const next = Number(year); if (Number.isFinite(next)) state.year = next; renderContextBar(); bindContextControls(); api?.render?.(securityWorkspaceContext(code, api)); },
+  };
+}
+function renderGpiWorkspace() { state.index="GPI"; state.year=2026; return window.GIRGPI?.render ? window.GIRGPI.render(securityWorkspaceContext("GPI", window.GIRGPI)) : renderMissingSecurity("GPI"); }
+function renderGmiWorkspace() { state.index="GMI"; state.year=2022; return window.GIRGMI?.render ? window.GIRGMI.render(securityWorkspaceContext("GMI", window.GIRGMI)) : renderMissingSecurity("GMI"); }
+function renderGociWorkspace() { state.index="GOCI"; if (![2021,2023,2025].includes(Number(state.year))) state.year=2025; return window.GIRGOCI?.render ? window.GIRGOCI.render(securityWorkspaceContext("GOCI", window.GIRGOCI)) : renderMissingSecurity("GOCI"); }
+function renderSipriMilexWorkspace() { state.index="SIPRI_MILEX"; state.year=2025; return window.GIRSIPRIMilex?.render ? window.GIRSIPRIMilex.render(securityWorkspaceContext("SIPRI_MILEX", window.GIRSIPRIMilex)) : renderMissingSecurity("SIPRI_MILEX"); }
+function renderDhlGciWorkspace() { state.index="DHL_GCI"; if (state.year < 2001 || state.year > 2024) state.year=2024; return window.GIRDHLGCI?.render ? window.GIRDHLGCI.render(securityWorkspaceContext("DHL_GCI", window.GIRDHLGCI)) : renderMissingSecurity("DHL_GCI"); }
+function renderWorldBankLpiWorkspace() { state.index="WORLD_BANK_LPI"; if (![2024,2023,2018,2016,2014,2012,2010,2007].includes(Number(state.year))) state.year=2024; return window.GIRWorldBankLPI?.render ? window.GIRWorldBankLPI.render(securityWorkspaceContext("WORLD_BANK_LPI", window.GIRWorldBankLPI)) : renderMissingSecurity("WORLD_BANK_LPI"); }
+function renderUnctadLsciWorkspace() { state.index="UNCTAD_LSCI"; if (state.year < 2006 || state.year > 2026) state.year=2026; return window.GIRUNCTADLSCI?.render ? window.GIRUNCTADLSCI.render(securityWorkspaceContext("UNCTAD_LSCI", window.GIRUNCTADLSCI)) : renderMissingSecurity("UNCTAD_LSCI"); }
+function renderMissingSecurity(code) { $("#view").innerHTML = `<section class="card"><h1>${escapeHtml(indexFullName(byCode(code)))}</h1><p class="muted">${escapeHtml(state.lang === "ru" ? "Модуль не загружен." : "The module is not loaded.")}</p></section>`; }
+
+// GIR T11 integration: ecology specialist workspaces preserved from GIR-ECOLOGY-STAGE08D.
+// GIR PATCH: ECOLOGY/EPI FRONTEND STAGE 02 — workspace adapter
+function renderEpiWorkspace() {
+  const root = $("#view");
+  if (!window.GIREPI?.render) {
+    root.innerHTML = `<section class="card"><h1>EPI 2026</h1><p>${escapeHtml(state.lang === "ru" ? "Frontend-модуль EPI не загружен." : "The EPI frontend module is not loaded.")}</p></section>`;
+    return;
+  }
+  return window.GIREPI.render({
+    root,
+    country: state.country,
+    lang: state.lang,
+    theme: state.theme,
+    onCountryChange: (iso3) => { if (selectUserCountry(iso3)) renderContextBar(); },
+    onNotice: showToast,
+    showToast,
+    routeTo,
+  });
+}
+
+// GIR PATCH: ECOLOGY/ND-GAIN FRONTEND STAGE 04 — workspace adapter
+function renderNdGainWorkspace() {
+  const root = $("#view");
+  if (!window.GIRNDGAIN?.render) {
+    root.innerHTML = `<section class="card"><h1>ND-GAIN</h1><p>${escapeHtml(state.lang === "ru" ? "Frontend-модуль ND-GAIN не загружен." : "The ND-GAIN frontend module is not loaded.")}</p></section>`;
+    return;
+  }
+  return window.GIRNDGAIN.render({
+    root,
+    country: state.country,
+    lang: state.lang,
+    theme: state.theme,
+    onCountryChange: (iso3) => { if (selectUserCountry(iso3)) renderContextBar(); },
+    onNotice: showToast,
+    showToast,
+    routeTo,
+  });
+}
+
+// GIR PATCH: ECOLOGY/ETI FRONTEND STAGE 06 — workspace adapter
+function renderEtiWorkspace() {
+  const root = $("#view");
+  if (!window.GIRETI?.render) {
+    root.innerHTML = `<section class="card"><h1>ETI 2026</h1><p>${escapeHtml(state.lang === "ru" ? "Frontend-модуль ETI не загружен." : "The ETI frontend module is not loaded.")}</p></section>`;
+    return;
+  }
+  return window.GIRETI.render({
+    root,
+    country: state.country,
+    lang: state.lang,
+    theme: state.theme,
+    onCountryChange: (iso3) => { if (selectUserCountry(iso3)) renderContextBar(); },
+    onNotice: showToast,
+    showToast,
+    routeTo,
+  });
+}
+
+// GIR PATCH: ECOLOGY/WORLD-RISK FRONTEND STAGE 08 — workspace adapter
+function renderWorldRiskWorkspace() {
+  const root = $("#view");
+  if (!window.GIRWRI?.render) {
+    root.innerHTML = `<section class="card"><h1>WorldRiskIndex 2025</h1><p>${escapeHtml(state.lang === "ru" ? "Frontend-модуль WorldRiskIndex не загружен." : "The WorldRiskIndex frontend module is not loaded.")}</p></section>`;
+    return;
+  }
+  return window.GIRWRI.render({
+    root,
+    country: state.country,
+    lang: state.lang,
+    theme: state.theme,
+    onCountryChange: (iso3) => { if (selectUserCountry(iso3)) renderContextBar(); },
+    onNotice: showToast,
+    showToast,
+    routeTo,
+  });
+}
+
+// GIR_PATCH:T14_GOVERNANCE_SOCIETY_ADAPTER:BEGIN
+let societyContextObserver = null;
+let societyContextTimer = 0;
+
+function societyModuleSelectors(code) {
+  if (code === "SPI") return { country: "[data-spi-country]", year: "[data-spi-year]" };
+  if (code === "SDG") return { country: "[data-sdg-country]", year: "[data-sdg-year]" };
+  if (code === "WHR") return { country: "[data-whr-country]", year: "[data-whr-year]" };
+  if (code === "GGGI") return { country: "[data-gggi-country]", year: "[data-gggi-year]" };
+  if (code === "UHC_SCI") return { country: "[data-uhc-country]", year: "[data-uhc-year]" };
+  if (code === "CPI") return { country: "[data-cpi-country]", year: "[data-cpi-year]" };
+  if (code === "WPFI") return { country: "[data-wpfi-country]", year: "[data-wpfi-year]" };
+  return { country: "[data-roli-country]", year: "[data-roli-period]" };
+}
+
+function societyOptionMarkup(source) {
+  return Array.from(source?.options || []).map((option) => `<option value="${escapeHtml(option.value)}" ${option.selected ? "selected" : ""}>${escapeHtml(option.textContent || option.value)}</option>`).join("");
+}
+
+function syncSocietyContextBar(code) {
+  const host = document.querySelector(`[data-society-context-host][data-society-code="${code}"]`);
+  const root = $("#view");
+  if (!host || !root || !isSocietyIndexPage(state.page) || state.index !== code) return;
+  const selectors = societyModuleSelectors(code);
+  const sourceCountry = root.querySelector(selectors.country);
+  const sourceYear = root.querySelector(selectors.year);
+  if (!sourceCountry || !sourceYear) {
+    host.innerHTML = `<span class="tiny muted">${escapeHtml(state.lang === "ru" ? "Загрузка стран и периодов…" : "Loading countries and periods…")}</span>`;
+    return;
+  }
+  const countryLabel = sourceCountry.selectedOptions[0]?.textContent || sourceCountry.value;
+  const yearLabel = sourceYear.selectedOptions[0]?.textContent || sourceYear.value;
+  host.innerHTML = `<label><span>${t("countryLabel")}</span>${selectShell(`<select id="societyCountrySelect" class="select" aria-label="${escapeHtml(t("countryLabel"))}">${societyOptionMarkup(sourceCountry)}</select>`, countryLabel)}</label><label><span>${t("year")}</span>${selectShell(`<select id="societyYearSelect" class="select context-year" aria-label="${escapeHtml(t("year"))}">${societyOptionMarkup(sourceYear)}</select>`, yearLabel)}</label>`;
+  const countrySelect = $("#societyCountrySelect");
+  const yearSelect = $("#societyYearSelect");
+  if (countrySelect) countrySelect.onchange = (event) => {
+    const latest = $("#view")?.querySelector(societyModuleSelectors(code).country);
+    if (!latest) return;
+    latest.value = event.target.value;
+    selectUserCountry(event.target.value);
+    latest.dispatchEvent(new Event("change", { bubbles: true }));
+    syncSelectDisplay(event.target);
+  };
+  if (yearSelect) yearSelect.onchange = (event) => {
+    const latest = $("#view")?.querySelector(societyModuleSelectors(code).year);
+    if (!latest) return;
+    latest.value = event.target.value;
+    state.year = Number(String(event.target.value).split("-").pop()) || state.year;
+    latest.dispatchEvent(new Event("change", { bubbles: true }));
+    syncSelectDisplay(event.target);
+  };
+  state.country = String(sourceCountry.value || state.country || "").toUpperCase() || null;
+  state.year = Number(String(sourceYear.value).split("-").pop()) || state.year;
+  syncAllSelectDisplays();
+}
+
+function scheduleSocietyContextSync(code) {
+  window.clearTimeout(societyContextTimer);
+  societyContextTimer = window.setTimeout(() => syncSocietyContextBar(code), 0);
+}
+
+function observeSocietyContext(code) {
+  societyContextObserver?.disconnect();
+  const root = $("#view");
+  if (!root) return;
+  societyContextObserver = new MutationObserver(() => scheduleSocietyContextSync(code));
+  societyContextObserver.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ["value", "selected"] });
+  scheduleSocietyContextSync(code);
+}
+
+function societyHostContext(code) {
+  return {
+    root: $("#view"),
+    country: state.country,
+    year: state.year,
+    lang: state.lang,
+    theme: state.theme,
+    openDrawer,
+    onNotice: showToast,
+    onContextChange: ({ country, year }) => {
+      if (country) selectUserCountry(country);
+      if (year) state.year = Number(year);
+      scheduleSocietyContextSync(code);
+    },
+  };
+}
+
+function renderSocialProgressWorkspace() {
+  state.index = "SPI";
+  if (!window.GIRSocialProgress?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль SPI не загружен" : "SPI module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRSocialProgress.render(societyHostContext("SPI"));
+  observeSocietyContext("SPI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("SPI"));
+  return result;
+}
+
+function renderSustainableDevelopmentWorkspace() {
+  state.index = "SDG";
+  if (!window.GIRSustainableDevelopment?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль SDG Index не загружен" : "SDG Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRSustainableDevelopment.render(societyHostContext("SDG"));
+  observeSocietyContext("SDG");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("SDG"));
+  return result;
+}
+
+function renderWorldHappinessWorkspace() {
+  state.index = "WHR";
+  if (!window.GIRWorldHappiness?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль World Happiness Report не загружен" : "World Happiness Report module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRWorldHappiness.render(societyHostContext("WHR"));
+  observeSocietyContext("WHR");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("WHR"));
+  return result;
+}
+
+function renderGlobalGenderGapWorkspace() {
+  state.index = "GGGI";
+  if (!window.GIRGlobalGenderGap?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль Global Gender Gap Index не загружен" : "Global Gender Gap Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRGlobalGenderGap.render(societyHostContext("GGGI"));
+  observeSocietyContext("GGGI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("GGGI"));
+  return result;
+}
+
+function renderUHCServiceCoverageWorkspace() {
+  state.index = "UHC_SCI";
+  if (!window.GIRUHCServiceCoverage?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль UHC Service Coverage Index не загружен" : "UHC Service Coverage Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRUHCServiceCoverage.render(societyHostContext("UHC_SCI"));
+  observeSocietyContext("UHC_SCI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("UHC_SCI"));
+  return result;
+}
+
+function renderCorruptionPerceptionsWorkspace() {
+  state.index = "CPI";
+  if (!window.GIRCorruptionPerceptions?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль Corruption Perceptions Index не загружен" : "Corruption Perceptions Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRCorruptionPerceptions.render(societyHostContext("CPI"));
+  observeSocietyContext("CPI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("CPI"));
+  return result;
+}
+
+function renderWorldPressFreedomWorkspace() {
+  state.index = "WPFI";
+  if (!window.GIRWorldPressFreedom?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль World Press Freedom Index не загружен" : "World Press Freedom Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRWorldPressFreedom.render(societyHostContext("WPFI"));
+  observeSocietyContext("WPFI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("WPFI"));
+  return result;
+}
+
+function renderRuleOfLawWorkspace() {
+  state.index = "ROLI";
+  if (!window.GIRRuleOfLaw?.render) {
+    $("#view").innerHTML = `<div class="card"><h2>${escapeHtml(state.lang === "ru" ? "Модуль WJP Rule of Law Index не загружен" : "WJP Rule of Law Index module is not loaded")}</h2></div>`;
+    return;
+  }
+  const result = window.GIRRuleOfLaw.render(societyHostContext("ROLI"));
+  observeSocietyContext("ROLI");
+  Promise.resolve(result).finally(() => scheduleSocietyContextSync("ROLI"));
+  return result;
+}
+// GIR_PATCH:T14_GOVERNANCE_SOCIETY_ADAPTER:END
+
+function renderWgiWorkspace() {
+  state.index = "WGI";
+  const root = $("#view");
+  if (!window.GIRWGI?.render) {
+    root.innerHTML = `<section class="card"><h1>WGI</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль Всемирных показателей государственного управления не загружен." : "The Worldwide Governance Indicators module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRWGI.render({
+    root, country: state.country, year: state.year || 2024, dimension: state.wgiDimension, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, routeTo,
+    onCountryChange: (iso3) => { const code=String(iso3||"").toUpperCase(); if (!code || code===state.country || !selectUserCountry(code)) return; updateGovernanceDimensionUrlState(); render(); },
+    onYearChange: (year) => { const value=Number(year); if (!Number.isFinite(value) || value===Number(state.year)) return; state.year=value; updateGovernanceDimensionUrlState(); render(); },
+    onDimensionChange: (dimension) => { const code=String(dimension||"GE").toUpperCase(); if (!["VA","PV","GE","RQ","RL","CC"].includes(code) || code===state.wgiDimension) return; state.wgiDimension=code; window.GIRWGI?.invalidate?.(); updateGovernanceDimensionUrlState(); render(); },
+    onProvenance: (valueId, trigger) => openProvenance(valueId, trigger), onNotice: (message) => showToast(message),
+  });
+}
+
+function renderVdemWorkspace() {
+  state.index = "VDEM";
+  const root = $("#view");
+  if (!window.GIRVDEM?.render) {
+    root.innerHTML = `<section class="card"><h1>V-Dem</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль индексов демократии V-Dem не загружен." : "The V-Dem Democracy Indices module is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRVDEM.render({
+    root, country: state.country, year: state.year || 2025, dimension: state.vdemDimension, lang: state.lang, theme: state.theme,
+    platformContext: PLATFORM_CONTEXT, escapeHtml, flagImage, routeTo,
+    onCountryChange: (iso3) => { const code=String(iso3||"").toUpperCase(); if (!code || code===state.country || !selectUserCountry(code)) return; updateGovernanceDimensionUrlState(); render(); },
+    onYearChange: (year) => { const value=Number(year); if (!Number.isFinite(value) || value===Number(state.year)) return; state.year=value; updateGovernanceDimensionUrlState(); render(); },
+    onDimensionChange: (dimension) => { const code=String(dimension||"EDI").toUpperCase(); if (!["EDI","LDI","PDI","DDI","EGDI"].includes(code) || code===state.vdemDimension) return; state.vdemDimension=code; window.GIRVDEM?.invalidate?.(); updateGovernanceDimensionUrlState(); render(); },
+    onProvenance: (valueId, trigger) => openProvenance(valueId, trigger), onNotice: (message) => showToast(message),
+  });
+}
+
+function renderQsIntelligenceWorkspace() {
+  state.index = "QS_ET";
+  const root = $("#view");
+  if (!window.GIRQSIntelligence?.render) {
+    root.innerHTML = `<section class="card"><h1>${escapeHtml(state.lang === "ru" ? "Аналитика QS" : "QS Intelligence")}</h1><p>${escapeHtml(state.lang === "ru" ? "Модуль аналитики QS не загружен." : "The QS Intelligence workspace is unavailable.")}</p></section>`;
+    return;
+  }
+  return window.GIRQSIntelligence.render({
+    root,
+    country: state.country,
+    year: state.year || 2026,
+    lang: state.lang,
+    theme: state.theme,
+    platformContext: PLATFORM_CONTEXT,
+    escapeHtml,
+    flagImage,
+    routeTo,
+    openProvenance,
+    selectCountry: (iso3) => {
+      if (!selectUserCountry(iso3)) return false;
+      renderContextBar();
+      bindContextControls();
+      return true;
+    },
+    onNotice: (message) => showToast(message),
+  });
 }
 
 function renderStandardIndexWorkspace(code) {
@@ -1425,7 +2912,7 @@ function sortMatrix(code){
   refreshMatrixData();
 }
 function goCountry(iso3){
-  state.country=String(iso3||"").toUpperCase();
+  if(!selectUserCountry(iso3))return;
   state.page="country";
   location.hash="country";
   renderNav();

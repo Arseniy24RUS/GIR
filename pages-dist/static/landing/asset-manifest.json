@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "release_snapshot": "2026-07-11",
+  "release_snapshot": "2026-07-19",
   "base_url": "/static/landing",
   "assets": [
     {
@@ -343,6 +343,82 @@
         "path": "product/methodology-ru-light.webp",
         "bytes": 80836,
         "sha256": "64284ca98fd1101034ca37f0ec808aa4e65d221ac70127b6e35202c5943e4de7"
+      }
+    },
+    {
+      "id": "htei-platform",
+      "role": "product-screen",
+      "theme": "neutral",
+      "locale": "ru",
+      "origin": "GIR_stage3_htei_desktop.png",
+      "width": 1440,
+      "height": 900,
+      "png": {
+        "path": "showcase/htei-platform.png",
+        "bytes": 178763,
+        "sha256": "759086617c349086c9395d94f354c27f2ad9e41f7fbffa888bb5128c821d0963"
+      },
+      "webp": {
+        "path": "showcase/htei-platform.webp",
+        "bytes": 95986,
+        "sha256": "a22daae5f039624b58fe4a4e0c6c8d3d8fe6c55040fd67474eb56a4617e3d798"
+      }
+    },
+    {
+      "id": "university-map",
+      "role": "product-screen",
+      "theme": "neutral",
+      "locale": "ru",
+      "origin": "qs-desktop-dark.png",
+      "width": 1440,
+      "height": 900,
+      "png": {
+        "path": "showcase/university-map.png",
+        "bytes": 369715,
+        "sha256": "e7fe1defa1443ca2b5ae2c88dfd79d647441e1104f74fb620903299b112c0843"
+      },
+      "webp": {
+        "path": "showcase/university-map.webp",
+        "bytes": 85282,
+        "sha256": "83d02adf6817101c308b4f575ebfdc3473bf76b94469724873bf18e57f1e4313"
+      }
+    },
+    {
+      "id": "data-explorer",
+      "role": "product-screen",
+      "theme": "neutral",
+      "locale": "ru",
+      "origin": "data-explorer-epi-desktop.png",
+      "width": 1440,
+      "height": 900,
+      "png": {
+        "path": "showcase/data-explorer.png",
+        "bytes": 163827,
+        "sha256": "ce3eff843755608af90174ead0ac700cf5be6cd4813cfdfaf6a5a1d97be58923"
+      },
+      "webp": {
+        "path": "showcase/data-explorer.webp",
+        "bytes": 62108,
+        "sha256": "266fc1f6cc47e432999daf44f9024edc9f98ea02550dee78660b133d1f24c930"
+      }
+    },
+    {
+      "id": "gpi-platform",
+      "role": "product-screen",
+      "theme": "neutral",
+      "locale": "ru",
+      "origin": "gpi-dashboard.png",
+      "width": 1440,
+      "height": 900,
+      "png": {
+        "path": "showcase/gpi-platform.png",
+        "bytes": 377684,
+        "sha256": "805ac3b61b5b7b4df56fd6bd12be2f73128a4c9de37ec06e888b63add04a6bd9"
+      },
+      "webp": {
+        "path": "showcase/gpi-platform.webp",
+        "bytes": 60336,
+        "sha256": "afde53760b576e6b26d96f788a700ca291c1b78c0938e8d4430024c013dc2550"
       }
     }
   ]

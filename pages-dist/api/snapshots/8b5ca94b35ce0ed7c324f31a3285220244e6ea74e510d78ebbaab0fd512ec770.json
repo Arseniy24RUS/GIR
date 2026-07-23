@@ -1,0 +1,23 @@
+{
+  "attribution": "SIPRI Military Expenditure Database; Stockholm International Peace Research Institute (SIPRI).",
+  "index_code": "SIPRI_MILEX",
+  "notice_path": "docs/NOTICE_SIPRI_MILEX_DATA.md",
+  "policy": {
+    "csv_or_public_static_export_requires": [
+      "commercial_license",
+      "written_permission"
+    ],
+    "default_api_audience": "disabled",
+    "implicit_download": false,
+    "implicit_numeric_import": false,
+    "numeric_dataset_in_patch": false,
+    "official_workbook_in_patch": false,
+    "operator_attestation_required": true,
+    "public_api_requires": [
+      "commercial_license",
+      "written_permission"
+    ],
+    "terms_acceptance_required": true
+  },
+  "terms_url": "https://www.sipri.org/about/terms-and-conditions"
+}

@@ -1,0 +1,565 @@
+/*
+ * GIR Stage 10R — native UI alignment for the Security & Connectivity group.
+ * Loaded after the six module stylesheets. It keeps module data/behaviour and
+ * maps their presentation back to the platform contract from styles.css and
+ * index-workspace.css: Onest, flat panels, 2px geometry and shared tokens.
+ */
+
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) {
+  font-family: var(--font) !important;
+  min-width: 0;
+  color: var(--text) !important;
+  line-height: 1.45;
+}
+
+.gpiw {
+  --gpi-gap: clamp(42px,6vw,78px);
+  --gpi-peace: var(--green);
+  --gpi-peace-strong: var(--green);
+  --gpi-warn: var(--orange);
+  --gpi-risk: var(--red);
+  --gpi-subtle: var(--panel);
+  --gpi-soft-peace: color-mix(in srgb,var(--green) 14%,var(--panel));
+  --gpi-soft-risk: color-mix(in srgb,var(--red) 12%,var(--panel));
+  --gpi-soft-warn: color-mix(in srgb,var(--orange) 12%,var(--panel));
+  --gpi-map-1: color-mix(in srgb,var(--green) 84%,var(--panel));
+  --gpi-map-2: color-mix(in srgb,var(--green) 68%,var(--blue));
+  --gpi-map-3: color-mix(in srgb,var(--green) 46%,var(--blue));
+  --gpi-map-4: var(--blue);
+  --gpi-map-5: color-mix(in srgb,var(--blue) 62%,var(--red));
+  --gpi-map-6: color-mix(in srgb,var(--red) 76%,var(--blue));
+  --gpi-map-7: var(--red);
+}
+.gmiw {
+  --gmi-gap: clamp(42px,6vw,78px);
+  --gmi-bronze: var(--orange);
+  --gmi-bronze-strong: var(--orange);
+  --gmi-ember: var(--red);
+  --gmi-red: var(--red);
+  --gmi-cyan: var(--green);
+  --gmi-violet: var(--blue2);
+  --gmi-subtle: var(--panel);
+  --gmi-soft: color-mix(in srgb,var(--orange) 12%,var(--panel));
+  --gmi-soft-red: color-mix(in srgb,var(--red) 12%,var(--panel));
+  --gmi-map-1: color-mix(in srgb,var(--blue) 80%,var(--panel));
+  --gmi-map-2: color-mix(in srgb,var(--blue) 65%,var(--orange));
+  --gmi-map-3: color-mix(in srgb,var(--blue) 45%,var(--orange));
+  --gmi-map-4: color-mix(in srgb,var(--orange) 62%,var(--red));
+  --gmi-map-5: color-mix(in srgb,var(--orange) 40%,var(--red));
+  --gmi-map-6: color-mix(in srgb,var(--red) 82%,var(--orange));
+  --gmi-map-7: var(--red);
+  --gmi-series-1: var(--orange);
+  --gmi-series-2: var(--green);
+  --gmi-series-3: var(--red);
+  --gmi-series-4: var(--blue2);
+  --gmi-series-5: var(--green);
+}
+.gociw {
+  --goci-gap: clamp(42px,6vw,78px);
+  --goci-crime: var(--red);
+  --goci-crime-strong: var(--red);
+  --goci-resilience: var(--green);
+  --goci-resilience-strong: var(--green);
+  --goci-amber: var(--orange);
+  --goci-blue: var(--blue2);
+  --goci-soft-crime: color-mix(in srgb,var(--red) 12%,var(--panel));
+  --goci-soft-resilience: color-mix(in srgb,var(--green) 13%,var(--panel));
+  --goci-soft-amber: color-mix(in srgb,var(--orange) 12%,var(--panel));
+  --goci-subtle: var(--panel);
+}
+.milexw {
+  --mx-bg: var(--bg);
+  --mx-panel: var(--panel);
+  --mx-panel-solid: var(--panel);
+  --mx-panel-2: var(--panel);
+  --mx-line: var(--line);
+  --mx-line-strong: var(--line2);
+  --mx-text: var(--text);
+  --mx-muted: var(--muted);
+  --mx-dim: var(--muted);
+  --mx-accent: var(--green);
+  --mx-accent-2: var(--blue2);
+  --mx-accent-3: var(--orange);
+  --mx-good: var(--green);
+  --mx-danger: var(--red);
+  --mx-blue: var(--blue2);
+  --mx-shadow: none;
+  --mx-radius: var(--radius);
+  --mx-radius-sm: var(--radius);
+  gap: clamp(42px,6vw,78px) !important;
+  padding: 0 !important;
+  isolation: auto !important;
+}
+
+.lpiw {
+  --lpi-good: var(--green);
+  --lpi-blue: var(--blue2);
+  --lpi-warn: var(--orange);
+  --lpi-risk: var(--red);
+}
+.dhlg {
+  --dg-bg: var(--bg);
+  --dg-panel: var(--panel);
+  --dg-panel-solid: var(--panel);
+  --dg-panel-2: var(--panel);
+  --dg-panel-3: var(--surface);
+  --dg-line: var(--line);
+  --dg-line-strong: var(--line2);
+  --dg-text: var(--text);
+  --dg-muted: var(--muted);
+  --dg-dim: var(--muted);
+  --dg-cyan: var(--green);
+  --dg-gold: var(--orange);
+  --dg-blue: var(--blue2);
+  --dg-violet: var(--blue);
+  --dg-coral: var(--red);
+  --dg-good: var(--green);
+  --dg-danger: var(--red);
+  --dg-shadow: none;
+  --dg-radius: var(--radius);
+  --dg-radius-sm: var(--radius);
+  gap: clamp(42px,6vw,78px) !important;
+  padding: 0 !important;
+  isolation: auto !important;
+}
+
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw),
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) * {
+  box-sizing: border-box;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(button,input,select,textarea,a) {
+  font-family: var(--font) !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(button,input,select,textarea) {
+  border-radius: var(--radius) !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where([class*="-card"],[class*="-panel"],[class*="-section"],[class*="-rail"],[class*="-strip"],[class*="-dialog"],[class*="-toolbar"],[class*="-chip"],[class*="-button"],[class*="-btn"],[class*="-node"],[class*="-message"],[class*="-banner"],[class*="-command"],[class*="-pill"]) {
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where([class*="-section"],[class*="-card"],[class*="-panel"],[class*="-rail"],[class*="-dialog-shell"]) {
+  border-color: var(--line) !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where([class*="-section"],[class*="-panel"],[class*="-card"])::before,
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where([class*="-section"],[class*="-panel"],[class*="-card"])::after {
+  box-shadow: none !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(input,select,textarea) {
+  min-height: 39px;
+  border: 1px solid var(--line2) !important;
+  background: var(--control-bg) !important;
+  color: var(--control-text) !important;
+  -webkit-text-fill-color: var(--control-text) !important;
+  outline: none;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(input,select,textarea):focus-visible {
+  outline: 3px solid color-mix(in srgb,var(--green) 72%,transparent) !important;
+  outline-offset: 2px;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.gpiw-button,.gmiw-button,.gociw-button,.milexw-btn,.milexw-link-btn,.dhlg-btn) {
+  min-height: 42px !important;
+  padding: 9px 15px !important;
+  border: 1px solid var(--line2) !important;
+  background: transparent !important;
+  color: var(--text) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: .01em !important;
+  text-decoration: none !important;
+  transform: none !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.gpiw-button,.gmiw-button,.gociw-button,.milexw-btn,.milexw-link-btn,.dhlg-btn):hover {
+  border-color: var(--green) !important;
+  background: var(--surface) !important;
+  transform: none !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.gpiw-button,.gmiw-button,.gociw-button,.milexw-btn,.dhlg-btn).primary {
+  border-color: var(--green) !important;
+  background: var(--green) !important;
+  color: #071d2d !important;
+}
+html[data-theme="light"] :is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.gpiw-button,.gmiw-button,.gociw-button,.milexw-btn,.dhlg-btn).primary {
+  color: #fff !important;
+}
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.gpiw-status-line,.gmiw-status-line,.gociw-status-line,.milexw-hero-meta,.dhlg-hero-meta) span,
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.milexw-chip,.dhlg-chip) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  box-shadow: none !important;
+}
+
+/* GPI / GMI / GOCI: match the platform's unified index-workspace geometry. */
+:is(.gpiw-hero,.gmiw-hero,.gociw-hero) {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.45fr) minmax(340px,.55fr) !important;
+  gap: 1px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--line) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+:is(.gpiw-hero-main,.gmiw-hero-main,.gociw-hero-main) {
+  min-height: 440px !important;
+  padding: clamp(28px,4vw,54px) !important;
+  background: linear-gradient(118deg,color-mix(in srgb,var(--panel) 91%,var(--blue) 9%) 0%,var(--panel) 72%),var(--panel) !important;
+}
+:is(.gpiw-hero-main,.gmiw-hero-main,.gociw-hero-main)::after {
+  border-color: color-mix(in srgb,var(--green) 32%,var(--line)) !important;
+  opacity: .55 !important;
+  box-shadow: none !important;
+}
+:is(.gpiw-country-panel,.gmiw-country-panel,.gociw-country-cockpit) {
+  min-width: 0;
+  padding: clamp(26px,3vw,40px) !important;
+  background: var(--panel) !important;
+  border: 0 !important;
+}
+:is(.gpiw-hero,.gmiw-hero,.gociw-hero) h1 {
+  max-width: 940px !important;
+  margin: 0 !important;
+  font-size: clamp(36px,5vw,70px) !important;
+  line-height: .98 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.045em !important;
+  color: var(--text) !important;
+}
+:is(.gpiw-hero,.gmiw-hero,.gociw-hero) h1 span {
+  margin-bottom: 16px !important;
+  color: var(--accent-text) !important;
+  font-size: .22em !important;
+  line-height: 1 !important;
+  letter-spacing: .11em !important;
+  text-transform: uppercase;
+}
+:is(.gpiw-lead,.gmiw-lead,.gociw-lead) {
+  max-width: 900px !important;
+  margin: 26px 0 0 !important;
+  color: var(--muted) !important;
+  font-size: clamp(15px,1.5vw,20px) !important;
+  line-height: 1.52 !important;
+}
+:is(.gpiw-hero-actions,.gmiw-hero-actions,.gociw-hero-actions) {
+  margin-top: 34px !important;
+}
+:is(.gpiw-section-heading,.gmiw-section-head,.gociw-section-head) {
+  display: grid !important;
+  grid-template-columns: minmax(240px,.68fr) minmax(0,1.32fr) !important;
+  gap: 28px !important;
+  align-items: end !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 18px !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+:is(.gpiw-section-heading,.gmiw-section-head,.gociw-section-head) h2 {
+  max-width: 760px !important;
+  margin: 7px 0 0 !important;
+  font-size: clamp(28px,3.2vw,46px) !important;
+  line-height: 1.06 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em !important;
+}
+:is(.gpiw-section-heading,.gmiw-section-head,.gociw-section-head) p {
+  max-width: 760px !important;
+  margin: 0 !important;
+  color: var(--muted) !important;
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+:is(.gpiw-panel,.gmiw-map-card,.gmiw-architecture-card,.gmiw-radar-card,.gmiw-distribution-card,.gociw-map-card,.gociw-matrix-card,.gociw-history-card,.gociw-quadrant-card) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.gpiw-panel-head,.gmiw-country-panel-head) {
+  padding: 19px 21px !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+:is(.gpiw-findings,.gmiw-stat-grid,.gociw-stat-grid) {
+  gap: 1px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--line) !important;
+}
+:is(.gpiw-findings,.gmiw-stat-grid,.gociw-stat-grid) > article,
+.gpiw-findings > div {
+  min-height: 172px !important;
+  padding: 22px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.gmiw-release-rail,.gociw-release-rail) {
+  gap: 1px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--line) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+:is(.gmiw-release-node,.gmiw-release-message,.gociw-release-node) {
+  min-height: 112px !important;
+  padding: 22px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.gmiw-release-node,.gociw-release-node).active {
+  background: color-mix(in srgb,var(--blue) 68%,var(--panel)) !important;
+  box-shadow: inset 3px 0 0 var(--green) !important;
+}
+:is(.gpiw-table,.gmiw-ranking-table,.gociw-ranking-table,.gmiw-exact-table,.gociw-exact-table) {
+  border-collapse: collapse !important;
+  background: var(--panel) !important;
+}
+:is(.gpiw-table,.gmiw-ranking-table,.gociw-ranking-table,.gmiw-exact-table,.gociw-exact-table) :is(th,td) {
+  border-color: var(--line) !important;
+  padding: 11px 13px !important;
+}
+:is(.gpiw-ranking-toolbar,.gmiw-ranking-toolbar,.gociw-ranking-toolbar,.gpiw-map-toolbar,.gmiw-map-toolbar,.gociw-map-toolbar) {
+  border-color: var(--line) !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.gpiw-dialog,.gmiw-dialog,.gociw-dialog,.milexw-dialog,.dhlg-dialog) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  color: var(--text) !important;
+  box-shadow: none !important;
+}
+
+/* SIPRI / DHL: keep specialist visualisations but use the same GIR surfaces. */
+:is(.milexw-hero,.milexw-section,.milexw-validation-banner,.dhlg-hero,.dhlg-section,.dhlg-time-rail,.dhlg-validation) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+:is(.milexw-hero,.milexw-section,.dhlg-hero,.dhlg-section,.dhlg-time-rail)::before {
+  background: none !important;
+  opacity: 0 !important;
+}
+:is(.milexw-hero,.dhlg-hero)::after {
+  opacity: 0 !important;
+}
+:is(.milexw-hero-grid,.dhlg-hero-grid) {
+  min-height: 440px !important;
+  padding: clamp(28px,4vw,54px) !important;
+  grid-template-columns: minmax(0,1.45fr) minmax(340px,.55fr) !important;
+  gap: 32px !important;
+  align-items: center !important;
+  background: linear-gradient(118deg,color-mix(in srgb,var(--panel) 91%,var(--blue) 9%) 0%,var(--panel) 72%) !important;
+}
+:is(.milexw-hero,.dhlg-hero) h1 {
+  max-width: 940px !important;
+  margin: 0 0 26px !important;
+  font-size: clamp(36px,5vw,70px) !important;
+  line-height: .98 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.045em !important;
+  color: var(--text) !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+}
+:is(.milexw-hero-copy,.dhlg-hero-copy) > p {
+  max-width: 900px !important;
+  color: var(--muted) !important;
+  font-size: clamp(15px,1.5vw,20px) !important;
+  line-height: 1.52 !important;
+}
+:is(.milexw-kicker,.dhlg-kicker) {
+  margin-bottom: 20px !important;
+  color: var(--accent-text) !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: .11em !important;
+}
+:is(.milexw-kicker,.dhlg-kicker) b {
+  padding: 5px 7px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: transparent !important;
+  color: var(--accent-text) !important;
+}
+:is(.milexw-pulse,.dhlg-orbit) {
+  width: 100% !important;
+  max-width: 400px !important;
+  justify-self: center !important;
+  filter: saturate(.75) !important;
+}
+:is(.milexw-pulse-stat,.dhlg-orbit-card) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+:is(.milexw-status-strip,.dhlg-status-strip) {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border-top: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+}
+:is(.milexw-status-strip,.dhlg-status-strip) > * {
+  min-width: 0;
+  min-height: 54px;
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 16px !important;
+  border-right: 1px solid var(--line) !important;
+  color: var(--muted) !important;
+  font-size: 8px !important;
+}
+:is(.milexw-status-strip,.dhlg-status-strip) > *:last-child { border-right: 0 !important; }
+:is(.milexw-section,.dhlg-section) {
+  padding: clamp(24px,3.2vw,42px) !important;
+  gap: 26px !important;
+}
+:is(.milexw-section-head,.dhlg-section-head) {
+  display: grid !important;
+  grid-template-columns: minmax(240px,.68fr) minmax(0,1.32fr) !important;
+  gap: 28px !important;
+  align-items: end !important;
+  padding-bottom: 18px !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+:is(.milexw-section-head,.dhlg-section-head) > div:first-child { max-width: none !important; }
+:is(.milexw-section-head,.dhlg-section-head) h2 {
+  max-width: 760px !important;
+  margin: 7px 0 0 !important;
+  font-size: clamp(28px,3.2vw,46px) !important;
+  line-height: 1.06 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em !important;
+}
+:is(.milexw-section-head,.dhlg-section-head) p {
+  max-width: 760px !important;
+  margin: 0 !important;
+  color: var(--muted) !important;
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+:is(.milexw-kpi-grid,.dhlg-fact-grid) {
+  gap: 1px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--line) !important;
+}
+:is(.milexw-kpi-grid,.dhlg-fact-grid) > article {
+  min-height: 154px !important;
+  padding: 22px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.milexw-kpi-grid,.dhlg-fact-grid) > article::before,
+:is(.milexw-kpi-grid,.dhlg-fact-grid) > article::after { opacity: 0 !important; }
+:is(.milexw-vault-grid,.milexw-access-flow,.milexw-blueprint-grid,.milexw-series-grid,.milexw-principles,.dhlg-leader-grid,.dhlg-access-grid,.dhlg-import-flow,.dhlg-dimensions,.dhlg-pillar-grid,.dhlg-contract-grid,.dhlg-compare-cards) {
+  gap: 1px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--line) !important;
+}
+:is(.milexw-vault-grid,.milexw-access-flow,.milexw-blueprint-grid,.milexw-series-grid,.milexw-principles,.dhlg-leader-grid,.dhlg-access-grid,.dhlg-import-flow,.dhlg-dimensions,.dhlg-pillar-grid,.dhlg-contract-grid,.dhlg-compare-cards) > :is(article,div) {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.milexw-profile-main,.milexw-integrity-card,.milexw-policy-card,.milexw-chart-card,.milexw-map-card,.dhlg-profile-main,.dhlg-balance-card,.dhlg-pillar-scores,.dhlg-chart-card,.dhlg-map-card,.dhlg-matrix-card,.dhlg-vault-card,.dhlg-policy-card,.dhlg-token-card) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.milexw-ranking-table,.dhlg-ranking-table) {
+  border-collapse: collapse !important;
+  background: var(--panel) !important;
+}
+:is(.milexw-ranking-table,.dhlg-ranking-table) :is(th,td) {
+  border-color: var(--line) !important;
+  padding: 11px 13px !important;
+}
+:is(.milexw-ranking-toolbar,.dhlg-ranking-toolbar,.milexw-compare-toolbar,.dhlg-compare-toolbar) {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+:is(.milexw-command,.dhlg-command) {
+  border: 1px solid var(--line) !important;
+  background: color-mix(in srgb,var(--panel) 92%,black) !important;
+}
+:is(.milexw-command,.dhlg-command) code {
+  color: var(--text) !important;
+}
+
+/* Preserve semantics with the platform palette, not per-module themes. */
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.is-live,.positive,.up,.good) { color: var(--green) !important; }
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.is-danger,.negative,.down,.risk) { color: var(--red) !important; }
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.is-locked,.warning,.warn) { color: var(--orange) !important; }
+:is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) :where(.selected,.active,.is-selected) {
+  border-color: var(--green) !important;
+}
+
+@media (max-width:1100px) {
+  :is(.gpiw-hero,.gmiw-hero,.gociw-hero) { grid-template-columns: 1fr !important; }
+  :is(.gpiw-hero-main,.gmiw-hero-main,.gociw-hero-main) { min-height: 370px !important; }
+  :is(.milexw-hero-grid,.dhlg-hero-grid) { grid-template-columns: 1fr !important; }
+  :is(.milexw-pulse,.dhlg-orbit) { max-width: 430px !important; }
+}
+@media (max-width:760px) {
+  :is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) { gap: 44px !important; }
+  :is(.gpiw-hero-main,.gmiw-hero-main,.gociw-hero-main,.milexw-hero-grid,.dhlg-hero-grid) {
+    min-height: 0 !important;
+    padding: 25px 20px !important;
+  }
+  :is(.gpiw-hero,.gmiw-hero,.gociw-hero,.milexw-hero,.dhlg-hero) h1 {
+    font-size: 38px !important;
+  }
+  :is(.gpiw-lead,.gmiw-lead,.gociw-lead,.milexw-hero-copy>p,.dhlg-hero-copy>p) { font-size: 15px !important; }
+  :is(.gpiw-country-panel,.gmiw-country-panel,.gociw-country-cockpit) { padding: 24px 20px !important; }
+  :is(.gpiw-section-heading,.gmiw-section-head,.gociw-section-head,.milexw-section-head,.dhlg-section-head) {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  :is(.milexw-status-strip,.dhlg-status-strip) { grid-template-columns: 1fr !important; }
+  :is(.milexw-status-strip,.dhlg-status-strip) > * { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; }
+  :is(.milexw-status-strip,.dhlg-status-strip) > *:last-child { border-bottom: 0 !important; }
+  :is(.milexw-section,.dhlg-section) { padding: 22px 18px !important; }
+  :is(.milexw-pulse,.dhlg-orbit) { max-width: 330px !important; }
+  :is(.gpiw-findings,.gmiw-stat-grid,.gociw-stat-grid,.milexw-kpi-grid,.dhlg-fact-grid) { grid-template-columns: 1fr !important; }
+}
+@media (max-width:430px) {
+  :is(.gpiw-hero-main,.gmiw-hero-main,.gociw-hero-main,.milexw-hero-grid,.dhlg-hero-grid) { padding: 23px 16px !important; }
+  :is(.gpiw-hero,.gmiw-hero,.gociw-hero,.milexw-hero,.dhlg-hero) h1 { font-size: 35px !important; }
+  :is(.milexw-actions,.dhlg-actions,.gpiw-hero-actions,.gmiw-hero-actions,.gociw-hero-actions) { display: grid !important; grid-template-columns: 1fr !important; }
+  :is(.milexw-actions,.dhlg-actions,.gpiw-hero-actions,.gmiw-hero-actions,.gociw-hero-actions) > * { width: 100% !important; }
+  :is(.milexw-section,.dhlg-section) { padding: 20px 14px !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) *,
+  :is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) *::before,
+  :is(.gpiw,.gmiw,.gociw,.milexw,.dhlg,.lpiw,.lsciw) *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .001ms !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* GIR Stage 14 — UNCTAD LSCI participates in the same native platform contract. */
+.lsciw{font-family:var(--font)!important;min-width:0;color:var(--text)!important;line-height:1.45}
+.lsciw,.lsciw *{box-sizing:border-box}
+.lsciw :where(button,input,select,textarea,a){font-family:var(--font)!important}
+.lsciw :where(button,input,select,textarea,[class*="-card"],[class*="-panel"],[class*="-section"],[class*="-toolbar"],[class*="-drawer"]){border-radius:var(--radius)!important;box-shadow:none!important}
+.lsciw :where(input,select,textarea){border:1px solid var(--line2)!important;background:var(--control-bg)!important;color:var(--control-text)!important}

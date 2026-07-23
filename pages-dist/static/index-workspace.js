@@ -16,7 +16,7 @@
   const intFmt = (value) => value == null || !Number.isFinite(Number(value)) ? "—" : Math.round(Number(value)).toLocaleString(lang() === "ru" ? "ru-RU" : "en-US");
   const clamp = (value, min = 0, max = 100) => Math.max(min, Math.min(max, Number(value) || 0));
   const local = (item, prefix = "name") => item?.[`${prefix}_${lang()}`] || item?.[`${prefix}_ru`] || item?.[`${prefix}_en`] || "";
-  const selectedCountry = () => context?.country || "RUS";
+  const selectedCountry = () => context?.country || "";
   const requestedYear = () => Number(context?.year || 2026);
   const selectedCode = () => String(context?.code || "HDI").toUpperCase();
   const key = () => `${selectedCode()}:${selectedCountry()}:${requestedYear()}`;
@@ -27,7 +27,7 @@
   const percentileValue = () => Number.isFinite(Number(score().percentile)) ? Number(score().percentile) : (Number.isFinite(Number(score().rank)) && Number(payload?.summary?.country_count) ? 100 * (Number(payload.summary.country_count) - Number(score().rank)) / Math.max(1, Number(payload.summary.country_count) - 1) : null);
 
   function icon(name) {
-    return `<img class="iw-icon" src="static/icons/${esc(name)}.svg" alt="" aria-hidden="true">`;
+    return `<img class="iw-icon" src="/static/icons/${esc(name)}.svg" alt="" aria-hidden="true">`;
   }
 
   async function fetchJson(url) {
@@ -250,7 +250,7 @@
     const rows = payload.institutions || [];
     if (selectedCode() !== "QS_ET" || !rows.length) return "";
     const summary = payload.qs_summary || {};
-    return `<section class="iw-section">${sectionHeading("05A", tr("Университетский слой QS", "QS university layer"), tr("Страновая оценка является воспроизводимой агрегацией официальных университетских строк, а не официальным страновым рейтингом QS.", "The country score is a reproducible aggregation of official university rows, not an official QS country ranking."))}<div class="iw-findings"><article class="iw-finding"><span>${tr("Учреждения", "Institutions")}</span><strong>${intFmt(summary.institution_count || rows.length)}</strong><b>${tr("в профиле страны", "in the country profile")}</b></article><article class="iw-finding"><span>${tr("Лучшее место", "Best rank")}</span><strong>${summary.best_rank == null ? "—" : `#${intFmt(summary.best_rank)}`}</strong><b>${tr("в инженерии и технологиях", "in Engineering & Technology")}</b></article><article class="iw-finding"><span>Top 250</span><strong>${intFmt(summary.top250_count || rows.filter((item) => Number(item.rank) <= 250).length)}</strong><b>${tr("университетов", "universities")}</b></article><article class="iw-finding"><span>Top 500</span><strong>${intFmt(summary.top500_count || rows.filter((item) => Number(item.rank) <= 500).length)}</strong><b>${tr("университетов", "universities")}</b></article></div><div class="iw-institutions">${rows.map((item) => `<article class="iw-institution"><strong>${item.rank == null ? "—" : `#${intFmt(item.rank)}`}</strong><div><b title="${esc(item.title)}">${esc(item.title)}</b><span>${esc(item.city || item.country || "")} · ${item.overall_score == null ? tr("score не опубликован", "score not published") : fmt(item.overall_score, 1)}</span></div></article>`).join("")}</div></section>`;
+    return `<section class="iw-section" id="iwUniversities">${sectionHeading("05A", tr("Университетский слой QS", "QS university layer"), tr("Страновая оценка является воспроизводимой агрегацией официальных университетских строк, а не официальным страновым рейтингом QS. Карта показывает мировую географию университетов и сохраняет происхождение каждой приблизительной координаты.", "The country score is a reproducible aggregation of official university rows, not an official QS country ranking. The map shows the worldwide geography of institutions and preserves the provenance of every approximate coordinate."))}<div class="iw-findings"><article class="iw-finding"><span>${tr("Учреждения", "Institutions")}</span><strong>${intFmt(summary.institution_count || rows.length)}</strong><b>${tr("в профиле страны", "in the country profile")}</b></article><article class="iw-finding"><span>${tr("Лучшее место", "Best rank")}</span><strong>${summary.best_rank == null ? "—" : `#${intFmt(summary.best_rank)}`}</strong><b>${tr("в инженерии и технологиях", "in Engineering & Technology")}</b></article><article class="iw-finding"><span>Top 250</span><strong>${intFmt(summary.top250_count || rows.filter((item) => Number(item.rank) <= 250).length)}</strong><b>${tr("университетов", "universities")}</b></article><article class="iw-finding"><span>Top 500</span><strong>${intFmt(summary.top500_count || rows.filter((item) => Number(item.rank) <= 500).length)}</strong><b>${tr("университетов", "universities")}</b></article></div><div class="iw-university-map-host" data-university-map-host="QS_ET"></div><div class="iw-institutions">${rows.map((item) => `<article class="iw-institution"><strong>${item.rank == null ? "—" : `#${intFmt(item.rank)}`}</strong><div><b title="${esc(item.title)}">${esc(item.title)}</b><span>${esc(item.city || item.country || "")} · ${item.overall_score == null ? tr("score не опубликован", "score not published") : fmt(item.overall_score, 1)}</span></div></article>`).join("")}</div></section>`;
   }
 
   function rankingSection() {
@@ -298,10 +298,25 @@
     context.root.querySelector("#iwRankingSearch")?.addEventListener("input", (event) => { ui.query = event.target.value; ui.page = 1; renderPage(); context.root.querySelector("#iwRankingSearch")?.focus(); });
     context.root.querySelectorAll("[data-iw-page]").forEach((button) => button.addEventListener("click", () => { ui.page += button.dataset.iwPage === "next" ? 1 : -1; renderPage(); document.getElementById("iwRanking")?.scrollIntoView({ block: "start" }); }));
     context.root.querySelector("[data-iw-retry]")?.addEventListener("click", () => { cache.delete(key()); render(context); });
+    const universityMapHost = context.root.querySelector('[data-university-map-host="QS_ET"]');
+    if (universityMapHost && window.GIRUniversityMap?.render) {
+      window.GIRUniversityMap.render(universityMapHost, {
+        sourceCode: "QS_ET",
+        year: Number(payload.requested_year || 2026),
+        lang: lang(),
+        selectedCountry: country().iso3,
+        eyebrow: "QS Engineering & Technology",
+        title: tr("Мировая карта инженерных университетов", "World map of engineering universities"),
+        subtitle: tr("Цвет показывает диапазон места, размер — официальный QS score или позицию, если score не опубликован.", "Colour shows the rank band; size represents the official QS score or rank when no score is published."),
+        openProvenance: context.openProvenance,
+        selectCountry: (iso3) => context.goCountry?.(iso3),
+      });
+    }
   }
 
   async function render(nextContext) {
     context = nextContext;
+    if (!context?.root || !selectedCountry()) return;
     const token = ++renderToken;
     context.root.innerHTML = loading();
     try {

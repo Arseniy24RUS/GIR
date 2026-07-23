@@ -1,0 +1,1489 @@
+{
+  "schema_version": "gir-fastapi-catalog-t24",
+  "count": 165,
+  "operations": [
+    {
+      "path": "/",
+      "methods": [
+        "GET"
+      ],
+      "name": "home",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/acceptance/tz",
+      "methods": [
+        "GET"
+      ],
+      "name": "acceptance_tz",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/benchmarks",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_benchmarks",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_ranking_compatibility",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/aipi/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "ai_preparedness_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/app-data",
+      "methods": [
+        "GET"
+      ],
+      "name": "app_data",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/institutions",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_institutions",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/methodology",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_methodology",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/provenance/{value_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_provenance",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/arwu/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "arwu_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/comparison/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "comparison_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/comparison/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "comparison_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}/command-center",
+      "methods": [
+        "GET"
+      ],
+      "name": "command_center",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}/profile",
+      "methods": [
+        "GET"
+      ],
+      "name": "country_profile",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "country_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}/workspace-v3",
+      "methods": [
+        "GET"
+      ],
+      "name": "country_portfolio_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/country/{iso3}/workspace-v3.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "country_portfolio_workspace_csv",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/cross-matrix",
+      "methods": [
+        "GET"
+      ],
+      "name": "cross_matrix",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/cross-matrix.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "cross_matrix_csv",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-quality",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_quality",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/check",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_check",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/cli",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_cli",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/health",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_health",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/jobs",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_jobs",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/jobs",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_stage",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/jobs/{job_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_job",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/jobs/{job_id:path}/publish",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_publish",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/overview",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_overview",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/packages/register",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_register_package",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/plans",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_plans",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/plans",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_create_plan",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/plans/{plan_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_plan",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/publications",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_publications",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/rollback/{publication_id:path}",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_rollback",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/sources",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_sources",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/v2/dashboard",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_dashboard_v2",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/v2/jobs/{job_id}/diff",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_job_diff_v2",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/v2/plan-preview",
+      "methods": [
+        "POST"
+      ],
+      "name": "data_updates_plan_preview_v2",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/v2/preflight",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_preflight_v2",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/data-updates/v2/sources/{source_id}",
+      "methods": [
+        "GET"
+      ],
+      "name": "data_updates_source_detail_v2",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/diagnostics/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "diagnostics_all",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/diagnostics/{iso3}/{code}",
+      "methods": [
+        "GET"
+      ],
+      "name": "diagnostics",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/egdi",
+      "methods": [
+        "GET"
+      ],
+      "name": "e_government_development_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/egdi/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "e_government_development_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/egdi/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "e_government_development_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/egdi/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "e_government_development_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/egdi/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "e_government_development_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/export/country/{iso3}/brief",
+      "methods": [
+        "GET"
+      ],
+      "name": "country_brief",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gari",
+      "methods": [
+        "GET"
+      ],
+      "name": "government_ai_readiness_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gari/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "government_ai_readiness_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gari/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "government_ai_readiness_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gari/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "government_ai_readiness_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gari/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "government_ai_readiness_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_score_order",
+      "summary": null,
+      "description": "Compatibility endpoint with an explicit no-rank contract."
+    },
+    {
+      "path": "/api/gci/tiers",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_tiers",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/gci/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "global_cybersecurity_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/governance/external-reviews",
+      "methods": [
+        "GET"
+      ],
+      "name": "governance_external_reviews",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/governance/licenses",
+      "methods": [
+        "GET"
+      ],
+      "name": "governance_licenses_alias",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/health",
+      "methods": [
+        "GET"
+      ],
+      "name": "health",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/model",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_model",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v5",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v5_root",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v5/audit",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v5_audit",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v5/profile/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v5_profile",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v5/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v5_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v5/validation",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v5_validation",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v6",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v6_root",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v6/profile/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v6_profile_endpoint",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/v6/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_v6_ranking_endpoint",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/htei/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "htei_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/human-capital/combined/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "human_capital_combined_endpoint",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/i18n/catalog",
+      "methods": [
+        "GET"
+      ],
+      "name": "i18n_catalog",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index-methodology",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_methodology_alias",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index-methodology/{code}",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_methodology_by_code",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}",
+      "methods": [
+        "GET"
+      ],
+      "name": "index",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/components",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_components",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/details",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_score_details",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/explainer",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_explainer",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/formula",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_formula",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "index_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "standard_index_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/index/{code}/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "standard_index_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/indices",
+      "methods": [
+        "GET"
+      ],
+      "name": "indices",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/metrics",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_metrics",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_ranking_rejected",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/releases",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_releases",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/iqi/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "cloudflare_iqi_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/landing-summary",
+      "methods": [
+        "GET"
+      ],
+      "name": "landing_summary",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/legal/licenses",
+      "methods": [
+        "GET"
+      ],
+      "name": "legal_source_registry",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/methodology/registry",
+      "methods": [
+        "GET"
+      ],
+      "name": "methodology_registry",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/methodology/summary",
+      "methods": [
+        "GET"
+      ],
+      "name": "methodology_summary",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/nri",
+      "methods": [
+        "GET"
+      ],
+      "name": "network_readiness_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/nri/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "network_readiness_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/nri/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "network_readiness_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/nri/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "network_readiness_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/nri/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "network_readiness_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/operations/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "operations_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/entity/{entity_code}",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_entity",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/methodology",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_methodology",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/provenance/{value_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_provenance",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/pisa-school-knowledge/trends/{entity_code}",
+      "methods": [
+        "GET"
+      ],
+      "name": "pisa_school_knowledge_trends",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/platform-context",
+      "methods": [
+        "GET"
+      ],
+      "name": "platform_context",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/policy-brief/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "policy_brief_alias",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/policy/russia",
+      "methods": [
+        "GET"
+      ],
+      "name": "russia_policy_brief",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/policy/russia/export.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "policy_russia_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/policy/russia/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "policy_russia_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/provenance/value/{value_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "provenance_value",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/qs/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "qs_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/refresh/{source_code}",
+      "methods": [
+        "POST"
+      ],
+      "name": "refresh",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/release/readiness",
+      "methods": [
+        "GET"
+      ],
+      "name": "release_readiness",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/source-registry",
+      "methods": [
+        "GET"
+      ],
+      "name": "source_registry",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/sources",
+      "methods": [
+        "GET"
+      ],
+      "name": "sources",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/institutions",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_institutions",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/methodology",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_methodology",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/provenance/{value_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_provenance",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/the-engineering/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "the_engineering_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_release",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/audit",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_crosslist_audit",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/countries",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_countries",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/country/{iso3}",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_country",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/green500",
+      "methods": [
+        "GET"
+      ],
+      "name": "green500_systems",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_country_order",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/system/{system_id}",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_system",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/systems",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_systems",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/top500/workspace.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "top500_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/training-competitiveness",
+      "methods": [
+        "GET"
+      ],
+      "name": "training_competitiveness",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/training-competitiveness/ranking",
+      "methods": [
+        "GET"
+      ],
+      "name": "training_competitiveness_ranking",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/training/workspace",
+      "methods": [
+        "GET"
+      ],
+      "name": "training_workspace",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/training/workspace/export.csv",
+      "methods": [
+        "GET"
+      ],
+      "name": "training_workspace_export",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/universities/geography/status",
+      "methods": [
+        "GET"
+      ],
+      "name": "university_geography_status",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/universities/location/{location_id:path}",
+      "methods": [
+        "GET"
+      ],
+      "name": "university_location_provenance",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/universities/map",
+      "methods": [
+        "GET"
+      ],
+      "name": "university_geography_map",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/vdem/dimensions",
+      "methods": [
+        "GET"
+      ],
+      "name": "vdem_dimensions",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/vdem/polities",
+      "methods": [
+        "GET"
+      ],
+      "name": "vdem_polities",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/wgi/dimensions",
+      "methods": [
+        "GET"
+      ],
+      "name": "wgi_dimensions",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/api/wgi/sources",
+      "methods": [
+        "GET"
+      ],
+      "name": "wgi_sources",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/docs",
+      "methods": [
+        "GET"
+      ],
+      "name": "swagger_ui_html",
+      "summary": null,
+      "description": null
+    },
+    {
+      "path": "/docs/oauth2-redirect",
+      "methods": [
+        "GET"
+      ],
+      "name": "swagger_ui_redirect",
+      "summary": null,
+      "description": null
+    },
+    {
+      "path": "/openapi.json",
+      "methods": [
+        "GET"
+      ],
+      "name": "openapi",
+      "summary": null,
+      "description": null
+    },
+    {
+      "path": "/personal-data-consent",
+      "methods": [
+        "GET"
+      ],
+      "name": "personal_data_consent",
+      "summary": null,
+      "description": ""
+    },
+    {
+      "path": "/redoc",
+      "methods": [
+        "GET"
+      ],
+      "name": "redoc_html",
+      "summary": null,
+      "description": null
+    },
+    {
+      "path": "/static",
+      "methods": [],
+      "name": "static",
+      "summary": null,
+      "description": null
+    },
+    {
+      "path": "/world.geojson",
+      "methods": [
+        "GET"
+      ],
+      "name": "world_geojson",
+      "summary": null,
+      "description": ""
+    }
+  ]
+}

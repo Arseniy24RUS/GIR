@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Martinique">
+  <path fill="#00a95c" d="M0 0h640v240H0z"/>
+  <path fill="#211f1f" d="M0 240h640v240H0z"/>
+  <path fill="#f71924" d="M0 0l320 240L0 480z"/>
+</svg>
